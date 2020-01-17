@@ -216,7 +216,7 @@
     width: 100%;
     height: auto;
     position: fixed;
-    pointer-events: none;
+    /* pointer-events: none; */
     display: flex;
     justify-content: center;
     align-items: center;
