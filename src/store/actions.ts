@@ -4,12 +4,20 @@ import { PlayingAction } from './reducers/session/isPlaying';
 import { setUserIdAction } from './reducers/session/setUserId';
 import { ContributionCalendar } from 'models/ContributionCalendar';
 import { UserContributionsAction } from './reducers/session/UserContributions'
-import { AppStateAction } from './reducers/app/index'
+import { AppControlAction } from './reducers/app/control'
+import { MetronomeAction } from './reducers/app/metronome'
+
+import { Metronome } from 'models/Metronome'
 
 
-export const setAppLoadingData = (state: boolean): AppStateAction => ({
+export const setAppLoadingData = (state: boolean): AppControlAction => ({
   type: 'SET_APP_LOADING_DATA',
   state
+})
+
+export const setAppMetronomeData = (metronome: Metronome): MetronomeAction => ({
+  type: 'SET_APP_METRONOME_DATA',
+  metronome
 })
 
 export const setBpm = (value: number): BpmAction => ({

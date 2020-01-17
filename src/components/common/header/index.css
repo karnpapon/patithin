@@ -22,5 +22,8 @@
 .right-col{
     flex: 1;
     text-align: end;
+    font-size: 1rem;
+    padding-left: 500px;
+    font-family: Helvetica, sans-serif;
 }
 

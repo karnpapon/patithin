@@ -23,7 +23,7 @@ export class GitCalendarPlayground extends React.Component<PlaygroundProps, Play
 
     store.subscribe(() => {
       let userData = store.getState().session.UserContributions;
-      let isLoading = store.getState().loading;
+      let isLoading = store.getState().app.loading;
       if (userData !== this.state.contributions) {
         this.setState({
           contributions: userData

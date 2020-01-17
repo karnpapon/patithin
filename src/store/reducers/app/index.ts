@@ -1,14 +1,8 @@
-export interface AppStateAction {
-    type: string;
-    state: boolean;
-  }
-  
-export function loading(state: boolean = false, action: AppStateAction): boolean {
-  switch (action.type) {
-    case 'SET_APP_LOADING_DATA':
-    return action.state;
-    default:
-    return state;
-  }
-}
-  
+import { combineReducers } from 'redux';
+import { loading } from './control';
+import { metronome } from './metronome';
+
+export default combineReducers({
+  loading,
+  metronome
+});

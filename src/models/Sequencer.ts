@@ -1,5 +1,4 @@
 import { store, actions } from 'store';
-// import Track from 'models/Track';
 
 export class Sequencer {
   session: any;
@@ -41,9 +40,6 @@ export class Sequencer {
     this.nextKey = window.setTimeout(this.looped, timeBeforeNext);
 
     let index = (this.session.currentSeqPosition + 17) % 16;
-    // this.session.tracks.forEach((trck: Track) => {
-    //   trck.playAt(index, this.session.volume, this.session.soloTrack);
-    // });
     store.dispatch(actions.setCurrentSeqPosition(index));
   }
 

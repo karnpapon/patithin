@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { store, actions } from 'store';
+import { Metronome } from 'models/Metronome'
 import '../index.css';
 
 export interface CalendarControlState {
@@ -28,8 +29,8 @@ export class CalendarControl extends React.Component<any, CalendarControlState> 
     // End event
     e.stopPropagation();
     e.preventDefault();
-
     store.dispatch(actions.play(!this.state.isPlaying));
+    store.getState().app.metronome.play()
   }
 
   render() {
