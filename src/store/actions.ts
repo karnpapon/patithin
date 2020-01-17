@@ -4,6 +4,13 @@ import { PlayingAction } from './reducers/session/isPlaying';
 import { setUserIdAction } from './reducers/session/setUserId';
 import { ContributionCalendar } from 'models/ContributionCalendar';
 import { UserContributionsAction } from './reducers/session/UserContributions'
+import { AppStateAction } from './reducers/app/index'
+
+
+export const setAppLoadingData = (state: boolean): AppStateAction => ({
+  type: 'SET_APP_LOADING_DATA',
+  state
+})
 
 export const setBpm = (value: number): BpmAction => ({
   type: 'SET_BPM',

@@ -9,6 +9,7 @@ export class ContributionCalendar {
   isUserIdDetailsLoaded: Boolean = false
   totalCounts: number
   userIdDetails: UserDetails
+  isFullyLoaded: Boolean = false
 
   async fetchContributions(user: string): Promise<Contribution[][]>{
     this.contributions = await fetchContributions(user)

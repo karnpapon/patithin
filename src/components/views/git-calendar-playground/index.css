@@ -212,6 +212,16 @@
 }
 
 .add-track{ width: 40px; height: 40px; font-size: 2rem;}
+.loading-track{
+    width: 100%;
+    height: auto;
+    position: fixed;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loading{ position: relative; background-blend-mode: overlay;}
 
 .playcontroller {
     display: flex;

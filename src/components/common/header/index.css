@@ -4,6 +4,7 @@
     position: sticky;
     top: 0;
     display: flex;
+    pointer-events: none;
     /* background-color: var(--shade-base); */
     justify-content: center;
     align-items: center;

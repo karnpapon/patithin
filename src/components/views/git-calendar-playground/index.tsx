@@ -10,6 +10,7 @@ import './index.css';
 export interface PlaygroundProps{}
 export interface PlaygroundState {
   contributions: Array<ContributionCalendar>,
+  isLoading: boolean
 }
 
 export class GitCalendarPlayground extends React.Component<PlaygroundProps, PlaygroundState>{
@@ -17,22 +18,31 @@ export class GitCalendarPlayground extends React.Component<PlaygroundProps, Play
     super(props)
     this.state = {
       contributions: [],
+      isLoading: false
     }
 
     store.subscribe(() => {
       let userData = store.getState().session.UserContributions;
+      let isLoading = store.getState().loading;
       if (userData !== this.state.contributions) {
         this.setState({
           contributions: userData
+        });
+      }
+
+      if (isLoading !== this.state.isLoading) {
+        this.setState({
+          isLoading: isLoading
         });
       }
     });
   }
 
   render(){
-    const { contributions } = this.state
+    const { contributions, isLoading } = this.state
     return ( 
     <div className="contents"> 
+      { isLoading? <LoadingButton/>:'' }
       {
         contributions.map((item, index) => 
           <GitCalendarTrack 
@@ -47,5 +57,16 @@ export class GitCalendarPlayground extends React.Component<PlaygroundProps, Play
       <CalendarControl/>
     </div>
     )
+  }
+}
+
+
+class LoadingButton extends React.Component {
+  render() {
+    return (
+      <div className="loading-track">
+        <img className="loading" src="src/assets/loading2.gif"></img>
+      </div>
+    );
   }
 }
