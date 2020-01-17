@@ -30,8 +30,8 @@ export class ContributionCalendar {
     return this.totalCounts = contributions.map(c => c.count).reduce((a, b) => a + b, 0)
   }
 
-  loadContributions(){
-    const user = store.getState().session.setUserId
+  loadContributions(user: string){
+    // const user = store.getState().session.setUserId
     return this.fetchContributions(user).then(
       () => {
         this.isContributionLoaded = true;
@@ -44,8 +44,8 @@ export class ContributionCalendar {
     );
   }
 
-  loadUserIdDetails(){
-    const user = store.getState().session.setUserId
+  loadUserIdDetails(user: string){
+    // const user = store.getState().session.setUserId
     return this.fetchUserIdDetails(user).then(
       () => {
         this.isUserIdDetailsLoaded = true;

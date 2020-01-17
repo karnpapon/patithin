@@ -7,7 +7,8 @@ import '../../index.css'
 
 export interface CalendarTrackAddProps{ }
 export interface CalendarTrackAddState{
-  contributions: Contribution[][],
+  // contributions: Contribution[][],
+  userId: string
 }
 
 export class CalendarTrackAdd extends React.Component<CalendarTrackAddProps, CalendarTrackAddState>{
@@ -16,12 +17,14 @@ export class CalendarTrackAdd extends React.Component<CalendarTrackAddProps, Cal
   constructor(props: CalendarTrackAddProps){
     super(props)
     this.state = {
-      contributions: [],
+      // contributions: [],
+      userId: ""
     }
   }
 
-  setUserIdInput(event: React.ChangeEvent<HTMLInputElement> ){
-    store.dispatch(actions.setUserIdInput(event.target.value))
+  setUserIdInput = (event: React.ChangeEvent<HTMLInputElement> ) => {
+    // store.dispatch(actions.setUserIdInput(event.target.value))
+    this.setState({ userId: event.target.value})
   }
 
   clearInput(){
@@ -44,8 +47,8 @@ export class CalendarTrackAdd extends React.Component<CalendarTrackAddProps, Cal
   handleAddNewTrack = async () => {
     const calendar = new ContributionCalendar()
     this.setLoadingOn()
-    calendar.loadContributions()
-    .then(() => calendar.loadUserIdDetails())
+    calendar.loadContributions(this.state.userId)
+    .then(() => calendar.loadUserIdDetails(this.state.userId))
     .then(() => this.setLoadingOff())
     .then(() => calendar.countContributions(calendar.contributionList()) )
     .then(() => store.dispatch( actions.setUserCollectionsData(calendar)) )
@@ -62,7 +65,7 @@ export class CalendarTrackAdd extends React.Component<CalendarTrackAddProps, Cal
   }
 
   render(){
-    
+
     return (
       <div className="track-add">
         <div className="track-add-container">
