@@ -5,7 +5,8 @@ import { store } from 'store';
 import '../../index.css';
 
 export interface WeekRenderProps{
-  weeks: Contribution[]
+  weeks: Contribution[],
+  week_idx?: number | null
 }
 export interface WeekRenderState{
   isMuted: Boolean,
@@ -42,20 +43,16 @@ export class WeekRender extends React.Component<WeekRenderProps, WeekRenderState
   }
 
   render(){
-    const { weeks } = this.props
+    const { weeks, week_idx } = this.props
     let { currentPos } = this.state;
 
     currentPos = store.getState().session.currentSeqPosition;
 
-    console.log("currentPos", currentPos)
-
     return (
-      <div className={ `week ${this.state.isMuted? 'toggle':''}` }>
+      <div className={ `week ${this.state.isMuted? 'toggle':''} ${week_idx == currentPos? 'active':''}` }>
         <span className="week-selector" onClick={() => this.toggleWeek(weeks)}>●</span>
         <div className="week-col">{
-          weeks.map( ( day, day_index ) => 
-            <DayRender key={day_index} day={day}/>
-          )}
+          weeks.map((day, day_index) => <DayRender key={day_index} day={day}/>)}
         </div>
       </div>
     )

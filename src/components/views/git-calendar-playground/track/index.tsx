@@ -42,7 +42,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
               {
                 contributions?
                 contributions.map(( weeks, index ) => {
-                    return <WeekRender key={index} weeks={weeks}/>
+                    return <WeekRender key={index} weeks={weeks} week_idx={index}/>
                 })
                 :
                 "loading.."

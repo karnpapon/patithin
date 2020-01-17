@@ -37,8 +37,8 @@ export class Sequencer {
 
   looped = this.loop.bind(this);
   loop() {
-    const tiemeBeforeNext = 240000 / this.session.bpm / 16;
-    this.nextKey = window.setTimeout(this.looped, tiemeBeforeNext);
+    const timeBeforeNext = 240000 / this.session.bpm / 16;
+    this.nextKey = window.setTimeout(this.looped, timeBeforeNext);
 
     let index = (this.session.currentSeqPosition + 17) % 16;
     // this.session.tracks.forEach((trck: Track) => {

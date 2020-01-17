@@ -78,6 +78,7 @@
     justify-content: center;
     display: flex;
     flex-direction: column;
+    font-weight: bolder;
 }
 
 .track-title{
@@ -88,13 +89,15 @@
     /* border-top: 1px solid var(--shade-gray); */
     background-color: var(--shade-light);
     color: var(--shade-base);
+    font-family: 'Six Caps', sans-serif;
     /* align-items: center; */
     /* justify-content: center; */
 }
 
 .track-title p{
-    font-size: 2rem;
-    position: a;
+    font-size: 5rem;
+    margin-top: 0;
+    margin-bottom: 0;
     width: 100%;
     align-items: center;
     justify-content: center;
@@ -149,9 +152,8 @@
     display: flex;
     border-right: 2px solid var(--shade-base);
     border-bottom: 2px solid var(--shade-base);
-    /* border-left: 1px solid var(--shade-base); */
-    /* transition: 200ms; */
     cursor: pointer;
+    font-family: 'Helvetica', sans-serif;
 }
 
 .delete-track:hover{ background-color: var(--hover-base); color: var(--hover-inverted);}
@@ -228,6 +230,10 @@
     justify-content: center;
     align-items: center;
     clip-path: var(--cut-shape);
+}
+
+.active .week-col div{
+    background-color: var(--shade-active);
 }
 
 
