@@ -1,0 +1,233 @@
+@import '/src/styles/variables.css';
+
+
+.track-container{
+    display: flex;
+    font-size: 12px;
+    padding: 40px;
+    justify-content: space-between;
+    animation: slide-up 0.4s ease;
+}
+
+.contribute-day{
+    margin: 4px;
+    margin-right: 0;
+    width: 12px;
+    height: 12px;
+    background-color: rgb(175, 175, 175);
+}
+
+.week{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* display: flex; */
+    /* padding: 2.5px 2.5px; */
+}
+
+.toggle .week-col div{
+    background-color: rgb(47, 47, 47);
+}
+
+.week-col{}
+
+.week-selector{
+    cursor: pointer;
+    font-size: .7rem;
+    color: gray;
+}
+
+.week-selector:hover ~ .week-col div{
+ background-color: var(--hover-base);   
+}
+
+.day-selector{
+    display: grid;
+    cursor: pointer;
+}
+
+.day-selector span:nth-child(1){ visibility: hidden;}
+
+/* .day-selector:hover ~ .weeks-table .week .week-col div:nth-child(1){
+    background-color: var(--hover-base);  
+} */
+
+/* #row1:hover ~ .weeks-table .week .week-col div:nth-child(1){ background-color: white; } */
+/* #row2:hover ~ .week .week-col div:nth-child(2){ background-color: white; }
+#row3:hover ~ .week .week-col div:nth-child(3){ background-color: white; }
+#row4:hover ~ .week .week-col div:nth-child(4){ background-color: white; }
+#row5:hover ~ .week .week-col div:nth-child(5){ background-color: white; }
+#row6:hover ~ .week .week-col div:nth-child(6){ background-color: white; }
+#row7:hover ~ .week .week-col div:nth-child(7){ background-color: white; } */
+
+.track-steps{
+    display: flex;
+    border-top: 1px solid var(--shade-gray);
+    padding: 20px;
+    flex: 3;
+}
+
+.track-steps span{ width: auto;}
+
+.track-info{
+    border-top: 1px solid var(--shade-gray);
+    padding: 20px;
+    /* width: 100%; */
+    flex: 1;
+    margin-right: 10px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.track-title{
+    /* width: 100%; */
+    flex: 1;
+    margin-right: 10px;
+    display: flex;
+    /* border-top: 1px solid var(--shade-gray); */
+    background-color: var(--shade-light);
+    color: var(--shade-base);
+    /* align-items: center; */
+    /* justify-content: center; */
+}
+
+.track-title p{
+    font-size: 2rem;
+    position: a;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding-right: 20px;
+    display: flex;
+}
+
+.track-play{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    background-color: var(--shade-base);
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    font-size: 2rem;
+    /* border-top: 1px solid gray; */
+}
+
+.track-add{
+    display: flex;
+    padding: 20px;
+    height: 200px;
+    margin-bottom: 100px;
+}
+
+.track-add-container{
+    width: 100%;
+    border: 1px dashed gray;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.track-add-container button{ margin-top: 20px}
+
+.circle {
+    border:1px solid;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: all 150ms ease-in-out 0s;
+}
+
+.delete-track{
+    width: 28px;
+    justify-content: center;
+    height: 20px;
+    align-items: center;
+    display: flex;
+    border-right: 2px solid var(--shade-base);
+    border-bottom: 2px solid var(--shade-base);
+    /* border-left: 1px solid var(--shade-base); */
+    /* transition: 200ms; */
+    cursor: pointer;
+}
+
+.delete-track:hover{ background-color: var(--hover-base); color: var(--hover-inverted);}
+
+.play-btn{
+    display: flex;
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid gray;
+    fill: var(--shade-light);
+    stroke-width: 4px;
+    padding: 10px;
+    /* transition: 200ms; */
+}
+
+.play-btn:hover { background-color: var(--hover-base); }
+
+.play-btn:hover .circle{
+    background-color:var(--hover-base);
+}
+
+.play-btn:hover .play-symbol{
+    color: var(--hover-inverted);
+}
+
+.play-btn line {
+    stroke-width: 2px;
+    stroke: var(--shade-light);
+}
+
+.play-btn polygon {
+    fill: var(--shade-light);
+}
+
+.play-symbol{
+    position: absolute;
+}
+
+.contrib-count{ }
+
+.counts{ display: flex; align-items: center; }
+.counts i{ font-size: 1.5rem; margin-left: 10px;}
+
+.contrib-count p{
+   font-size: 2.25rem;
+   margin: 0
+}
+
+.contrib-date p{ margin: 0 }
+.have-contributed{ background-color: green;}
+.no-t-margin{ margin: 0}
+
+.weeks-table{
+    display: flex;
+}
+
+.add-track{ width: 40px; height: 40px; font-size: 2rem;}
+
+.playcontroller {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    clip-path: var(--cut-shape);
+}
+
+
+@keyframes slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

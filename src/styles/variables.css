@@ -1,0 +1,49 @@
+:root {
+  /* --shade-base: rgb(150, 150, 150); */
+  /* --shade-base: rgb(0, 0, 0); */
+  --shade-base: darkblue;
+  --shade-base-overlay: #000d;
+
+  --shade-dark: #111;
+  --shade: #444;
+  /* --shade-light: rgb(0, 0, 0); */
+  --shade-light: rgb(158, 136, 76);
+
+  --shade-active-on: #f6c408;
+
+  --shade-gray: gray;
+
+  --space: 2px;
+  --half-box-size: 12px;
+  --box-size: 25px;
+  --track-size: 52px;
+
+  --view-width: 1200px;
+
+  --hover-base: #444;
+  --hover-inverted: white;
+
+  --cut-shape: polygon(
+    0% 0%,
+    100% 0%,
+    100% calc(100% - var(--half-box-size)),
+    calc(100% - var(--half-box-size)) 100%,
+    0% 100%
+  );
+}
+
+/**
+Reserved CSS classes
+
+- active
+- selected
+- on
+- off
+
+These classes must be applied as association with another class.
+
+Good: .mykomponent.active .mykomponent-title
+Not:  .active .mykomponent-title
+
+no camel, no dash (until modifier), no undescore
+*/

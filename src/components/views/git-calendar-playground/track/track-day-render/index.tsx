@@ -1,0 +1,26 @@
+import * as React from 'react'
+import { Contribution } from 'services/fetchContributions'
+import '../../index.css'
+
+export interface DayRenderProps{
+    day: Contribution
+}
+export interface DayRenderState{
+  isMuted: Boolean,
+    
+}
+
+export class DayRender extends React.Component<DayRenderProps, DayRenderState>{
+  constructor(props: DayRenderProps){
+    super(props)
+    this.state = {
+      isMuted: false,
+    }
+  }
+
+  render(){
+      const { day } = this.props
+    return ( <div className={ `contribute-day ${day.count > 0? 'have-contributed':''}` }></div> )
+  }
+
+}

@@ -1,0 +1,112 @@
+@import './styles/variables.css';
+
+@font-face {
+  font-family: 'Space Mono';
+  font-weight: 400;
+  src: /* url('../public/fonts/SpaceMono-Regular.woff2') format('woff2'),
+       url('../public/fonts/SpaceMono-Regular.woff') format('woff'), */ url('../public/fonts/SpaceMono-Regular.ttf')
+    format('truetype');
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  font-weight: 700;
+  src: /* url('../public/fonts/SpaceMono-Bold.woff2') format('woff2'),
+       url('../public/fonts/SpaceMono-Bold.woff') format('woff'), */ url('../public/fonts/SpaceMono-Bold.ttf')
+    format('truetype');
+}
+::-webkit-scrollbar {
+  display: none;
+}
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  font-family: 'Space Mono', monospace;
+  background-color: var(--shade-base);
+  color: var(--shade-light);
+
+  font-weight: normal;
+  text-transform: uppercase;
+  line-height: 1.2;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -o-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+a {
+  color: inherit;
+}
+
+.selectable {
+  border: var(--border-width) solid var(--shade-dark);
+  transition: 0.2s box-shadow, 0.3s border-color;
+  box-shadow: 0 0 0 transparent;
+}
+.selectable.active {
+  border-color: var(--primary);
+  box-shadow: 0 0 var(--border-width) var(--primary);
+}
+
+button {
+  border: 1px solid;
+  text-align: center;
+  box-sizing: border-box;
+  line-height: var(--box-size);
+  cursor: pointer;
+  background-color: var(--shade-base);
+  color: var(--shade-light);
+}
+button:hover {
+  background-color: var(--shade);
+  color: var(--hover-inverted);
+}
+button.on {
+  background-color: var(--shade-light);
+  color: var(--shade-base);
+}
+
+button:focus {
+  outline: none;
+}
+
+.contents{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 125px;
+  overflow: auto;
+}
+
+input{
+  outline: none;
+  width: 100%;
+  font-size: 16px;
+  border: 0;
+  line-height: 24px;
+  padding: 8px 36px 8px 14px;
+  color: var(--shade-light);
+}

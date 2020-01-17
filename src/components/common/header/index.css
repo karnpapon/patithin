@@ -1,0 +1,25 @@
+@import '/src/styles/variables.css';
+
+.header-container{
+    position: sticky;
+    top: 0;
+    display: flex;
+    /* background-color: var(--shade-base); */
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    font-size: 2rem;
+    padding: 20px;
+    z-index: 10;
+}
+.left-col{
+    flex: 1;
+}
+
+.left-col i{padding-left: 20px;}
+
+.right-col{
+    flex: 1;
+    text-align: end;
+}
+
