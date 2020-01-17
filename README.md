@@ -1,0 +1,1 @@
+## GCB (git-calendar-beat generator).
