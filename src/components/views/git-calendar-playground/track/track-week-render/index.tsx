@@ -2,14 +2,14 @@ import * as React from 'react'
 import { Contribution } from 'services/fetchContributions'
 import { DayRender } from '../track-day-render';
 import { store } from 'store';
-import { Metronome } from 'models/Metronome';
+// import { Metronome } from 'models/Metronome';
 import { AppContextConsumer } from 'AppContext';
 import '../../index.css';
 
 export interface WeekRenderProps{
   weeks: Contribution[],
   week_idx?: number | null,
-  metronome: Metronome,
+  // metronome: Metronome,
 }
 export interface WeekRenderState{
   isMuted: Boolean,

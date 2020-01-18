@@ -5,11 +5,11 @@ import { CalendarTrackAdd } from './track/track-add-new';
 import { CalendarControl } from './control'
 import { store, actions } from 'store'
 import { ContributionCalendar } from 'models/ContributionCalendar';
-import { Metronome } from 'models/Metronome';
+// import { Metronome } from 'models/Metronome';
 import './index.css';
 
 export interface PlaygroundProps{
-  metronome: Metronome,
+  // metronome: Metronome,
 }
 export interface PlaygroundState {
   contributions: Array<ContributionCalendar>,
@@ -49,14 +49,11 @@ export class GitCalendarPlayground extends React.Component<PlaygroundProps, Play
             contributions={item.contributions} 
             totalCounts={item.totalCounts}
             UserDetails={item.userIdDetails}
-            metronome={this.props.metronome}
           /> 
         )
       }
       <CalendarTrackAdd/>
-      <CalendarControl 
-        metronome={this.props.metronome}
-      />
+      <CalendarControl/>
     </div>
     )
   }

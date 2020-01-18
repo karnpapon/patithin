@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { store, actions } from 'store';
 import { Metronome } from 'models/Metronome'
+import { AppContextConsumer } from 'AppContext';
 import '../index.css';
 
-
 export interface CalendarControlProps {
-  metronome: Metronome
 }
 
 export interface CalendarControlState {
@@ -30,23 +29,26 @@ export class CalendarControl extends React.Component<CalendarControlProps, Calen
     };
   }
 
-  onClick(e: React.WheelEvent) {
+  onClick(e: React.WheelEvent, metronome: Metronome) {
     // End event
     e.stopPropagation();
     e.preventDefault();
     store.dispatch(actions.play(!this.state.isPlaying));
-    // store.getState().app.metronome.play()
-    this.props.metronome.play()
+    metronome.play()
   }
 
   render() {
     return (
-      <div
-        className='track-play'
-        onClick={this.clickListener}
-      >
-        {this.state.isPlaying ? <ButtonPause /> : <ButtonPlay />}
-      </div>
+      <AppContextConsumer>
+        {appContext => appContext && (
+          <div
+            className='track-play'
+            onClick={(e) => this.clickListener(e, appContext.metronome)}
+          >
+            {this.state.isPlaying ? <ButtonPause /> : <ButtonPlay />}
+          </div>
+        )}
+      </AppContextConsumer>
     );
   }
 }

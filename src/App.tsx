@@ -11,8 +11,6 @@ interface AppState {
   currentBeat: number
 }
 
-// const CurrentBeatContext = React.createContext("current-beat-context!");
-
 export class App extends React.Component<any, AppState> {
   constructor(props: any) {
     super(props);
@@ -33,19 +31,16 @@ export class App extends React.Component<any, AppState> {
   }
   render() {
 
-    const sampleAppContext: AppContextInterface = {
-      currentBeat: this.state.currentBeat
+    const appCtx: AppContextInterface = {
+      currentBeat: this.state.currentBeat,
+      metronome: this.state.metronome
     };
 
-    console.log("state", this.state)
     return (
       <Provider store={store}>
         <Header/>
-        <AppContextProvider value={sampleAppContext}>
-          <GitCalendarPlayground  
-            metronome={this.state.metronome}
-            // currentBeat={this.state.currentBeat}
-          />
+        <AppContextProvider value={appCtx}>
+          <GitCalendarPlayground/>
         </AppContextProvider>
       </Provider>
     );
