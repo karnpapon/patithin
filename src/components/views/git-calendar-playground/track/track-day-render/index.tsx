@@ -19,7 +19,7 @@ export class DayRender extends React.Component<DayRenderProps, DayRenderState>{
   }
 
   render(){
-      const { day } = this.props
+    const { day } = this.props
     return ( <div className={ `contribute-day ${day.count > 0? 'have-contributed':''}` }></div> )
   }
 

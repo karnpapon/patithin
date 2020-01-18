@@ -69,7 +69,7 @@ export class CalendarTrackAdd extends React.Component<CalendarTrackAddProps, Cal
     return (
       <div className="track-add">
         <div className="track-add-container">
-          <div>ID:<input onChange={this.setUserIdInput} ref={this.inputRef}></input></div>
+          <div><input type="text" name="search" placeholder="github id" onChange={this.setUserIdInput} ref={this.inputRef}></input></div>
           <AddButton handleAddNewTrack={this.handleAddNewTrack.bind(this)}/>
         </div>
       </div>

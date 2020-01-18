@@ -47,7 +47,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
               defaultValue={[0, 16]} 
               step={16}
               allowCross={false}
-              tipFormatter={( value: number ) => `week ${value + 1}`}
+              tipFormatter={( value: number ) => `week ${value == 0? 1:value}`}
               tipProps={{ overlayClassName: 'tooltip-custom' }}
               pushable={true}
               onAfterChange={value => this.onRangeSliderChange( value )}
