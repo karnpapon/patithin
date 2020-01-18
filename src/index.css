@@ -118,6 +118,8 @@ input{
 .rc-slider{
   padding-left: 5px;
   padding-right: 5px;
+  position: relative;
+  top: -5px;
 }
 
 .rc-slider .rc-slider-rail{ border-radius: 0; height: 2px; left: 0; right: 0; background-color: var(--shade-light);}

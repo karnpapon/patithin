@@ -40,6 +40,10 @@ export class WeekRender extends React.Component<WeekRenderProps, WeekRenderState
     return Array(( steps[1] - 1 ) - steps[0] + 1).fill('').map((_: any, idx: number) => steps[0] + idx)
   }
 
+  getNewRange = (current: number, shift: number[]): number => {
+    return current + shift[0]
+  }
+
   componentWillUnmount() {
     // this.unsubscribe();
     // this.isDead = true;
@@ -47,12 +51,21 @@ export class WeekRender extends React.Component<WeekRenderProps, WeekRenderState
 
   render(){
     const { weeks, week_idx, steps } = this.props
+
+    let stepClass = ( current: number) => 
+      ( this.state.isMuted? 'toggle':'' ) + 
+      ( this.getNewRange(current, steps) == week_idx? 'active':'')
+
+    let rangeClass = (steps: number[], week_idx: number) =>
+      (week_idx == 0? 'first-col':'') + " " +
+      (this.range(steps).indexOf(week_idx) == -1 ? 'excluded':"" )
+
     return (
       <AppContextConsumer>
         {appContext => appContext && (
-          <div className={ `week ${this.state.isMuted? 'toggle':''} ${( appContext.currentBeat + steps[0] ) == week_idx? 'active':''}` }>
+          <div className={ `week ${stepClass(appContext.currentBeat)}` }>
            <span className="week-selector" onClick={() => this.toggleWeek(weeks)}>●</span>
-           <div className={ `week-col ${this.range(steps).indexOf(week_idx) == -1 ? 'excluded':"" } ${week_idx == 0? 'first-col':''}` }>{
+           <div className={ `week-col ${rangeClass(steps, week_idx)}` }>{
              weeks.map((day, day_index) => <DayRender key={day_index} day={day}/>)}
            </div>
          </div>

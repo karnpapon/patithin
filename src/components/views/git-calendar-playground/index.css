@@ -66,8 +66,9 @@
 
 .track-steps{
     /* display: flex; */
-    border-top: 1px solid var(--shade-gray);
+    /* border-top: 1px solid var(--shade-gray); */
     padding: 20px;
+    padding-top: 0;
     flex: 3;
 }
 
@@ -231,6 +232,7 @@
 
 .weeks-table{
     display: flex;
+    padding-top: 10px;
 }
 
 .add-track{ width: 40px; height: 40px; font-size: 2rem;}
