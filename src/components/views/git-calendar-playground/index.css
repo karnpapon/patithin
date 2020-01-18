@@ -217,7 +217,16 @@
 }
 
 .contrib-date p{ margin: 0 }
-.have-contributed{ background-color: green;}
+
+/* contribution level */
+.rarely{ background-color: rgb(130, 255, 130);}
+.normal{ background-color: rgb(10, 187, 10);}
+.often{ background-color: rgb(3, 148, 3);}
+.every{ background-color: rgb(0, 138, 0);}
+.nerd{ background-color: rgb(15, 109, 15);}
+.commits-by-cat{ background-color: rgb(0, 71, 0);}
+
+
 .no-t-margin{ margin: 0}
 
 .weeks-table{
