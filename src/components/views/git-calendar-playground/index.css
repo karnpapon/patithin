@@ -17,6 +17,10 @@
     background-color: rgb(175, 175, 175);
 }
 
+.first-col .contribute-day{
+    margin-left: 0;
+}
+
 .week{
     display: flex;
     flex-direction: column;
@@ -61,7 +65,7 @@
 #row7:hover ~ .week .week-col div:nth-child(7){ background-color: white; } */
 
 .track-steps{
-    display: flex;
+    /* display: flex; */
     border-top: 1px solid var(--shade-gray);
     padding: 20px;
     flex: 3;
@@ -214,16 +218,8 @@
 }
 
 .add-track{ width: 40px; height: 40px; font-size: 2rem;}
-.loading-track{
-    width: 100%;
-    height: auto;
-    position: fixed;
-    /* pointer-events: none; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.loading{ position: relative; background-blend-mode: overlay;}
+
+/* remove loading here */
 
 .playcontroller {
     display: flex;
@@ -234,6 +230,10 @@
 
 .active .week-col div{
     background-color: var(--shade-active);
+}
+
+.excluded div{
+    opacity: 0.5;
 }
 
 

@@ -111,3 +111,53 @@ input{
   padding: 8px 36px 8px 14px;
   color: var(--shade-light);
 }
+
+
+/* range slider */
+
+.rc-slider{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.rc-slider .rc-slider-rail{ border-radius: 0; height: 2px; left: 0; right: 0; background-color: var(--shade-light);}
+.rc-slider .rc-slider-track{ background-color: white; height: 2px;}
+
+.rc-slider .rc-slider-handle{
+  margin-top: -6px;
+  width: 1px;
+  height: 15px;
+  cursor: col-resize;
+  border-radius: 0;
+  border: unset;
+}
+
+.rc-slider-handle-1{
+  transform: translateX(0) !important;
+}
+.rc-slider-handle-2{
+  transform: translateX(-100%) !important;
+}
+
+/* tooltips */
+
+.tooltip-custom{
+  /* background-color: var(--hover-base);
+  color: black; */
+}
+
+
+
+
+/* loading.. */
+
+.loading-track{
+  width: 100%;
+  height: auto;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.loading{ position: relative; background-blend-mode: overlay;}

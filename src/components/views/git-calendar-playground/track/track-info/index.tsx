@@ -25,7 +25,7 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
 
   abbrevName(name: string): string{
     var n = name.split(' ');
-    return n[0].charAt(0).toUpperCase() + n[1].charAt(0).toUpperCase();
+    return n[0].charAt(0).toUpperCase()+ "." + n[1].charAt(0).toUpperCase() + "."
   }
 
   render(){
