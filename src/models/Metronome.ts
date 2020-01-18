@@ -1,28 +1,50 @@
 import { store, actions } from 'store';
 import { MetronomeWorker } from './Metronomeworker'
 
-export class Metronome {
-   // implementation from https://github.com/cwilso/metronome.
-   audioContext: AudioContext = null;
-   unlocked: boolean = false;
-   isPlaying: boolean = false;      // Are we currently playing?
-   startTime: any;              // The start time of the entire sequence.
-   current16thNote: any;        // What note is currently last scheduled?
-   tempo: number = 120.0;          // tempo (in beats per minute)
-   lookahead: number = 25.0;       // How frequently to call scheduling function 
-                               //(in milliseconds)
-   scheduleAheadTime: number = 0.1;    // How far ahead to schedule audio (sec)
-                               // This is calculated from lookahead, and overlaps 
-                               // with next interval (in case the timer is late)
-   nextNoteTime: number = 0.0;     // when the next note is due.
-   noteResolution: number = 0;     // 0 == 16th, 1 == 8th, 2 == quarter note
-   noteLength: number = 0.05;      // length of "beep" (in seconds)
+export class MetronomeState{
+  audioContext: AudioContext;
+  unlocked: boolean;
+  isPlaying: boolean;      // Are we currently playing?
+  startTime: any;              // The start time of the entire sequence.
+  current16thNote: number;        // What note is currently last scheduled?
+  tempo: number;          // tempo (in beats per minute)
+  lookahead: number;       // How frequently to call scheduling function 
+                              //(in milliseconds)
+  scheduleAheadTime: number;    // How far ahead to schedule audio (sec)
+                              // This is calculated from lookahead, and overlaps 
+                              // with next interval (in case the timer is late)
+  nextNoteTime: number;     // when the next note is due.
+  noteResolution: number;     // 0 == 16th, 1 == 8th, 2 == quarter note
+  noteLength: number;      // length of "beep" (in seconds)
 //    canvas                 // the canvas element
 //    canvasContext;          // canvasContext is the canvas' context 2D
-   last16thNoteDrawn = -1; // the last "box" we drew on the screen
-   notesInQueue: any = [];      // the notes that have been put into the web audio,
-                               // and may or may not have played yet. {note, time}
-   timerWorker: MetronomeWorker = null;     // The Web Worker used to fire timer messages
+  last16thNoteDrawn: number; // the last "box" we drew on the screen
+  notesInQueue: any;      // the notes that have been put into the web audio,
+                              // and may or may not have played yet. {note, time}
+  timerWorker: MetronomeWorker;     // The Web
+  app: any
+
+}
+export class Metronome extends MetronomeState {
+
+  constructor(props: any){
+    super()
+    this.audioContext = null;
+    this.unlocked = false;
+    this.isPlaying = false;
+    this.startTime = 0;
+    this.current16thNote = 0;
+    this.tempo = 120.0;  
+    this.lookahead = 25.0;
+    this.scheduleAheadTime = 0.1;
+    this.nextNoteTime = 0.0;
+    this.noteResolution = 0;  
+    this.noteLength = 0.05;
+    this.last16thNoteDrawn = -1;
+    this.notesInQueue = [];
+    this.timerWorker = null;
+    this.app = props
+  }
 
 
    nextNote = function()  {
@@ -41,7 +63,7 @@ export class Metronome {
     // for displaying tick.
     this.notesInQueue.push( { note: beatNumber, time: time } );
 
-    // create an oscillator
+    //-------create an oscillator(audio indicator)--------
     var osc = this.audioContext.createOscillator();
     let gain = this.audioContext.createGain();
 
@@ -57,6 +79,7 @@ export class Metronome {
 
     osc.start( time );
     osc.stop( time + this.noteLength );
+    //--------------- end audio indicator-----------------
   }
 
   scheduler = (): void => {
@@ -68,8 +91,8 @@ export class Metronome {
     }
   }
 
-  play = function(): void {
-    this.session = store.getState().session;
+  play = () => {
+    let session = store.getState().session;
 
     if (!this.unlocked) {
       // play silent buffer to unlock the audio
@@ -80,7 +103,7 @@ export class Metronome {
       this.unlocked = true;
     }
 
-    if (this.session.isPlaying) {
+    if (session.isPlaying) {
       console.log("playing.. sesion isPlaying")
       this.current16thNote = 0;
       this.nextNoteTime = this.audioContext.currentTime;
@@ -101,6 +124,8 @@ export class Metronome {
 
     if (this.last16thNoteDrawn != currentNote) {
       this.last16thNoteDrawn = currentNote;
+      this.app.setState({ currentBeat: currentNote})
+      // store.dispatch(actions.setCurrentSeqPosition(currentNote));
     }
 
     window.requestAnimationFrame(this.draw);

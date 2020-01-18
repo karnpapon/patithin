@@ -5,9 +5,12 @@ import { CalendarTrackAdd } from './track/track-add-new';
 import { CalendarControl } from './control'
 import { store, actions } from 'store'
 import { ContributionCalendar } from 'models/ContributionCalendar';
+import { Metronome } from 'models/Metronome';
 import './index.css';
 
-export interface PlaygroundProps{}
+export interface PlaygroundProps{
+  metronome: Metronome,
+}
 export interface PlaygroundState {
   contributions: Array<ContributionCalendar>,
   isLoading: boolean
@@ -25,15 +28,11 @@ export class GitCalendarPlayground extends React.Component<PlaygroundProps, Play
       let userData = store.getState().session.UserContributions;
       let isLoading = store.getState().app.loading;
       if (userData !== this.state.contributions) {
-        this.setState({
-          contributions: userData
-        });
+        this.setState({ contributions: userData });
       }
 
       if (isLoading !== this.state.isLoading) {
-        this.setState({
-          isLoading: isLoading
-        });
+        this.setState({ isLoading: isLoading });
       }
     });
   }
@@ -42,7 +41,7 @@ export class GitCalendarPlayground extends React.Component<PlaygroundProps, Play
     const { contributions, isLoading } = this.state
     return ( 
     <div className="contents"> 
-      { isLoading? <LoadingButton/>:'' }
+      { isLoading? <LoadingDisplay/>:'' }
       {
         contributions.map((item, index) => 
           <GitCalendarTrack 
@@ -50,18 +49,21 @@ export class GitCalendarPlayground extends React.Component<PlaygroundProps, Play
             contributions={item.contributions} 
             totalCounts={item.totalCounts}
             UserDetails={item.userIdDetails}
+            metronome={this.props.metronome}
           /> 
         )
       }
       <CalendarTrackAdd/>
-      <CalendarControl/>
+      <CalendarControl 
+        metronome={this.props.metronome}
+      />
     </div>
     )
   }
 }
 
 
-class LoadingButton extends React.Component {
+class LoadingDisplay extends React.Component {
   render() {
     return (
       <div className="loading-track">

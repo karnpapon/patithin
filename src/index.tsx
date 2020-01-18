@@ -8,7 +8,7 @@ import { Metronome } from 'models/Metronome';
 import './index.css';
 
 // new Sequencer();
-// var metronome = new Metronome()
-// metronome.init()
+// var met = new Metronome()
+// met.init()
 
 ReactDOM.render(<App />, document.getElementById('root'));

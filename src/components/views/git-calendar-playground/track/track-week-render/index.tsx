@@ -2,11 +2,14 @@ import * as React from 'react'
 import { Contribution } from 'services/fetchContributions'
 import { DayRender } from '../track-day-render';
 import { store } from 'store';
+import { Metronome } from 'models/Metronome';
+import { AppContextConsumer } from 'AppContext';
 import '../../index.css';
 
 export interface WeekRenderProps{
   weeks: Contribution[],
-  week_idx?: number | null
+  week_idx?: number | null,
+  metronome: Metronome,
 }
 export interface WeekRenderState{
   isMuted: Boolean,
@@ -20,9 +23,6 @@ export class WeekRender extends React.Component<WeekRenderProps, WeekRenderState
     if (this.isDead) {
       return;
     }
-    this.setState({
-      currentPos: store.getState().session.currentSeqPosition
-    });
   });
 
   constructor(props: WeekRenderProps){
@@ -44,17 +44,17 @@ export class WeekRender extends React.Component<WeekRenderProps, WeekRenderState
 
   render(){
     const { weeks, week_idx } = this.props
-    let { currentPos } = this.state;
-
-    currentPos = store.getState().session.currentSeqPosition;
-
     return (
-      <div className={ `week ${this.state.isMuted? 'toggle':''} ${week_idx == currentPos? 'active':''}` }>
-        <span className="week-selector" onClick={() => this.toggleWeek(weeks)}>●</span>
-        <div className="week-col">{
-          weeks.map((day, day_index) => <DayRender key={day_index} day={day}/>)}
-        </div>
-      </div>
+      <AppContextConsumer>
+        {appContext => appContext && (
+          <div className={ `week ${this.state.isMuted? 'toggle':''} ${appContext.currentBeat == week_idx? 'active':''}` }>
+           <span className="week-selector" onClick={() => this.toggleWeek(weeks)}>●</span>
+           <div className="week-col">{
+             weeks.map((day, day_index) => <DayRender key={day_index} day={day}/>)}
+           </div>
+         </div>
+        )}
+      </AppContextConsumer>
     )
   }
 

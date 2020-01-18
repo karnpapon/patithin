@@ -3,11 +3,16 @@ import { store, actions } from 'store';
 import { Metronome } from 'models/Metronome'
 import '../index.css';
 
+
+export interface CalendarControlProps {
+  metronome: Metronome
+}
+
 export interface CalendarControlState {
   isPlaying: boolean;
 }
 
-export class CalendarControl extends React.Component<any, CalendarControlState> {
+export class CalendarControl extends React.Component<CalendarControlProps, CalendarControlState> {
   clickListener = this.onClick.bind(this);
   unsubscribe = store.subscribe(() => {
     const isPlaying = store.getState().session.isPlaying;
@@ -30,7 +35,8 @@ export class CalendarControl extends React.Component<any, CalendarControlState> 
     e.stopPropagation();
     e.preventDefault();
     store.dispatch(actions.play(!this.state.isPlaying));
-    store.getState().app.metronome.play()
+    // store.getState().app.metronome.play()
+    this.props.metronome.play()
   }
 
   render() {
