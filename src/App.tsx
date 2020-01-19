@@ -20,10 +20,8 @@ export class App extends React.Component<any, AppState> {
     };
   }
   componentWillMount(){
-    // store.dispatch(actions.setAppMetronomeData(new Metronome))
   }
   componentDidMount() {
-    // store.getState().app.metronome.init()
     this.state.metronome.init()
   }
   componentWillUnmount() {

@@ -3,6 +3,7 @@ import { Contribution } from 'services/fetchContributions'
 import { DayRender } from '../track-day-render';
 import { store } from 'store';
 import { AppContextConsumer } from 'AppContext';
+import { range, getNewRange } from 'utils';
 import '../../index.css';
 
 export interface WeekRenderProps{
@@ -12,23 +13,14 @@ export interface WeekRenderProps{
 }
 export interface WeekRenderState{
   isMuted: Boolean,
-  currentPos: number;
 }
 
 export class WeekRender extends React.Component<WeekRenderProps, WeekRenderState>{
-
-  // isDead = false;
-  // unsubscribe = store.subscribe(() => {
-  //   if (this.isDead) {
-  //     return;
-  //   }
-  // });
 
   constructor(props: WeekRenderProps){
     super(props)
     this.state = {
       isMuted: false,
-      currentPos: 0
     }
   }
 
@@ -36,17 +28,7 @@ export class WeekRender extends React.Component<WeekRenderProps, WeekRenderState
     this.setState({ isMuted: !this.state.isMuted})
   }
 
-  range = (steps: number[]) : number[] => {
-    return Array(( steps[1] - 1 ) - steps[0] + 1).fill('').map((_: any, idx: number) => steps[0] + idx)
-  }
-
-  getNewRange = (current: number, shift: number[]): number => {
-    return current + shift[0]
-  }
-
   componentWillUnmount() {
-    // this.unsubscribe();
-    // this.isDead = true;
   }
 
   render(){
@@ -54,11 +36,11 @@ export class WeekRender extends React.Component<WeekRenderProps, WeekRenderState
 
     let stepClass = ( current: number) => 
       ( this.state.isMuted? 'toggle':'' ) + 
-      ( this.getNewRange(current, steps) == week_idx? 'active':'')
+      ( getNewRange(current, steps) == week_idx? 'active':'')
 
     let rangeClass = (steps: number[], week_idx: number) =>
       (week_idx == 0? 'first-col':'') + " " +
-      (this.range(steps).indexOf(week_idx) == -1 ? 'excluded':"" )
+      (range(steps).indexOf(week_idx) == -1 ? 'excluded':"" )
 
     return (
       <AppContextConsumer>

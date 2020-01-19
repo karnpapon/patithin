@@ -1,5 +1,8 @@
 import { getLevel } from './getLevel'
+import { range, getNewRange } from './range'
 
 export {
-    getLevel
+    getLevel,
+    getNewRange,
+    range
 }

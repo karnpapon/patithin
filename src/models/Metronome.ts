@@ -64,21 +64,21 @@ export class Metronome extends MetronomeState {
     this.notesInQueue.push( { note: beatNumber, time: time } );
 
     //-------create an oscillator(audio indicator)--------
-    var osc = this.audioContext.createOscillator();
-    let gain = this.audioContext.createGain();
+    // var osc = this.audioContext.createOscillator();
+    // let gain = this.audioContext.createGain();
 
-    osc.connect(gain);
-    gain.connect(this.audioContext.destination);
+    // osc.connect(gain);
+    // gain.connect(this.audioContext.destination);
 
-    if (beatNumber % 16 === 0)    // beat 0 == high pitch
-      osc.frequency.value = 880.0;
-    else if (beatNumber % 4 === 0 )    // quarter notes = medium pitch
-      osc.frequency.value = 440.0;
-    else                        // other 16th notes = low pitch
-      osc.frequency.value = 220.0;
+    // if (beatNumber % 16 === 0)    // beat 0 == high pitch
+    //   osc.frequency.value = 880.0;
+    // else if (beatNumber % 4 === 0 )    // quarter notes = medium pitch
+    //   osc.frequency.value = 440.0;
+    // else                        // other 16th notes = low pitch
+    //   osc.frequency.value = 220.0;
 
-    osc.start( time );
-    osc.stop( time + this.noteLength );
+    // osc.start( time );
+    // osc.stop( time + this.noteLength );
     //--------------- end audio indicator-----------------
   }
 

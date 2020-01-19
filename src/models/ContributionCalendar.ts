@@ -32,7 +32,6 @@ export class ContributionCalendar {
   }
 
   loadContributions(user: string){
-    // const user = store.getState().session.setUserId
     return this.fetchContributions(user).then(
       () => {
         this.isContributionLoaded = true;
@@ -46,7 +45,6 @@ export class ContributionCalendar {
   }
 
   loadUserIdDetails(user: string){
-    // const user = store.getState().session.setUserId
     return this.fetchUserIdDetails(user).then(
       () => {
         this.isUserIdDetailsLoaded = true;
@@ -57,7 +55,6 @@ export class ContributionCalendar {
       return this;
       }
     );
-    
   }
 
   setExtractedWeek(){

@@ -3,12 +3,14 @@ import { Contribution, UserDetails } from 'services/fetchContributions'
 import { WeekRender } from './track-week-render';
 import { CalendarTrackInfo } from './track-info'
 import { createSliderWithTooltip, Range } from 'rc-slider';
-import {Nullable} from 'components/common/types'
+import { getNewRange } from 'utils'
+import { AppContextProvider, AppContextConsumer, AppContextInterface} from 'AppContext';
 // import Tooltip from 'rc-tooltip';
 
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 import '../index.css'
+import { store } from 'store';
 
 const RangeWithTooltips = createSliderWithTooltip(Range);
 
@@ -16,13 +18,14 @@ export interface GitCalendarTrackProps{
   contributions: Contribution[][],
   totalCounts: number,
   UserDetails: UserDetails,
+  extractedWeek: any[]
 }
 export interface GitCalendarTrackState{
   steps: number[]
-    
 }
 
 export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, GitCalendarTrackState>{
+  
   constructor(props: GitCalendarTrackProps){
     super(props)
     this.state = {
@@ -34,13 +37,25 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     this.setState({ steps: value })
   }
 
-  render(){
+  trigger = (current: number): number[] => {
+    let data: number[]
+    if(store.getState().session.isPlaying){
+      if(this.props.extractedWeek[current] !== null){
+        console.log("has contributed, Trigged!!", this.props.extractedWeek[current])
+      }
+    }
+    return data
+  }
 
+  render(){
     const { contributions, totalCounts, UserDetails } = this.props
     const { steps } = this.state
 
     return ( 
-        <div className="track-container">
+      <AppContextConsumer>
+        {appContext => appContext && (
+          this.trigger( getNewRange(appContext.currentBeat,steps) ),
+          <div className="track-container">
           <CalendarTrackInfo totalCounts={totalCounts} UserDetails={UserDetails}/>
           <div className="track-steps">
             <RangeWithTooltips 
@@ -80,6 +95,8 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
             </div>
           </div>
         </div>
+        )}
+      </AppContextConsumer>
      )
   }
 
