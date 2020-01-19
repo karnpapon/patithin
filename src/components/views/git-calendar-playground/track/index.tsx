@@ -2,8 +2,9 @@ import * as React from 'react'
 import { Contribution, UserDetails } from 'services/fetchContributions'
 import { WeekRender } from './track-week-render';
 import { CalendarTrackInfo } from './track-info'
-import Slider, { createSliderWithTooltip, Range } from 'rc-slider';
-import Tooltip from 'rc-tooltip';
+import { createSliderWithTooltip, Range } from 'rc-slider';
+import {Nullable} from 'components/common/types'
+// import Tooltip from 'rc-tooltip';
 
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';

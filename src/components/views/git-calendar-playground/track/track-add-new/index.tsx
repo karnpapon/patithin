@@ -40,10 +40,6 @@ export class CalendarTrackAdd extends React.Component<CalendarTrackAddProps, Cal
     store.dispatch(actions.setAppLoadingData(false))
   }
 
-  showLoading(){
-    // ReactDOM.render(loadingPage, document.getElementById('ct'));
-  }
-
   handleAddNewTrack = async () => {
     const calendar = new ContributionCalendar()
     this.setLoadingOn()
@@ -51,10 +47,13 @@ export class CalendarTrackAdd extends React.Component<CalendarTrackAddProps, Cal
     .then(() => calendar.loadUserIdDetails(this.state.userId))
     .then(() => this.setLoadingOff())
     .then(() => calendar.countContributions(calendar.contributionList()) )
+    .then(() => calendar.setExtractedWeek() )
     .then(() => store.dispatch( actions.setUserCollectionsData(calendar)) )
     .then(() => this.clearInput())
     .catch(() => { 
       this.setLoadingOff()
+
+      // TODO: better handle error (modal?).
       alert("somethin' wrong... please try again") 
       return 
     })

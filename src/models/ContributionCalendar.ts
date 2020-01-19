@@ -10,6 +10,7 @@ export class ContributionCalendar {
   totalCounts: number
   userIdDetails: UserDetails
   isFullyLoaded: Boolean = false
+  extractedWeek: any[] = []
 
   async fetchContributions(user: string): Promise<Contribution[][]>{
     this.contributions = await fetchContributions(user)
@@ -57,6 +58,22 @@ export class ContributionCalendar {
       }
     );
     
+  }
+
+  setExtractedWeek(){
+    this.contributions.map( ( week, index ) => {
+      this.extractedWeek.push(this.extracted(week, index))
+    })
+  }
+
+  extracted(weeks: Contribution[], weeks_index: number): Nullable<number[]>{
+    let extract: Nullable<number[]>
+    if ( weeks.some( week => week.count > 0) ){
+      extract = weeks.map(week => week.count)
+    } else {
+      extract = null
+    }
+    return  extract
   }
 
 }
