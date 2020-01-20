@@ -39,7 +39,6 @@ export class GitCalendarPlayground extends React.Component<PlaygroundProps, Play
 
   render(){
     const { contributions, isLoading } = this.state
-    // console.log("contribution", contributions)
     return ( 
     <div className="contents"> 
       { isLoading? <LoadingDisplay/>:'' }
@@ -51,6 +50,7 @@ export class GitCalendarPlayground extends React.Component<PlaygroundProps, Play
             totalCounts={item.totalCounts}
             UserDetails={item.userIdDetails}
             extractedWeek={item.extractedWeek}
+            trackIndex={index}
           /> 
         )
       }

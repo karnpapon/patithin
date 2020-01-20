@@ -19,7 +19,8 @@ export interface GitCalendarTrackProps{
   contributions: Contribution[][],
   totalCounts: number,
   UserDetails: UserDetails,
-  extractedWeek: any[]
+  extractedWeek: any[],
+  trackIndex: number
 }
 export interface GitCalendarTrackState{
   steps: number[]
@@ -45,15 +46,14 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
 
   trigger = (midi: Midi, current: number): void => {
 
-    const { extractedWeek } = this.props
-
+    const { extractedWeek, trackIndex } = this.props
     midi.clear()
 
     if(store.getState().session.isPlaying){
       if(extractedWeek[current] !== null){
         this.getMidiNoteAndVelocity(extractedWeek[current]).forEach(m => {
           midi.send({
-            channel: 0 ,
+            channel: trackIndex ,
             octave: 3, 
             note: getNote(m.note),
             velocity: Math.ceil( mapValue(m.velocity,1,10, 60,127 ) ), 
@@ -83,7 +83,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
   }
 
   render(){
-    const { contributions, totalCounts, UserDetails } = this.props
+    const { contributions, totalCounts, UserDetails, trackIndex } = this.props
     const { steps } = this.state
 
     return ( 
@@ -91,7 +91,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
         {appContext => appContext && (
           this.trigger( appContext.midi , getNewRange(appContext.currentBeat,steps) ),
           <div className="track-container">
-          <CalendarTrackInfo totalCounts={totalCounts} UserDetails={UserDetails}/>
+          <CalendarTrackInfo totalCounts={totalCounts} UserDetails={UserDetails} trackIndex={trackIndex}/>
           <div className="track-steps">
             <RangeWithTooltips 
               max={53} min={0}

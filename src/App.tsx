@@ -6,7 +6,6 @@ import { Header } from './components/common/header'
 import { Metronome } from 'models/Metronome';
 import { Midi } from 'models/Midi';
 import { AppContextInterface, AppContextProvider } from './AppContext';
-import * as WebMidi from 'webmidi';
 
 interface AppState {
   metronome: Metronome,

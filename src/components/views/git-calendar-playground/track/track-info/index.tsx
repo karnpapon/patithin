@@ -5,7 +5,8 @@ import '../../index.css'
 
 export interface CalendarTrackInfoProps{
   totalCounts: number,
-  UserDetails: UserDetails
+  UserDetails: UserDetails,
+  trackIndex: number
 }
 export interface CalendarTrackInfoState{
   // isMuted: Boolean,
@@ -30,7 +31,7 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
 
   render(){
 
-    const { totalCounts, UserDetails } = this.props
+    const { totalCounts, UserDetails, trackIndex } = this.props
     
     return (
         <>
@@ -50,6 +51,7 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
           <div className="contrib-date">
             <p> from 01-07-2020 </p>
             <p> to 12-31-2020 </p>
+            <p> midichan: {trackIndex} </p>
           </div>
         </div> 
         </>

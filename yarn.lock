@@ -3213,11 +3213,6 @@ watchpack@^1.6.0:
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
 
-webmidi@^2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/webmidi/-/webmidi-2.5.1.tgz#e98b0bb5356afb5112aaff7eaac23606cf0b71d0"
-  integrity sha512-rX9/vBBSnSZR04ZZcLWCe/ujOizH9f/Q9HX11+Zw+HHwOy7edUTbbC3Axc2RjoiDQ2W7RkK1tY4yv0nYSfUcJg==
-
 webpack-cli@^3.3.5:
   version "3.3.10"
   resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-3.3.10.tgz#17b279267e9b4fb549023fae170da8e6e766da13"
