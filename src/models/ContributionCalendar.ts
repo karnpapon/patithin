@@ -11,6 +11,7 @@ export class ContributionCalendar {
   userIdDetails: UserDetails
   isFullyLoaded: Boolean = false
   extractedWeek: any[] = []
+  isAccountMuted: boolean = false
 
   async fetchContributions(user: string): Promise<Contribution[][]>{
     this.contributions = await fetchContributions(user)
@@ -71,6 +72,12 @@ export class ContributionCalendar {
       extract = null
     }
     return  extract
+  }
+
+  setIsAccountMuted = () => {
+    this.isAccountMuted = !this.isAccountMuted
+    console.log("thjiss.isaccountmuted", this.isAccountMuted)
+    return this
   }
 
 }

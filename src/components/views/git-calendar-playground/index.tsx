@@ -13,7 +13,8 @@ export interface PlaygroundProps{
 }
 export interface PlaygroundState {
   contributions: Array<ContributionCalendar>,
-  isLoading: boolean
+  isLoading: boolean,
+  isUpdateAccountMute: boolean
 }
 
 export class GitCalendarPlayground extends React.Component<PlaygroundProps, PlaygroundState>{
@@ -21,13 +22,14 @@ export class GitCalendarPlayground extends React.Component<PlaygroundProps, Play
     super(props)
     this.state = {
       contributions: [],
-      isLoading: false
+      isLoading: false,
+      isUpdateAccountMute: false
     }
 
     store.subscribe(() => {
       let userData = store.getState().session.UserContributions;
       let isLoading = store.getState().app.loading;
-      if (userData !== this.state.contributions) {
+      if (userData !== this.state.contributions || this.state.isUpdateAccountMute) {
         this.setState({ contributions: userData });
       }
 
@@ -35,6 +37,10 @@ export class GitCalendarPlayground extends React.Component<PlaygroundProps, Play
         this.setState({ isLoading: isLoading });
       }
     });
+  }
+
+  updateAccountMute = () => {
+    this.setState({ isUpdateAccountMute: !this.state.isUpdateAccountMute})
   }
 
   render(){
@@ -51,6 +57,9 @@ export class GitCalendarPlayground extends React.Component<PlaygroundProps, Play
             UserDetails={item.userIdDetails}
             extractedWeek={item.extractedWeek}
             trackIndex={index}
+            isAccountMuted={item.isAccountMuted}
+            calendar={item}
+            updateAccountMute={this.updateAccountMute}
           /> 
         )
       }

@@ -64,6 +64,12 @@
 #row6:hover ~ .week .week-col div:nth-child(6){ background-color: white; }
 #row7:hover ~ .week .week-col div:nth-child(7){ background-color: white; } */
 
+.track{     
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
 .track-steps{
     /* display: flex; */
     /* border-top: 1px solid var(--shade-gray); */
@@ -90,23 +96,30 @@
     /* width: 100%; */
     flex: 1;
     margin-right: 10px;
-    display: flex;
+    display: block;
     /* border-top: 1px solid var(--shade-gray); */
     background-color: var(--shade-light);
     color: var(--shade-base);
     font-family: 'Six Caps', sans-serif;
+    z-index: 199;
     /* align-items: center; */
     /* justify-content: center; */
 }
 
-.track-title p{
+.abbrev-name{
     font-size: 5rem;
     margin-top: 0;
     margin-bottom: 0;
     width: 100%;
     align-items: center;
     justify-content: center;
-    padding-right: 20px;
+    /* padding-right: 20px; */
+    padding-top: 20px;
+    display: flex;
+}
+
+.track-control{
+    width: 100%;
     display: flex;
 }
 
@@ -165,7 +178,8 @@
     border-right: 2px solid var(--shade-base);
     border-bottom: 2px solid var(--shade-base);
     cursor: pointer;
-    font-family: 'Helvetica', sans-serif;
+    font-family: Helvetica, sans-serif;
+    font-weight: bold;
 }
 
 .delete-track:hover{ background-color: var(--hover-base); color: var(--hover-inverted);}
@@ -219,6 +233,49 @@
     opacity: 0.5;
 }
 
+.muted{
+    /* background-color: var(--hover-base); */
+    background-color: #22213a;
+    width: inherit;
+    position: absolute;
+    height: 100%;
+    z-index: 3;
+    opacity: .8;
+    /* background-image: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255,255,255,.5) 5px, rgba(255,255,255,.5) 18px); */
+}
+
+.muted-wrapper{
+    position: relative;
+}
+
+.mute-track{
+    width: 90%;
+    display: flex;
+    font-family: Helvetica, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid var(--shade-base);
+}
+
+.mute-active{
+    background-color: var(--hover-base);
+    color: var(--hover-inverted);
+}
+
+.mute-track:hover{ background-color: var(--hover-base); color: var(--hover-inverted);}
+
+.mute-display{
+    font-size: 5rem;
+    margin: 0;
+    height: 100%;
+    padding-left: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
 
 @keyframes slide-up {
     0% {

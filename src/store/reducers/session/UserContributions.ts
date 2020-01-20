@@ -7,7 +7,6 @@ export interface UserContributionsAction {
   id: number;
 }
 
-  
 export function UserContributions(state: Array<ContributionCalendar> = [], action: UserContributionsAction): Array<ContributionCalendar> {
   switch (action.type) {
     case 'SET_USER_COLLECTIONS_DATA':

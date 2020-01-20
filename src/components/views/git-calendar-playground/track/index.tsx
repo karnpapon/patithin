@@ -5,6 +5,7 @@ import { CalendarTrackInfo } from './track-info'
 import { createSliderWithTooltip, Range } from 'rc-slider';
 import { getNewRange, mapValue, getNote } from 'utils'
 import { AppContextProvider, AppContextConsumer, AppContextInterface} from 'AppContext';
+import { ContributionCalendar } from 'models/ContributionCalendar'
 import { Midi } from 'models/Midi'
 // import Tooltip from 'rc-tooltip';
 
@@ -20,7 +21,10 @@ export interface GitCalendarTrackProps{
   totalCounts: number,
   UserDetails: UserDetails,
   extractedWeek: any[],
-  trackIndex: number
+  trackIndex: number,
+  isAccountMuted: boolean,
+  calendar: ContributionCalendar,
+  updateAccountMute: () => void
 }
 export interface GitCalendarTrackState{
   steps: number[]
@@ -54,7 +58,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
         this.getMidiNoteAndVelocity(extractedWeek[current]).forEach(m => {
           midi.send({
             channel: trackIndex ,
-            octave: 1, 
+            octave: 3, 
             note: getNote(m.note),
             velocity: Math.ceil( mapValue(m.velocity,1,10, 60,127 ) ), 
             length: 12 
@@ -79,55 +83,74 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
   }
 
   monitorTrackMute = ( isMuted: boolean ) => {
-    console.log("isTrackMuted", isMuted)
+    // console.log("isTrackMuted", isMuted)
   }
 
   render(){
-    const { contributions, totalCounts, UserDetails, trackIndex } = this.props
+    const { 
+      contributions, 
+      totalCounts, 
+      UserDetails, 
+      trackIndex,
+      isAccountMuted,
+      calendar,
+      updateAccountMute
+    } = this.props
     const { steps } = this.state
+
+    console.log("isAccountMuted", isAccountMuted)
 
     return ( 
       <AppContextConsumer>
         {appContext => appContext && (
-          this.trigger( appContext.midi , getNewRange(appContext.currentBeat,steps) ),
+          !isAccountMuted? this.trigger( appContext.midi , getNewRange(appContext.currentBeat,steps) ):()=>{},
           <div className="track-container">
-          <CalendarTrackInfo totalCounts={totalCounts} UserDetails={UserDetails} trackIndex={trackIndex}/>
-          <div className="track-steps">
-            <RangeWithTooltips 
-              max={53} min={0}
-              defaultValue={[0, 16]} 
-              step={16}
-              allowCross={false}
-              tipFormatter={( value: number ) => `week ${value == 0? 1:value}`}
-              tipProps={{ overlayClassName: 'tooltip-custom' }}
-              pushable={true}
-              onAfterChange={value => this.onRangeSliderChange( value )}
+          <div className="track">
+            { isAccountMuted ? ( <div className='muted'><p className="mute-display">TRACK MUTED</p></div> ):'' }
+            <CalendarTrackInfo 
+              totalCounts={totalCounts} 
+              UserDetails={UserDetails} 
+              trackIndex={trackIndex}
+              calendar={calendar}
+              updateAccountMute={updateAccountMute}
             />
-            {/* <div className="day-selector">
-              <span>*</span>
-              <span>+</span>
-              <span>+</span>
-              <span>+</span>
-              <span>+</span>
-              <span>+</span>
-              <span>+</span>
-              <span>+</span>
-            </div> */}
-            <div className="weeks-table">
-              {
-                contributions?
-                contributions.map(( weeks, index ) => {
-                    return <WeekRender 
-                      key={index} 
-                      weeks={weeks} 
-                      week_idx={index} 
-                      steps={steps}
-                      // monitorTrackMute={this.monitorTrackMute}
-                    />
-                })
-                :
-                "loading.."
-              }
+            <div className="track-steps">
+              <RangeWithTooltips 
+                max={53} min={0}
+                defaultValue={[0, 16]} 
+                step={16}
+                allowCross={false}
+                tipFormatter={( value: number ) => `week ${value == 0? 1:value}`}
+                tipProps={{ overlayClassName: 'tooltip-custom' }}
+                pushable={true}
+                onAfterChange={value => this.onRangeSliderChange( value )}
+              />
+              {/* <div className="day-selector">
+                <span>*</span>
+                <span>+</span>
+                <span>+</span>
+                <span>+</span>
+                <span>+</span>
+                <span>+</span>
+                <span>+</span>
+                <span>+</span>
+              </div> */}
+              <div className="weeks-table">
+                {
+                  contributions?
+                  contributions.map(( weeks, index ) => {
+                      return <WeekRender 
+                        key={index} 
+                        weeks={weeks} 
+                        week_idx={index} 
+                        steps={steps}
+                        // monitorTrackMute={this.monitorTrackMute}
+                      />
+                  })
+                  :
+                  "loading.."
+                }
+              </div>
             </div>
           </div>
         </div>

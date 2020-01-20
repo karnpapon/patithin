@@ -1,12 +1,15 @@
 import * as React from 'react'
 import { Contribution, UserDetails } from 'services/fetchContributions'
 import { store, actions } from 'store'
+import { ContributionCalendar } from 'models/ContributionCalendar'
 import '../../index.css'
 
 export interface CalendarTrackInfoProps{
   totalCounts: number,
   UserDetails: UserDetails,
-  trackIndex: number
+  trackIndex: number,
+  calendar: ContributionCalendar,
+  updateAccountMute: () => void
 }
 export interface CalendarTrackInfoState{
   // isMuted: Boolean,
@@ -24,6 +27,11 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
     store.dispatch(actions.deleteUserCollectionData(id))
   }
 
+  handleMuteTrack(){
+    this.props.calendar.isAccountMuted = !this.props.calendar.isAccountMuted
+    this.props.updateAccountMute()
+  }
+
   abbrevName(name: string): string{
     var n = name.split(' ');
     return n[0].charAt(0).toUpperCase()+ "." + n[1].charAt(0).toUpperCase() + "."
@@ -31,13 +39,20 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
 
   render(){
 
-    const { totalCounts, UserDetails, trackIndex } = this.props
+    const { totalCounts, UserDetails, trackIndex,calendar } = this.props
     
     return (
         <>
         <div className="track-title"> 
-          <div className="delete-track" onClick={() => this.handleRemoveTrack(UserDetails.user_id)}>x</div>
-        <p>{this.abbrevName(UserDetails.user_name)}</p>  
+          <div className="track-control">
+            <div className="delete-track" onClick={() => this.handleRemoveTrack(UserDetails.user_id)}>x</div>
+            <div 
+              className={ `mute-track ${calendar.isAccountMuted? 'mute-active':''}` } 
+              onClick={() => this.handleMuteTrack()}>
+                {calendar.isAccountMuted? 'muted':'mute'}
+            </div>
+          </div>
+          <div className="abbrev-name">{this.abbrevName(UserDetails.user_name)}</div>  
         </div>
         <div className="track-info">
           <p className="no-t-margin"> github/{UserDetails.user_login} </p>
