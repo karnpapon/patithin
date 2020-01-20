@@ -9,10 +9,12 @@ import '../../index.css';
 export interface WeekRenderProps{
   weeks: Contribution[],
   week_idx?: number | null,
-  steps: number[]
+  steps: number[],
+  // weekRef: React.RefObject<HTMLDivElement>
+  // monitorTrackMute: (isMuted: boolean) => void
 }
 export interface WeekRenderState{
-  isMuted: Boolean,
+  isMuted: boolean,
 }
 
 export class WeekRender extends React.Component<WeekRenderProps, WeekRenderState>{
@@ -32,10 +34,10 @@ export class WeekRender extends React.Component<WeekRenderProps, WeekRenderState
   }
 
   render(){
-    const { weeks, week_idx, steps } = this.props
+    const { weeks, week_idx, steps} = this.props
 
     let stepClass = ( current: number) => 
-      ( this.state.isMuted? 'toggle':'' ) + 
+      ( this.state.isMuted? 'toggle':'' ) + " " +
       ( getNewRange(current, steps) == week_idx? 'active':'')
 
     let rangeClass = (steps: number[], week_idx: number) =>
@@ -45,7 +47,7 @@ export class WeekRender extends React.Component<WeekRenderProps, WeekRenderState
     return (
       <AppContextConsumer>
         {appContext => appContext && (
-          <div className={ `week ${stepClass(appContext.currentBeat)}` }>
+          <div className={ `week ${stepClass(appContext.currentBeat)}`}>
            <span className="week-selector" onClick={() => this.toggleWeek(weeks)}>●</span>
            <div className={ `week-col ${rangeClass(steps, week_idx)}` }>{
              weeks.map((day, day_index) => <DayRender key={day_index} day={day}/>)}

@@ -5,9 +5,9 @@ import { store, actions } from 'store'
 import { ContributionCalendar } from 'models/ContributionCalendar'
 import '../../index.css'
 
-export interface CalendarTrackAddProps{ }
+export interface CalendarTrackAddProps{
+ }
 export interface CalendarTrackAddState{
-  // contributions: Contribution[][],
   userId: string
 }
 
@@ -17,13 +17,11 @@ export class CalendarTrackAdd extends React.Component<CalendarTrackAddProps, Cal
   constructor(props: CalendarTrackAddProps){
     super(props)
     this.state = {
-      // contributions: [],
       userId: ""
     }
   }
 
   setUserIdInput = (event: React.ChangeEvent<HTMLInputElement> ) => {
-    // store.dispatch(actions.setUserIdInput(event.target.value))
     this.setState({ userId: event.target.value})
   }
 

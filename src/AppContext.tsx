@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { Metronome } from 'models/Metronome';
+import { Midi } from 'models/Midi';
 
 export interface AppContextInterface {
   currentBeat: number,
-  metronome: Metronome
+  metronome: Metronome,
+  midi: Midi
 }
 
 const ctx = React.createContext<AppContextInterface | null>(null);

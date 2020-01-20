@@ -4,11 +4,14 @@ import { store, actions } from 'store';
 import { GitCalendarPlayground } from 'components/views/git-calendar-playground';
 import { Header } from './components/common/header'
 import { Metronome } from 'models/Metronome';
+import { Midi } from 'models/Midi';
 import { AppContextInterface, AppContextProvider } from './AppContext';
+import * as WebMidi from 'webmidi';
 
 interface AppState {
   metronome: Metronome,
-  currentBeat: number
+  currentBeat: number,
+  midi: Midi
 }
 
 export class App extends React.Component<any, AppState> {
@@ -16,22 +19,29 @@ export class App extends React.Component<any, AppState> {
     super(props);
     this.state = {
       metronome: new Metronome(this),
-      currentBeat: 0
+      currentBeat: 0,
+      midi: new Midi(this)
     };
   }
   componentWillMount(){
   }
+
   componentDidMount() {
     this.state.metronome.init()
+    this.state.midi.init()
   }
+
   componentWillUnmount() {
     
   }
+
+
   render() {
 
     const appCtx: AppContextInterface = {
       currentBeat: this.state.currentBeat,
-      metronome: this.state.metronome
+      metronome: this.state.metronome,
+      midi: this.state.midi
     };
 
     return (

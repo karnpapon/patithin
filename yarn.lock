@@ -59,6 +59,11 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
+"@types/webmidi@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@types/webmidi/-/webmidi-2.0.3.tgz#2c04998688e4d0b558b2fa3b84af1a705c5a6ec3"
+  integrity sha512-ui4QxwMIf1I601Pw1FgWJqBOOitrWbeox8XENUIR/R7iQ2r3/BROXBpaYq8fKkk6AvGmBKN9oolURHC36KUI0Q==
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"
@@ -3207,6 +3212,11 @@ watchpack@^1.6.0:
     chokidar "^2.0.2"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
+
+webmidi@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/webmidi/-/webmidi-2.5.1.tgz#e98b0bb5356afb5112aaff7eaac23606cf0b71d0"
+  integrity sha512-rX9/vBBSnSZR04ZZcLWCe/ujOizH9f/Q9HX11+Zw+HHwOy7edUTbbC3Axc2RjoiDQ2W7RkK1tY4yv0nYSfUcJg==
 
 webpack-cli@^3.3.5:
   version "3.3.10"
