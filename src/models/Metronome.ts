@@ -34,7 +34,7 @@ export class Metronome extends MetronomeState {
     this.isPlaying = false;
     this.startTime = 0;
     this.current16thNote = 0;
-    this.tempo = 120.0;  
+    this.tempo = 120;  
     this.lookahead = 25.0;
     this.scheduleAheadTime = 0.1;
     this.nextNoteTime = 0.0;
@@ -49,7 +49,7 @@ export class Metronome extends MetronomeState {
 
    nextNote = function()  {
     // Advance current note and time by a 16th note...
-    var secondsPerBeat = 60.0 / 120;    // Notice this picks up the CURRENT 
+    var secondsPerBeat = 60.0 / store.getState().session.bpm;    // Notice this picks up the CURRENT 
                                         // tempo value to calculate beat length.
     this.nextNoteTime += 0.25 * secondsPerBeat;    // Add beat length to last beat time
     this.current16thNote++;    // Advance the beat number, wrap to zero

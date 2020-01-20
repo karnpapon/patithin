@@ -54,7 +54,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
         this.getMidiNoteAndVelocity(extractedWeek[current]).forEach(m => {
           midi.send({
             channel: trackIndex ,
-            octave: 3, 
+            octave: 1, 
             note: getNote(m.note),
             velocity: Math.ceil( mapValue(m.velocity,1,10, 60,127 ) ), 
             length: 12 
