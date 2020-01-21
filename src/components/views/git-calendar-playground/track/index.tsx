@@ -3,7 +3,7 @@ import { Contribution, UserDetails } from 'services/fetchContributions'
 import { WeekRender } from './track-week-render';
 import { CalendarTrackInfo } from './track-info'
 import { createSliderWithTooltip, Range } from 'rc-slider';
-import { getNewRange, mapValue, getNote } from 'utils'
+import { getNewRange, mapValue, getNote, getHarmonicMinorNote } from 'utils'
 import { AppContextProvider, AppContextConsumer, AppContextInterface} from 'AppContext';
 import { ContributionCalendar } from 'models/ContributionCalendar'
 import { Midi } from 'models/Midi'
@@ -58,7 +58,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     this.setState({ steps: value })
   }
 
-  trigger = (midi: Midi, current: number): void => {
+  runMidi = (midi: Midi, current: number): void => {
     const { extractedWeek, trackIndex } = this.props
     midi.clear()
 
@@ -80,8 +80,19 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
 
   runSynthEngine = (current: number, trackIndex: number, synthEngine: SynthEngine) => {
     const { extractedWeek } = this.props
+    let polyNotes: string[] = []
+    let singleNote: string = 'C'
     if(extractedWeek[current] !== null){
-      synthEngine.channels[trackIndex + 7].triggerAttackRelease("C2", "16n").toMaster();
+      this.getMidiNoteAndVelocity(extractedWeek[current]).forEach(m => {
+        singleNote = getHarmonicMinorNote(m.note)
+        singleNote = singleNote + "4"
+        polyNotes.push(singleNote)
+      })
+      if(trackIndex == 0){
+        synthEngine.channels[trackIndex].triggerAttackRelease(polyNotes, "16n").toMaster();
+      } else {
+        synthEngine.channels[trackIndex].triggerAttackRelease(singleNote, "16n").toMaster(); 
+      }
     }
   }
 
@@ -118,7 +129,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
       <AppContextConsumer>
         {appContext => appContext && (
           !isAccountMuted && store.getState().app.midiselect? 
-              this.trigger( appContext.midi , getNewRange(appContext.currentBeat,steps) )
+              this.runMidi( appContext.midi , getNewRange(appContext.currentBeat,steps) )
             :
               store.getState().session.isPlaying && 
               !store.getState().app.midiselect && 

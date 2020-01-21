@@ -41,3 +41,35 @@ export function getNote( value: number ): string{
 
   return note
 }
+
+export function getHarmonicMinorNote( value: number ): string{
+  let note: string
+  switch (value) {
+    case 0:
+      note = 'C'
+      break;
+    case 1:
+      note = 'D'
+      break;
+    case 2:
+      note = 'D#'
+      break;
+    case 3:
+      note = 'F'
+      break;
+    case 4:
+      note = 'G'
+      break;
+    case 5:
+      note = 'G#'
+      break;
+    case 6:
+      note = 'B'
+      break;
+    default:
+      note = 'C'
+      break;
+  }
+
+  return note
+}
