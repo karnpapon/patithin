@@ -104,7 +104,6 @@ export class Metronome extends MetronomeState {
     }
 
     if (session.isPlaying) {
-      console.log("playing.. sesion isPlaying")
       this.current16thNote = 0;
       this.nextNoteTime = this.audioContext.currentTime;
       window.parent.postMessage("start", '*')

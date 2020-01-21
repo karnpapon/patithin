@@ -6,24 +6,15 @@ import { Header } from './components/common/header'
 import { Metronome } from 'models/Metronome';
 import { Midi } from 'models/Midi';
 import { AppContextInterface, AppContextProvider } from './AppContext';
+import {Nullable} from 'components/common/types'
 
 interface AppState {
   metronome: Metronome,
   currentBeat: number,
   midi: Midi,
-  isMidiOn: boolean 
 }
 
 export class App extends React.Component<any, AppState> {
-
-  unsubscribe = store.subscribe(() => {
-    let midiState = store.getState().app.midiselect;
-    if (midiState !== this.state.isMidiOn) {
-      this.setState({
-        isMidiOn: midiState
-      });
-    } 
-  });
 
   constructor(props: any) {
     super(props);
@@ -31,7 +22,6 @@ export class App extends React.Component<any, AppState> {
       metronome: new Metronome(this),
       currentBeat: 0,
       midi: new Midi(this),
-      isMidiOn: false
     };
   }
   componentWillMount(){
@@ -47,16 +37,10 @@ export class App extends React.Component<any, AppState> {
 
   render() {
     
-    if(this.state.isMidiOn){
-      this.state.midi.init()
-    } else {
-      this.state.midi.destroy() 
-    }
-
     const appCtx: AppContextInterface = {
       currentBeat: this.state.currentBeat,
       metronome: this.state.metronome,
-      midi: this.state.midi
+      midi: this.state.midi,
     };
 
     return (

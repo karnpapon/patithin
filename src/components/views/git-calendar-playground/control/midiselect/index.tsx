@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { store, actions } from 'store';
-import { Slider } from 'components/common/slider';
 import { AppContextConsumer } from 'AppContext';
 import { Midi } from 'models/Midi';
 import '../index.css'
@@ -31,8 +30,18 @@ export class MidiSelect extends React.Component<any, MidiSelectState> {
     };
   }
 
-  handleMidiSelection = () =>  {
+  toggleMidi = (midi: Midi) =>  {
     store.dispatch(actions.toggleMidiSelection())
+
+    if( !this.state.isMidiOn){
+      midi.init()
+    } else{
+      midi.destroy()
+    }
+
+    if(this.state.isMidiListExpanded){
+      this.setState({ isMidiListExpanded: false})
+    }
   }
 
   showMidiList = () => {
@@ -46,43 +55,66 @@ export class MidiSelect extends React.Component<any, MidiSelectState> {
 
   render() {
     const { isMidiOn, isMidiListExpanded, selectedMidi } = this.state
-
     return (
       <AppContextConsumer>
         {appContext => appContext && (
-          console.log("appcontext.mdi", appContext.midi),
           <div className="midi">
-          { 
-            isMidiOn? 
-              <div className="midi-list">
-                <div className={ `select ${isMidiListExpanded? 'select-active':''}` } onClick={this.showMidiList}>
-                  <div className="select-styled"> { selectedMidi }</div>
-                  <ul className="select-options">
-                    <li value="hide">-- MIDI DEVICES --</li>
-                    {
-                      
-                      appContext.midi.devices.length > 0? 
-                      appContext.midi.list().map((item, index) => 
-                        <li 
-                          key={index} 
-                          value={index} 
-                          onClick={(e) => this.selectMidi(e, item.name, appContext.midi)}>
-                            {item.name}
-                        </li>
-                      ):
-                      <li value={0}> No MIDI Devices detected.</li>
-                    }
-                  </ul>
-                </div>
-              </div>
-            : ''
+          { isMidiOn? 
+            <MidiExpandTab 
+              isMidiListExpanded={isMidiListExpanded}
+              selectedMidi={selectedMidi}
+              midi={appContext.midi} 
+              selectMidi={this.selectMidi.bind(this)}
+              showMidiList={this.showMidiList.bind(this)}/> 
+            : 
+            '' 
           }
           <div className={ `midi-select ${isMidiOn? 'midi-active':''}` }>
-            <i className="icon-midi" onClick={this.handleMidiSelection}></i> 
+            <i className="icon-midi" onClick={() => { this.toggleMidi(appContext.midi) }}></i> 
           </div>
         </div>
         )}
       </AppContextConsumer>
     );
+  }
+}
+
+
+export interface MidiExpandTabProps{
+  isMidiListExpanded: boolean;
+  selectedMidi: string;
+  midi: Midi;
+  showMidiList: () => {};
+  selectMidi: (event: React.MouseEvent, name: string, midi: Midi) => {};
+}
+export interface MidiExpandTabState{}
+
+class MidiExpandTab extends React.Component<MidiExpandTabProps,MidiExpandTabState>{
+
+  render(){
+    const { isMidiListExpanded, selectedMidi, midi, showMidiList, selectMidi } = this.props
+
+    return(
+      <div className="midi-list">
+        <div className={ `select ${isMidiListExpanded? 'select-active':''}` } onClick={showMidiList}>
+          <div className="select-styled"> { selectedMidi }</div>
+          <ul className="select-options">
+            <li value="hide">-- MIDI DEVICES --</li>
+            {
+              midi.devices.length > 0? 
+              midi.list().map((item, index) => 
+                <li 
+                  key={index} 
+                  value={index} 
+                  onClick={(e) => selectMidi(e, item.name, midi)}>
+                    {item.name}
+                </li>
+              ):
+              <li value={0}> No MIDI Devices detected.</li>
+            }
+          </ul>
+        </div>
+      </div>
+    )
   }
 }

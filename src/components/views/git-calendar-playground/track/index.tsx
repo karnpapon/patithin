@@ -37,6 +37,15 @@ export interface MidiNoteAndVelocity{
 
 export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, GitCalendarTrackState>{
 
+  // unsubscribe = store.subscribe(() => {
+  //   let midiState = store.getState().app.midiselect;
+  //   if (midiState !== this.state.isMidiOn) {
+  //     this.setState({
+  //       isMidiOn: midiState
+  //     });
+  //   } 
+  // });
+
   constructor(props: GitCalendarTrackProps){
     super(props)
     this.state = {
@@ -98,12 +107,10 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     } = this.props
     const { steps } = this.state
 
-    console.log("isAccountMuted", isAccountMuted)
-
     return ( 
       <AppContextConsumer>
         {appContext => appContext && (
-          !isAccountMuted? this.trigger( appContext.midi , getNewRange(appContext.currentBeat,steps) ):()=>{},
+          !isAccountMuted && store.getState().app.midiselect? this.trigger( appContext.midi , getNewRange(appContext.currentBeat,steps) ):()=> {},
           <div className="track-container">
           <div className="track">
             { isAccountMuted ? ( <div className='muted'><p className="mute-display"> Shhhh.. </p></div> ):'' }

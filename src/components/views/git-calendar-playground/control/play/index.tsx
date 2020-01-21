@@ -44,6 +44,7 @@ export class PlayControl extends React.Component<PlayControlProps, PlayControlSt
       <AppContextConsumer>
         {appContext => appContext && (
           <div className='track-play'>
+            {/* <Credits/> */}
             <div className="control">
               <MidiSelect/>
               <BpmControl/> 
@@ -64,6 +65,19 @@ export class PlayControl extends React.Component<PlayControlProps, PlayControlSt
 export interface ButtonProps{
   handlePlay: (event: React.MouseEvent, ctx: any) => void;
   ctx: Metronome
+}
+
+export interface CreditsProps{}
+
+class Credits extends React.Component<CreditsProps>{
+  render(){
+    return (
+      <div className="credits">
+          <i className="icon-git"></i>
+          <p className="credit-texts">by Karnpapon Boonput</p>
+        </div>
+    )
+  }
 }
 
 class ButtonPlay extends React.Component<ButtonProps> {

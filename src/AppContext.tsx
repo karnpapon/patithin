@@ -5,7 +5,8 @@ import { Midi } from 'models/Midi';
 export interface AppContextInterface {
   currentBeat: number,
   metronome: Metronome,
-  midi: Midi
+  midi: Midi,
+  // isMidiOn: boolean
 }
 
 const ctx = React.createContext<AppContextInterface | null>(null);

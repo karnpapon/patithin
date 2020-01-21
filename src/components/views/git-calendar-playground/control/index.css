@@ -211,6 +211,27 @@
   display: none;
 }
 
+.credits{
+  padding-left: 20px;
+  /* width: 100%; */
+  display: flex;
+  align-items: center;;
+}
+
+/* .icon-git{ font-size: 1rem; } */
+.icon-git:hover { 
+  cursor: pointer;
+  color: var(--hover-light);
+}
+
+.credit-texts{ 
+  margin-left: 10px;
+  font-family: Helvetica, sans-serif; 
+  font-size: .95rem;
+  text-transform: none;
+}
+
+.flex{display: flex; }
 
 @keyframes slide-left {
   0% {
