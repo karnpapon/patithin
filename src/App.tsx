@@ -6,12 +6,15 @@ import { Header } from './components/common/header'
 import { Metronome } from 'models/Metronome';
 import { Midi } from 'models/Midi';
 import { AppContextInterface, AppContextProvider } from './AppContext';
-import {Nullable} from 'components/common/types'
+import { SynthEngine } from 'models/Synth'
+
+// declare var Gibberish: any;
 
 interface AppState {
   metronome: Metronome,
   currentBeat: number,
   midi: Midi,
+  synthEngine: SynthEngine
 }
 
 export class App extends React.Component<any, AppState> {
@@ -22,6 +25,7 @@ export class App extends React.Component<any, AppState> {
       metronome: new Metronome(this),
       currentBeat: 0,
       midi: new Midi(this),
+      synthEngine: new SynthEngine(this)
     };
   }
   componentWillMount(){
@@ -29,6 +33,7 @@ export class App extends React.Component<any, AppState> {
 
   componentDidMount() {
     this.state.metronome.init()
+    this.state.synthEngine.init()
   }
 
   componentWillUnmount() {
@@ -36,11 +41,12 @@ export class App extends React.Component<any, AppState> {
 
 
   render() {
-    
+
     const appCtx: AppContextInterface = {
       currentBeat: this.state.currentBeat,
       metronome: this.state.metronome,
       midi: this.state.midi,
+      synthEngine: this.state.synthEngine
     };
 
     return (

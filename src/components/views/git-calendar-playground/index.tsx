@@ -14,7 +14,7 @@ export interface PlaygroundProps{
 export interface PlaygroundState {
   contributions: Array<ContributionCalendar>,
   isLoading: boolean,
-  isUpdateAccountMute: boolean
+  isUpdateAccountMute: boolean,
 }
 
 export class GitCalendarPlayground extends React.Component<PlaygroundProps, PlaygroundState>{

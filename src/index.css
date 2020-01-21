@@ -80,8 +80,9 @@ button {
   color: var(--shade-light);
 }
 button:hover {
-  background-color: var(--shade);
-  color: var(--hover-inverted);
+  background-color: var(--shade-light);
+  color: var(--shade-base);
+  border: 1px solid var(--shade-light);
 }
 button.on {
   background-color: var(--shade-light);
@@ -147,9 +148,6 @@ input{
   /* background-color: var(--hover-base);
   color: black; */
 }
-
-
-
 
 /* loading.. */
 

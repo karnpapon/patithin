@@ -7,12 +7,13 @@ import { getNewRange, mapValue, getNote } from 'utils'
 import { AppContextProvider, AppContextConsumer, AppContextInterface} from 'AppContext';
 import { ContributionCalendar } from 'models/ContributionCalendar'
 import { Midi } from 'models/Midi'
-// import Tooltip from 'rc-tooltip';
+import * as Tone from "tone";
 
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 import '../index.css'
 import { store } from 'store';
+import { SynthEngine } from 'models/Synth';
 
 const RangeWithTooltips = createSliderWithTooltip(Range);
 
@@ -24,7 +25,7 @@ export interface GitCalendarTrackProps{
   trackIndex: number,
   isAccountMuted: boolean,
   calendar: ContributionCalendar,
-  updateAccountMute: () => void
+  updateAccountMute: () => void,
 }
 export interface GitCalendarTrackState{
   steps: number[]
@@ -58,7 +59,6 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
   }
 
   trigger = (midi: Midi, current: number): void => {
-
     const { extractedWeek, trackIndex } = this.props
     midi.clear()
 
@@ -78,6 +78,15 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     }
   }
 
+  runSynthEngine = (current: number, trackIndex: number, synthEngine: SynthEngine) => {
+    const { extractedWeek } = this.props
+    if(store.getState().session.isPlaying){
+      if(extractedWeek[current] !== null){
+        synthEngine.channels[trackIndex + 7].triggerAttackRelease("C2", "16n").toMaster();
+      }
+    }
+  }
+
   getMidiNoteAndVelocity = (arr: number[]): MidiNoteAndVelocity[] => {
     var indexes: MidiNoteAndVelocity[] = [], i;
     for(i = 0; i < arr.length; i++){
@@ -91,9 +100,9 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     return indexes;
   }
 
-  monitorTrackMute = ( isMuted: boolean ) => {
+  // monitorTrackMute = ( isMuted: boolean ) => {
     // console.log("isTrackMuted", isMuted)
-  }
+  // }
 
   render(){
     const { 
@@ -110,7 +119,10 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     return ( 
       <AppContextConsumer>
         {appContext => appContext && (
-          !isAccountMuted && store.getState().app.midiselect? this.trigger( appContext.midi , getNewRange(appContext.currentBeat,steps) ):()=> {},
+          !isAccountMuted && store.getState().app.midiselect? 
+              this.trigger( appContext.midi , getNewRange(appContext.currentBeat,steps) )
+            :
+              store.getState().session.isPlaying? this.runSynthEngine(getNewRange(appContext.currentBeat,steps), trackIndex, appContext.synthEngine):'',
           <div className="track-container">
           <div className="track">
             { isAccountMuted ? ( <div className='muted'><p className="mute-display"> Shhhh.. </p></div> ):'' }
