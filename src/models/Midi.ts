@@ -23,6 +23,14 @@ export class Midi extends MidiState {
     this.setup()
   }
 
+  destroy(){
+    console.log("Closing Midi..")
+    this.index = 0
+    this.devices = []
+    this.stack = []
+    this.app = null 
+  }
+
   clear = () => {
     this.stack = []
   }
@@ -88,7 +96,7 @@ export class Midi extends MidiState {
     for (let i = iter.next(); i && !i.done; i = iter.next()) {
       this.devices.push(i.value)
     }
-    this.select(0)
+    // this.select(0)
   }
 
   toString =  () => {

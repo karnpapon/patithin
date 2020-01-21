@@ -1,11 +1,12 @@
 .play-btn{
   display: flex;
   width: 30px;
-  height: 30px;
+  /* height: 30px; */
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  border: 1px solid gray;
+  /* border: 1px solid gray; */
+  border-left: 1px solid;
   fill: var(--shade-light);
   stroke-width: 4px;
   padding: 10px;
@@ -16,25 +17,32 @@
 .play-btn:hover { background-color: var(--hover-base); }
 
 .play-btn:hover .circle{
-    background-color:var(--hover-base);
+  background-color:var(--hover-base);
 }
 
 .play-btn:hover .play-symbol{
-    color: var(--hover-inverted);
+  color: var(--shade-base);
 }
 
 .play-btn line {
-    stroke-width: 2px;
-    stroke: var(--shade-light);
+  stroke-width: 2px;
+  stroke: var(--shade-light);
 }
 
 .play-btn polygon {
-    fill: var(--shade-light);
+  fill: var(--shade-light);
+}
+
+.play-btn:hover polygon {
+  fill: var(--shade-base);
+}
+.play-btn:hover line {
+  stroke: var(--shade-base);
 }
 
 
 .play-symbol{
-    position: absolute;
+  position: absolute;
 }
 
 .control{ 
@@ -60,7 +68,6 @@
   display: flex;
   justify-content: flex-end;
   width: 100%;
-  margin-bottom: var(--box-size);
   background-color: var(--shade-base);
 }
 
@@ -75,15 +82,19 @@
   width: 60px;
   height: 30px;
   padding: var(--half-box-size);
-  background-color: var(--shade-light);
-  color: var(--shade-base);
-  margin-right: var(--space);
-  margin-right: 20px;
+  /* background-color: var(--shade-light); */
+  /* color: var(--shade-base); */
+  /* margin-right: var(--space); */
+  border-left: 1px solid;
+  /* margin-right: 20px; */
   line-height: 1;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .control-item:hover {
-  background-color: var(--shade-active-on);
+  background-color: var(--hover-base);
+  color: var(--shade-base);
 }
 .control-item-main {
   width: auto;
@@ -104,4 +115,110 @@
 }
 .bpm-control-off {
   color: var(--shade);
+}
+
+.midi{
+  display: flex;
+}
+
+.midi-select{
+  font-size: inherit;
+  width: 60px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+}
+
+.midi-select:hover{
+  background-color: var(--shade-light);
+  color: var(--shade-base);
+}
+
+.midi-list{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem;
+  animation: slide-left 0.4s ease;
+}
+
+.midi-active{
+  background-color: var(--shade-light);
+  color: var(--shade-base); 
+}
+
+
+.select {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  font-size: 16px;
+  color: #fff;
+  width: 220px;
+  height: 100%;
+  color: var(--shade-base);
+}
+
+.select-hidden {
+  display: none;
+  visibility: hidden;
+  padding-right: 10px;
+}
+
+.select-styled {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--shade-light);
+  padding: 8px 15px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  /* transition: all 150ms ease-in; */
+}
+
+.select-styled:hover{
+  background-color: var(--hover-dark);
+}
+
+.select-options {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  left: 0;
+  z-index: 999;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: var(--shade-light);
+}
+
+.select-active .select-options{ display: block; }
+.select-options li:hover{ background-color: var(--hover-dark); }
+
+.select-options li {
+  margin: 0;
+  padding: 12px 0;
+  text-indent: 15px;
+  border-bottom: 1px solid var(--hover-dark);
+}
+
+.select-options li[value="hide"] {
+  display: none;
+}
+
+
+@keyframes slide-left {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

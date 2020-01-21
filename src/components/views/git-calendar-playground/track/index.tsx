@@ -106,7 +106,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
           !isAccountMuted? this.trigger( appContext.midi , getNewRange(appContext.currentBeat,steps) ):()=>{},
           <div className="track-container">
           <div className="track">
-            { isAccountMuted ? ( <div className='muted'><p className="mute-display">TRACK MUTED</p></div> ):'' }
+            { isAccountMuted ? ( <div className='muted'><p className="mute-display"> Shhhh.. </p></div> ):'' }
             <CalendarTrackInfo 
               totalCounts={totalCounts} 
               UserDetails={UserDetails} 

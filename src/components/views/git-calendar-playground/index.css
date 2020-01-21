@@ -42,7 +42,7 @@
 }
 
 .week-selector:hover ~ .week-col div{
- background-color: var(--hover-base);   
+ background-color: var(--hover-dark);   
 }
 
 .day-selector{
@@ -101,7 +101,7 @@
     background-color: var(--shade-light);
     color: var(--shade-base);
     font-family: 'Six Caps', sans-serif;
-    z-index: 199;
+    z-index: 20;
     /* align-items: center; */
     /* justify-content: center; */
 }
@@ -133,6 +133,7 @@
     align-items: center;
     height: 100px;
     font-size: 2rem;
+    z-index: 30;
     /* border-top: 1px solid gray; */
 }
 
@@ -260,11 +261,11 @@
 }
 
 .mute-active{
-    background-color: var(--hover-base);
-    color: var(--hover-inverted);
+    background-color: var(--shade-active-on);
+    color: var(--shade-light);
 }
 
-.mute-track:hover{ background-color: var(--hover-base); color: var(--hover-inverted);}
+.mute-track:hover{ background-color: var(--shade-active-on); color: var(--shade-base);}
 
 .mute-display{
     font-size: 5rem;
@@ -272,6 +273,8 @@
     height: 100%;
     padding-left: 8rem;
     display: flex;
+    /* font-family: Helvetica, sans-serif; */
+    text-transform: none;
     align-items: center;
     justify-content: center;
     text-align: center;

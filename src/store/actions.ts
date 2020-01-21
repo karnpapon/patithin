@@ -6,6 +6,7 @@ import { ContributionCalendar } from 'models/ContributionCalendar';
 import { UserContributionsAction } from './reducers/session/UserContributions'
 import { AppControlAction } from './reducers/app/control'
 import { MetronomeAction } from './reducers/app/metronome'
+import { MidiSelectAction } from './reducers/app/midiselect'
 
 import { Metronome } from 'models/Metronome'
 
@@ -54,4 +55,8 @@ export const deleteUserCollectionData = ( id: number ): UserContributionsAction 
   type: 'DELETE_USER_COLLECTIONS_DATA',
   data: undefined,
   id
+})
+
+export const toggleMidiSelection = (): MidiSelectAction => ({
+  type: 'TOGGLE_MIDI_SELECTION'
 })

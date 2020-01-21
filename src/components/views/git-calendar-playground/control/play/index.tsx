@@ -3,6 +3,7 @@ import { store, actions } from 'store';
 import { Metronome } from 'models/Metronome'
 import { AppContextConsumer, AppContextInterface } from 'AppContext';
 import { BpmControl } from '../bpm';
+import { MidiSelect } from '../midiselect';
 import '../index.css';
 
 export interface PlayControlProps {
@@ -44,6 +45,7 @@ export class PlayControl extends React.Component<PlayControlProps, PlayControlSt
         {appContext => appContext && (
           <div className='track-play'>
             <div className="control">
+              <MidiSelect/>
               <BpmControl/> 
               {
               this.state.isPlaying ? 

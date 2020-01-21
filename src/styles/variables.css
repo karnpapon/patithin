@@ -11,7 +11,7 @@
 
   --shade-active: rgb(255, 78, 94);
 
-  --shade-active-on: rgb(187, 168, 116);
+  --shade-active-on: #444;
 
   --shade-gray: gray;
 
@@ -22,30 +22,8 @@
 
   --view-width: 1200px;
 
-  --hover-base: #444;
+  --hover-base:  rgb(158, 136, 76);
+  --hover-light: rgb(230, 198, 111);
+  --hover-dark: #444;
   --hover-inverted: white;
-
-  --cut-shape: polygon(
-    0% 0%,
-    100% 0%,
-    100% calc(100% - var(--half-box-size)),
-    calc(100% - var(--half-box-size)) 100%,
-    0% 100%
-  );
 }
-
-/**
-Reserved CSS classes
-
-- active
-- selected
-- on
-- off
-
-These classes must be applied as association with another class.
-
-Good: .mykomponent.active .mykomponent-title
-Not:  .active .mykomponent-title
-
-no camel, no dash (until modifier), no undescore
-*/
