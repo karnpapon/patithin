@@ -80,10 +80,8 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
 
   runSynthEngine = (current: number, trackIndex: number, synthEngine: SynthEngine) => {
     const { extractedWeek } = this.props
-    if(store.getState().session.isPlaying){
-      if(extractedWeek[current] !== null){
-        synthEngine.channels[trackIndex + 7].triggerAttackRelease("C2", "16n").toMaster();
-      }
+    if(extractedWeek[current] !== null){
+      synthEngine.channels[trackIndex + 7].triggerAttackRelease("C2", "16n").toMaster();
     }
   }
 
@@ -122,7 +120,10 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
           !isAccountMuted && store.getState().app.midiselect? 
               this.trigger( appContext.midi , getNewRange(appContext.currentBeat,steps) )
             :
-              store.getState().session.isPlaying? this.runSynthEngine(getNewRange(appContext.currentBeat,steps), trackIndex, appContext.synthEngine):'',
+              store.getState().session.isPlaying && 
+              !store.getState().app.midiselect && 
+              !isAccountMuted ? 
+                this.runSynthEngine(getNewRange(appContext.currentBeat,steps), trackIndex, appContext.synthEngine):'',
           <div className="track-container">
           <div className="track">
             { isAccountMuted ? ( <div className='muted'><p className="mute-display"> Shhhh.. </p></div> ):'' }
