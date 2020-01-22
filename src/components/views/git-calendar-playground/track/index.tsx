@@ -30,7 +30,8 @@ export interface GitCalendarTrackProps{
 export interface GitCalendarTrackState{
   steps: number[]
   synthEngine: SynthEngine;
-  octave: number
+  octave: number;
+  channel: number
 }
 
 export interface MidiNoteAndVelocity{
@@ -45,7 +46,8 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     this.state = {
       steps: [0,16],
       synthEngine: new SynthEngine(this),
-      octave: 3
+      octave: 3,
+      channel: 0
     }
   }
 
@@ -61,48 +63,57 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     }
   }
 
+  setChannel = (type: string) => {
+    if( type == 'up'){
+      this.setState({ channel: this.state.channel + 1 })
+    } else {
+      this.setState({ channel: this.state.channel - 1  }) 
+    }
+  }
+
   /**
    * sending midi
    */
   runMidi = (midi: Midi, current: number): void => {
     const { extractedWeek, trackIndex } = this.props
-    const { octave } = this.state
+    const { octave, channel } = this.state
     midi.clear()
-    if(store.getState().session.isPlaying){
-      if(extractedWeek[current] !== null){
-        this.getMidiNoteAndVelocity(extractedWeek[current]).forEach(m => {
-          midi.send({
-            channel: trackIndex ,
-            octave, 
-            note: getNote(m.note),
-            velocity: Math.ceil( mapValue(m.velocity,1,10, 60,127 ) ), 
-            length: 12 
-          })
+    if(extractedWeek[current] !== null){
+      this.getMidiNoteAndVelocity(extractedWeek[current]).forEach(m => {
+        midi.send({
+          channel ,
+          octave, 
+          note: getNote(m.note),
+          velocity: Math.ceil( mapValue(m.velocity,1,10, 60,127 ) ), 
+          length: 12 
         })
-        midi.run()
-      }
+      })
+      midi.run()
     }
   }
 
   /**
    * send trigger to Internal synth(default), currently chan 0 = polyphony synth.
    */
-  runSynthEngine = (current: number, trackIndex: number) => {
+  runSynthEngine = (current: number) => {
     const { extractedWeek } = this.props
-    const { synthEngine } = this.state
+    const { synthEngine, channel, octave } = this.state
     let polyNotes: string[] = []
     let singleNote: string = 'C'
     if(extractedWeek[current] !== null){
       this.getMidiNoteAndVelocity(extractedWeek[current]).forEach(m => {
         singleNote = getNote(m.note, 'harmonic-minor')
-        singleNote = singleNote + "2"
+        singleNote = singleNote + JSON.stringify(octave)
         polyNotes.push(singleNote)
       })
-      if(trackIndex == 0){
-        this.runPolySynth(synthEngine, trackIndex, polyNotes)
-      } else {
-        this.runMonoSynth(synthEngine, trackIndex, singleNote) 
+      if(!store.getState().app.loading){
+        // if(channel == 0){
+          // this.runPolySynth(synthEngine, channel, polyNotes)
+        // } else {
+          this.runMonoSynth(synthEngine, channel, singleNote) 
+        // }
       }
+      // console.log("channel", channel)
     }
   }
 
@@ -129,6 +140,19 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
 
   componentDidMount(){
     this.state.synthEngine.init()
+    this.initChannel()
+  }
+
+  initChannel(){
+    this.setState({ channel: this.props.trackIndex})
+  }
+
+  playingAndUnmuted = (): boolean => {
+    return store.getState().session.isPlaying && !this.props.isAccountMuted
+  }
+
+  componentWillUnmount(){
+
   }
 
   // monitorTrackMute = ( isMuted: boolean ) => {
@@ -145,18 +169,18 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
       calendar,
       updateAccountMute,
     } = this.props
-    const { steps, synthEngine, octave } = this.state
+    const { steps, synthEngine, octave, channel } = this.state
 
     return ( 
       <AppContextConsumer>
         {appContext => appContext && (
-          !isAccountMuted && store.getState().app.midiselect? 
-              this.runMidi( appContext.midi , getNewRange(appContext.currentBeat,steps) )
-            :
-              store.getState().session.isPlaying && 
-              !store.getState().app.midiselect && 
-              !isAccountMuted ? 
-                this.runSynthEngine(getNewRange(appContext.currentBeat,steps), trackIndex):'',
+
+          ( this.playingAndUnmuted() && store.getState().app.midiselect? 
+              this.runMidi( appContext.midi , getNewRange(appContext.currentBeat,steps) ) : '' ),
+
+          ( this.playingAndUnmuted() && !store.getState().app.midiselect?
+                this.runSynthEngine(getNewRange(appContext.currentBeat,steps)):'' ),
+
           <div className="track-container">
           <div className="track">
             { isAccountMuted ? ( <div className='muted'><p className="mute-display"> Shhhh.. </p></div> ):'' }
@@ -168,8 +192,9 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
               updateAccountMute={updateAccountMute}
               synthEngine={synthEngine}
               setOctave={this.setOctave}
+              setChannel={this.setChannel}
               octave={octave}
-              // synthEngine={appContext.synthEngine}
+              channel={channel}
             />
             <div className="track-steps">
               <RangeWithTooltips 

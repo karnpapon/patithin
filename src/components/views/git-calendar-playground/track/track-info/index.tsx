@@ -11,10 +11,12 @@ export interface CalendarTrackInfoProps{
   UserDetails: UserDetails,
   trackIndex: number,
   calendar: ContributionCalendar,
-  updateAccountMute: () => void,
   synthEngine: SynthEngine,
+  updateAccountMute: () => void,
   setOctave: (type: string) => void,
+  setChannel: (type: string) => void,
   octave: number
+  channel: number
 }
 export interface CalendarTrackInfoState{
   volume: number
@@ -72,6 +74,8 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
       calendar, 
       synthEngine ,
       setOctave,
+      setChannel,
+      channel,
       octave
     } = this.props
     const { isMidiMode } = this.state
@@ -87,17 +91,9 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
                 {calendar.isAccountMuted? 'muted':'mute'}
             </div>
           </div>
-
-          <div className="octave">
-            <div className="octave-btn-wrapper">
-              <div className="octave-btn" onClick={() => setOctave('down')}> - </div>
-              <div className="octave-btn" onClick={() => setOctave('up')}> + </div>
-            </div>
-            <div className="octave-display"><p>{octave}</p></div>
-          </div>
-
+          <OctaveButton setOctave={setOctave} octave={octave}/>
+          <ChannelButton setChannel={setChannel} channel={channel}/>
           <div className="abbrev-name">{this.abbrevName(UserDetails.user_name)}</div> 
-
           <div className={ `track-bloc ${isMidiMode? 'level-off':''}` } data-title='volume'>
             <LevelMeter  
               progress={synthEngine.volume}
@@ -127,4 +123,44 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
     )
   }
 
+}
+
+export interface OctaveButtonProps{
+  setOctave: (type: string) => void,
+  octave: number
+}
+
+class OctaveButton extends React.Component<OctaveButtonProps>{
+  render(){
+    const { setOctave, octave } = this.props
+    return (
+      <div className="octave">
+        <div className="octave-btn-wrapper">
+          <div className="octave-btn" onClick={() => setOctave('down')}> - </div>
+          <div className="octave-btn" onClick={() => setOctave('up')}> + </div>
+        </div>
+        <div className="octave-display"><p>{octave}</p></div>
+      </div>
+    )
+  }
+}
+
+export interface ChannelButtonProps{
+  setChannel: (type: string) => void,
+  channel: number
+}
+
+class ChannelButton extends React.Component<ChannelButtonProps>{
+  render(){
+    const { setChannel, channel } = this.props
+    return (
+      <div className="octave">
+        <div className="octave-btn-wrapper">
+          <div className="octave-btn" onClick={() => setChannel('down')}> - </div>
+          <div className="octave-btn" onClick={() => setChannel('up')}> + </div>
+        </div>
+        <div className="octave-display"><p>{channel}</p></div>
+      </div>
+    )
+  }
 }
