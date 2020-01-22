@@ -291,6 +291,10 @@
     vertical-align: top;
     min-width: 4rem;
 }
+
+.level-off .level-content{
+    background-color: var(--shade-gray);
+}
   
 @keyframes slide-up {
     0% {

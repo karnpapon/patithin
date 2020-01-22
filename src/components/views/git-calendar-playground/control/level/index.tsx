@@ -9,6 +9,7 @@ export interface LevelMeterProps {
   unitType?: string
   min?: number
   max?: number
+  disabled: boolean
 }
 
 export interface LevelMeterState {
@@ -32,7 +33,7 @@ export class LevelMeter extends React.Component< LevelMeterProps, LevelMeterStat
   clamp = (v: number, min: number, max: number) => { return v < min ? min : v > max ? max : v }
 
   render() {
-    const { unitType } = this.props
+    const { unitType, disabled } = this.props
     let height = Math.round((this.props.progress || 0) * 100) + '%';
     let displayValue = this.props.progress.toFixed(2).substr(2);
     let prefix;
@@ -46,7 +47,7 @@ export class LevelMeter extends React.Component< LevelMeterProps, LevelMeterStat
       <Slider
         className='level'
         unitSize={2}
-        onUpdate={this.updateListener}
+        onUpdate={disabled? ()=>{}:this.updateListener}
       >
         <div className='level-wrap'>
           <div
@@ -54,11 +55,18 @@ export class LevelMeter extends React.Component< LevelMeterProps, LevelMeterStat
             style={{ height: height }}
           />
         </div>
-        <span className='level-label'>
-          {prefix}
-          <span>{displayValue}</span>
-          <p>{unitType}</p>
-        </span>
+        {
+          disabled?
+            <span className='level-label'>
+              <span> Disabled </span>
+            </span>
+            :
+            <span className='level-label'>
+              {prefix}
+              <span>{displayValue}</span>
+              <p>{unitType}</p>
+          </span>
+        }
       </Slider>
     );
   }

@@ -1,5 +1,6 @@
 import { store, actions } from 'store';
 import * as Tone from "tone";
+import { mapValue } from 'utils';
 
 export interface EffectType{
   // bitcrusher: Tone.BitCrusher;
@@ -30,7 +31,7 @@ export class SynthEngine extends SynthEngineState {
     super()
     this.index = 0
     this.channels = []
-    this.volume = 1
+    this.volume = 0.5
     this.effects = {
       // bitcrusher: null,
       // distortion: null,
@@ -52,15 +53,22 @@ export class SynthEngine extends SynthEngineState {
     this.defineSynth()
     this.defineEffect()
     this.connectNode()
+    this.initVolume()
   }
 
   defineSynth = () => {
 
     // AM
     this.channels[0] = new Tone.PolySynth(4, Tone.Synth);
-    this.channels[1] = new Tone.AMSynth({ 'harmonicity': 1.75, 'oscillator': { 'type': 'sawtooth' }, 'modulation': { 'type': 'triangle' } })
-    this.channels[2] = new Tone.FMSynth({ 'harmonicity': 1.75, 'modulationIndex': 10, 'oscillator': { 'type': 'sawtooth' }, 'modulation': { 'type': 'triangle' } })
-    this.channels[3] =  new Tone.MembraneSynth({ 'octaves': 5, 'oscillator': { 'type': 'sine' } })
+    // this.channels[1] =  new Tone.MembraneSynth({ 'octaves': 4, 'oscillator': { 'type': 'sine' } })
+    this.channels[1] =  new Tone.MembraneSynth({ 'octaves': 10, 'oscillator': { 'type': 'sawtooth' } })
+    this.channels[2] = new Tone.AMSynth({ 'harmonicity': 1.75, 'oscillator': { 'type': 'sawtooth' }, 'modulation': { 'type': 'triangle' } })
+    this.channels[3] = new Tone.FMSynth({ 'harmonicity': 1.75, 'modulationIndex': 10, 'oscillator': { 'type': 'sawtooth' }, 'modulation': { 'type': 'triangle' } })
+
+    // this.channels[10] =  new Tone.MembraneSynth({ 'octaves': 5, 'oscillator': { 'type': 'sine' } })
+    // this.channels[11] =  new Tone.MembraneSynth({ 'octaves': 10, 'oscillator': { 'type': 'sawtooth' } })
+    // this.channels[12] =  new Tone.MembraneSynth({ 'octaves': 15, 'oscillator': { 'type': 'triangle' } })
+    // this.channels[13] =  new Tone.MembraneSynth({ 'octaves': 20, 'oscillator': { 'type': 'square' } })
     }
 
     defineEffect(){
@@ -72,21 +80,21 @@ export class SynthEngine extends SynthEngineState {
     // this.effects.feedback =  new Tone.FeedbackDelay(0)
     // this.effects.delay =  new Tone.PingPongDelay('4n', 0.2)
     // this.effects.tremolo =  new Tone.Tremolo()
-    this.effects.reverb =  new Tone.JCReverb(0)
+    // this.effects.reverb =  new Tone.JCReverb(0)
     // // III
     // this.effects.phaser =  new Tone.Phaser(0.5, 3, 350)
     // this.effects.chorus =  new Tone.Chorus(4, 2.5, 0.5)
     // // Mastering
     // this.effects.equalizer =  new Tone.EQ3(5, 0, 5)
     // this.effects.compressor =  new Tone.Compressor(-6, 4)
-    this.effects.volume =  new Tone.Volume(6)
+    this.effects.volume =  new Tone.Volume(0)
     this.effects.limiter =  new Tone.Limiter(-2)    
   }
 
   connectNode = () => {
 
     for (const id in this.channels) {
-      this.channels[id].connect(this.effects.reverb)
+      this.channels[id].connect(this.effects.volume)
     }
 
     // this.effects.bitcrusher.connect(this.effects.distortion)
@@ -96,7 +104,7 @@ export class SynthEngine extends SynthEngineState {
     // this.effects.feedback.connect(this.effects.delay)
     // this.effects.delay.connect(this.effects.reverb)
     // this.effects.tremolo.connect(this.effects.reverb)
-    this.effects.reverb.connect(this.effects.volume)
+    // this.effects.reverb.connect(this.effects.volume)
 
     // this.effects.phaser.connect(this.effects.chorus)
     // this.effects.chorus.connect(this.effects.equalizer)
@@ -115,8 +123,14 @@ export class SynthEngine extends SynthEngineState {
     this.channels[index].triggerAttackRelease(note, "16n");
   }
 
-  setVolume = (newVolume: number) => {
+  setVolume = (newVolume: number, synthIndex: number) => {
     this.volume = Math.max(0, Math.min(1, newVolume));
-    // this.effects.volume.volume = 
+    let map_value = mapValue(this.volume, 0,1,-40,0)
+    this.effects.volume.volume.value = map_value
+  }
+
+  initVolume = () => {
+    let map_value = mapValue(this.volume, 0,1,-40,0)
+    this.effects.volume.volume.value = map_value 
   }
 }

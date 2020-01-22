@@ -12,24 +12,36 @@ export interface CalendarTrackInfoProps{
   trackIndex: number,
   calendar: ContributionCalendar,
   updateAccountMute: () => void,
-  synthEngine: SynthEngine
+  synthEngine: SynthEngine,
 }
 export interface CalendarTrackInfoState{
   volume: number
+  isMidiMode: boolean
 }
 
 export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, CalendarTrackInfoState>{
+
+  unsubscribe = store.subscribe(() => {
+    let isMidiSelect = store.getState().app.midiselect;
+    if (isMidiSelect !== this.state.isMidiMode) {
+      this.setState({
+        isMidiMode: isMidiSelect
+      });
+    }
+  });
+
   constructor(props: CalendarTrackInfoProps){
     super(props)
     this.state = {
-      volume: 0
+      volume: 0,
+      isMidiMode: false
     }
   }
 
   volumeUpdateListener = this.onVolumeUpdate.bind(this);
   onVolumeUpdate(newVolume: number) {
-    const { synthEngine } = this.props;
-    synthEngine.setVolume(newVolume);
+    const { synthEngine, trackIndex } = this.props;
+    synthEngine.setVolume(newVolume, trackIndex);
     this.setState({
       volume: this.state.volume + 1
     });
@@ -52,6 +64,7 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
   render(){
 
     const { totalCounts, UserDetails, trackIndex,calendar, synthEngine } = this.props
+    const { isMidiMode } = this.state
     
     return (
         <>
@@ -65,11 +78,12 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
             </div>
           </div>
           <div className="abbrev-name">{this.abbrevName(UserDetails.user_name)}</div> 
-          <div className='track-bloc' data-title='volume'>
+          <div className={ `track-bloc ${isMidiMode? 'level-off':''}` } data-title='volume'>
             <LevelMeter  
               progress={synthEngine.volume}
               onUpdate={this.volumeUpdateListener}
               unitType="%"
+              disabled={isMidiMode}
             /> 
           </div>
         </div>

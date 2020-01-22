@@ -84,7 +84,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     if(extractedWeek[current] !== null){
       this.getMidiNoteAndVelocity(extractedWeek[current]).forEach(m => {
         singleNote = getNote(m.note, 'harmonic-minor')
-        singleNote = singleNote + "4"
+        singleNote = singleNote + "2"
         polyNotes.push(singleNote)
       })
       if(trackIndex == 0){
@@ -134,7 +134,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
       calendar,
       updateAccountMute,
     } = this.props
-    const { steps, synthEngine  } = this.state
+    const { steps, synthEngine } = this.state
 
     return ( 
       <AppContextConsumer>
@@ -156,6 +156,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
               calendar={calendar}
               updateAccountMute={updateAccountMute}
               synthEngine={synthEngine}
+              // synthEngine={appContext.synthEngine}
             />
             <div className="track-steps">
               <RangeWithTooltips 
