@@ -1,5 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: './src/index.tsx',
@@ -49,6 +50,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'style.css',
       path: __dirname + '/dist'
-    })
+    }),
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+    }),
   ]
 };
