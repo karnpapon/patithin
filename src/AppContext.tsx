@@ -7,7 +7,6 @@ export interface AppContextInterface {
   currentBeat: number,
   metronome: Metronome,
   midi: Midi,
-  synthEngine: SynthEngine
 }
 
 const ctx = React.createContext<AppContextInterface | null>(null);

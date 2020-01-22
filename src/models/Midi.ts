@@ -121,7 +121,5 @@ export class Midi extends MidiState {
     }
     return (60000 / bpm) * (val / 16)
   }
-
-  clamp(v: number, min: number, max: number) { return v < min ? min : v > max ? max : v }
 }
 

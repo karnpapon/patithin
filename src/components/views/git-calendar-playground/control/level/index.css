@@ -1,0 +1,47 @@
+@import '../../../../../styles/variables.css';
+
+.level {
+  position: relative;
+  height: var(--track-size);
+  width: calc(var(--border-width) * 3);
+  font-family: Helvetica, sans-serif;
+  font-size: 1.25rem;
+  cursor: grab;
+}
+
+/* Background / Meter */
+.level-wrap {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+.level-content {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--shade-active);
+  color: var(--shade-base);
+  border-top: 2px solid;
+}
+
+/* Label */
+.level-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: var(--shade-base);
+}
+
+.level-label p{
+  text-transform: none;
+}
+
+.level-label-off {
+  color: var(--shade);
+}

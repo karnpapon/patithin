@@ -278,6 +278,20 @@
     text-align: center;
 }
 
+
+.volume{
+    font-family: Helvetica, sans-serif;
+    margin: 0;
+    text-align: center;
+    text-transform: none;
+}
+
+.track-bloc {
+    animation-fill-mode: both;
+    vertical-align: top;
+    min-width: 4rem;
+}
+  
 @keyframes slide-up {
     0% {
         opacity: 0;

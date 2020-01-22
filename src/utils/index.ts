@@ -1,5 +1,5 @@
 import { getLevel } from './getLevel'
-import { range, getNewRange, mapValue, getNote,getHarmonicMinorNote } from './range'
+import { range, getNewRange, mapValue, getNote } from './range'
 
 export {
     getLevel,
@@ -7,5 +7,4 @@ export {
     range,
     mapValue,
     getNote,
-    getHarmonicMinorNote
 }

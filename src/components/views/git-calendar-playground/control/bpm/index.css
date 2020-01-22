@@ -1,0 +1,37 @@
+.control-item,
+.control-item-main {
+  width: 60px;
+  height: 30px;
+  padding: var(--half-box-size);
+  /* background-color: var(--shade-light); */
+  /* color: var(--shade-base); */
+  /* margin-right: var(--space); */
+  border-left: 1px solid;
+  /* margin-right: 20px; */
+  line-height: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.control-item:hover {
+  background-color: var(--hover-base);
+  color: var(--shade-base);
+}
+.control-item-main {
+  width: auto;
+  flex-grow: 1;
+}
+
+.control-item{ cursor: grab; }
+
+.control-item-title {
+  font-size: 0.75em;
+  text-transform: uppercase;
+  display: block;
+}
+
+.control-item-content,
+
+.bpm-control-off {
+  /* color: var(--shade); */
+}

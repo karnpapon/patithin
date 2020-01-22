@@ -2,7 +2,7 @@ import * as React from 'react';
 import { store, actions } from 'store';
 import { AppContextConsumer } from 'AppContext';
 import { Midi } from 'models/Midi';
-import '../index.css'
+import './index.css'
 
 export interface MidiSelectState {
   isMidiOn: boolean,

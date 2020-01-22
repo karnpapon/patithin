@@ -2,6 +2,8 @@ import * as React from 'react'
 import { Contribution, UserDetails } from 'services/fetchContributions'
 import { store, actions } from 'store'
 import { ContributionCalendar } from 'models/ContributionCalendar'
+import { LevelMeter } from 'components/views/git-calendar-playground/control/level'
+import { SynthEngine } from 'models/Synth'
 import '../../index.css'
 
 export interface CalendarTrackInfoProps{
@@ -9,18 +11,28 @@ export interface CalendarTrackInfoProps{
   UserDetails: UserDetails,
   trackIndex: number,
   calendar: ContributionCalendar,
-  updateAccountMute: () => void
+  updateAccountMute: () => void,
+  synthEngine: SynthEngine
 }
 export interface CalendarTrackInfoState{
-  // isMuted: Boolean,
+  volume: number
 }
 
 export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, CalendarTrackInfoState>{
   constructor(props: CalendarTrackInfoProps){
     super(props)
     this.state = {
-      // isMuted: false,
+      volume: 0
     }
+  }
+
+  volumeUpdateListener = this.onVolumeUpdate.bind(this);
+  onVolumeUpdate(newVolume: number) {
+    const { synthEngine } = this.props;
+    synthEngine.setVolume(newVolume);
+    this.setState({
+      volume: this.state.volume + 1
+    });
   }
 
   handleRemoveTrack(id: number){
@@ -39,7 +51,7 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
 
   render(){
 
-    const { totalCounts, UserDetails, trackIndex,calendar } = this.props
+    const { totalCounts, UserDetails, trackIndex,calendar, synthEngine } = this.props
     
     return (
         <>
@@ -52,7 +64,14 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
                 {calendar.isAccountMuted? 'muted':'mute'}
             </div>
           </div>
-          <div className="abbrev-name">{this.abbrevName(UserDetails.user_name)}</div>  
+          <div className="abbrev-name">{this.abbrevName(UserDetails.user_name)}</div> 
+          <div className='track-bloc' data-title='volume'>
+            <LevelMeter  
+              progress={synthEngine.volume}
+              onUpdate={this.volumeUpdateListener}
+              unitType="%"
+            /> 
+          </div>
         </div>
         <div className="track-info">
           <p className="no-t-margin"> github/{UserDetails.user_login} </p>

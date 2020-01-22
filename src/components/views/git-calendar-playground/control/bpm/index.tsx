@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { store, actions } from 'store';
 import { Slider } from 'components/common/slider';
+import './index.css'
 
 export interface BpmControlState {
   value: number;
