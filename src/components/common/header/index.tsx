@@ -23,7 +23,7 @@ export class Header extends React.Component<HeaderProps, HeaderState>{
       <div className="header-container">
         <div className="left-col">
           PATITHIN
-          <i className="icon-contributions"></i>
+          {/* <i className="icon-contributions"></i> */}
         </div>
         <div className="right-col"> calendrical sequencer based on Github's contribution history. </div>
       </div>
