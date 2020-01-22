@@ -13,6 +13,8 @@ export interface CalendarTrackInfoProps{
   calendar: ContributionCalendar,
   updateAccountMute: () => void,
   synthEngine: SynthEngine,
+  setOctave: (type: string) => void,
+  octave: number
 }
 export interface CalendarTrackInfoState{
   volume: number
@@ -63,7 +65,15 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
 
   render(){
 
-    const { totalCounts, UserDetails, trackIndex,calendar, synthEngine } = this.props
+    const { 
+      totalCounts, 
+      UserDetails, 
+      trackIndex,
+      calendar, 
+      synthEngine ,
+      setOctave,
+      octave
+    } = this.props
     const { isMidiMode } = this.state
     
     return (
@@ -77,7 +87,17 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
                 {calendar.isAccountMuted? 'muted':'mute'}
             </div>
           </div>
+
+          <div className="octave">
+            <div className="octave-btn-wrapper">
+              <div className="octave-btn" onClick={() => setOctave('down')}> - </div>
+              <div className="octave-btn" onClick={() => setOctave('up')}> + </div>
+            </div>
+            <div className="octave-display"><p>{octave}</p></div>
+          </div>
+
           <div className="abbrev-name">{this.abbrevName(UserDetails.user_name)}</div> 
+
           <div className={ `track-bloc ${isMidiMode? 'level-off':''}` } data-title='volume'>
             <LevelMeter  
               progress={synthEngine.volume}
@@ -87,6 +107,7 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
             /> 
           </div>
         </div>
+
         <div className="track-info">
           <p className="no-t-margin"> github/{UserDetails.user_login} </p>
           <div className="contrib-count">

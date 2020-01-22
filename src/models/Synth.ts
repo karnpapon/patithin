@@ -22,7 +22,7 @@ export class SynthEngineState {
   index: number;
   channels: any[];
   effects: EffectType; 
-  volume: number
+  volume: number;
 }
 
 export class SynthEngine extends SynthEngineState {

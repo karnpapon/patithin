@@ -295,6 +295,42 @@
 .level-off .level-content{
     background-color: var(--shade-gray);
 }
+
+
+.octave{
+    display: flex;
+    font-weight: bold;
+    font-family: Helvetica, sans-serif;
+    font-size: 1rem;
+    border-bottom: 2px solid;
+}
+.octave-btn{ 
+    width: 100%;
+    text-align: center;
+    padding-right: 0;
+    cursor: pointer;
+    border-right: 2px solid;
+}
+
+.octave-btn-wrapper{
+    display: flex;
+    width: 70%;
+}
+
+.octave-btn:hover{
+    background-color: var(--hover-dark);
+    color: var(--shade-base);
+}
+
+.octave-display{
+    font-size: .65rem;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.octave-display p{margin: 0;}
   
 @keyframes slide-up {
     0% {

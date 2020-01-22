@@ -30,6 +30,7 @@ export interface GitCalendarTrackProps{
 export interface GitCalendarTrackState{
   steps: number[]
   synthEngine: SynthEngine;
+  octave: number
 }
 
 export interface MidiNoteAndVelocity{
@@ -43,7 +44,8 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     super(props)
     this.state = {
       steps: [0,16],
-      synthEngine: new SynthEngine(this)
+      synthEngine: new SynthEngine(this),
+      octave: 3
     }
   }
 
@@ -51,18 +53,27 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     this.setState({ steps: value })
   }
 
+  setOctave = (type: string) => {
+    if( type == 'up'){
+      this.setState({ octave: this.state.octave + 1 })
+    } else {
+      this.setState({ octave: this.state.octave - 1  }) 
+    }
+  }
+
   /**
    * sending midi
    */
   runMidi = (midi: Midi, current: number): void => {
     const { extractedWeek, trackIndex } = this.props
+    const { octave } = this.state
     midi.clear()
     if(store.getState().session.isPlaying){
       if(extractedWeek[current] !== null){
         this.getMidiNoteAndVelocity(extractedWeek[current]).forEach(m => {
           midi.send({
             channel: trackIndex ,
-            octave: 3, 
+            octave, 
             note: getNote(m.note),
             velocity: Math.ceil( mapValue(m.velocity,1,10, 60,127 ) ), 
             length: 12 
@@ -134,7 +145,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
       calendar,
       updateAccountMute,
     } = this.props
-    const { steps, synthEngine } = this.state
+    const { steps, synthEngine, octave } = this.state
 
     return ( 
       <AppContextConsumer>
@@ -156,6 +167,8 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
               calendar={calendar}
               updateAccountMute={updateAccountMute}
               synthEngine={synthEngine}
+              setOctave={this.setOctave}
+              octave={octave}
               // synthEngine={appContext.synthEngine}
             />
             <div className="track-steps">
