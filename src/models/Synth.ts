@@ -124,11 +124,15 @@ export class SynthEngine extends SynthEngineState {
   }
 
   runPolySynth = (index: number, notes: string[]) => {
-    this.channels[index].triggerAttackRelease(notes, "16n");
+    if(this.channels[index]){
+      this.channels[index].triggerAttackRelease(notes, "16n");
+    }
   }
 
   runMonoSynth = (index: number, note: string) => {
-    this.channels[index].triggerAttackRelease(note, "16n");
+    if(this.channels[index]){
+      this.channels[index].triggerAttackRelease(note, "16n");
+    }
   }
 
   setVolume = (newVolume: number, synthIndex: number) => {

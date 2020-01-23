@@ -106,14 +106,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
         singleNote = singleNote + JSON.stringify(octave)
         polyNotes.push(singleNote)
       })
-      if(!store.getState().app.loading){
-        // if(channel == 0){
-          // this.runPolySynth(synthEngine, channel, polyNotes)
-        // } else {
-          this.runMonoSynth(synthEngine, channel, singleNote) 
-        // }
-      }
-      // console.log("channel", channel)
+      this.runMonoSynth(synthEngine, channel, singleNote) 
     }
   }
 
@@ -138,21 +131,28 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     return indexes;
   }
 
-  componentDidMount(){
-    this.state.synthEngine.init()
-    this.initChannel()
-  }
-
   initChannel(){
     this.setState({ channel: this.props.trackIndex})
   }
 
-  playingAndUnmuted = (): boolean => {
+  checkIsPlayingUnmuted = (): boolean => {
     return store.getState().session.isPlaying && !this.props.isAccountMuted
   }
 
-  componentWillUnmount(){
+  run = (app: any) => {
+    const { steps } = this.state
+    if(this.checkIsPlayingUnmuted() && store.getState().app.midiselect){
+      this.runMidi( app.midi , getNewRange(app.currentBeat,steps) ) 
+    } 
+    
+    if (this.checkIsPlayingUnmuted() && !store.getState().app.midiselect){
+      this.runSynthEngine(getNewRange(app.currentBeat,steps)) 
+    }
+  }
 
+  componentDidMount(){
+    this.state.synthEngine.init()
+    this.initChannel()
   }
 
   // monitorTrackMute = ( isMuted: boolean ) => {
@@ -174,13 +174,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     return ( 
       <AppContextConsumer>
         {appContext => appContext && (
-
-          ( this.playingAndUnmuted() && store.getState().app.midiselect? 
-              this.runMidi( appContext.midi , getNewRange(appContext.currentBeat,steps) ) : '' ),
-
-          ( this.playingAndUnmuted() && !store.getState().app.midiselect?
-                this.runSynthEngine(getNewRange(appContext.currentBeat,steps)):'' ),
-
+          this.run(appContext),
           <div className="track-container">
           <div className="track">
             { isAccountMuted ? ( <div className='muted'><p className="mute-display"> Shhhh.. </p></div> ):'' }
