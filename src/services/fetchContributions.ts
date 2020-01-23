@@ -37,9 +37,7 @@ export async function fetchContributions( user: String): Promise<Contribution[][
   const dom = parser.parseFromString(html, 'text/html')
   const rows = Array.from(dom.querySelectorAll('.js-calendar-graph-svg g g'))
 
-  return [...rows]
-    // .reverse()
-    .map(week => Array.from(week.querySelectorAll('.day')).map(getContribution))
+  return [...rows].map(week => Array.from(week.querySelectorAll('.day')).map(getContribution))
 }
 
 

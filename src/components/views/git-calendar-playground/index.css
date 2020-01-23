@@ -212,7 +212,7 @@
 
 .weeks-table{
     display: flex;
-    padding-top: 10px;
+    padding-top: 40px;
 }
 
 .add-track{ width: 40px; height: 40px; font-size: 2rem;}
@@ -305,10 +305,18 @@
     border-bottom: 2px solid;
 }
 .octave-btn{ 
-    width: 100%;
+    width: auto;
     text-align: center;
-    padding-right: 0;
+    /* padding-right: 0; */
+    padding: 0 10px;;
     cursor: pointer;
+}
+
+.btn-down{
+    border-left: 2px solid;
+}
+
+.btn-up{
     border-right: 2px solid;
 }
 
@@ -324,7 +332,7 @@
 
 .octave-display{
     font-size: .65rem;
-    width: 30%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

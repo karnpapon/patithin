@@ -1,6 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import { Contribution } from 'services/fetchContributions'
 import { store, actions } from 'store'
 import { ContributionCalendar } from 'models/ContributionCalendar'
 import '../../index.css'

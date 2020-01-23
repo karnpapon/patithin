@@ -4,10 +4,9 @@ import { WeekRender } from './track-week-render';
 import { CalendarTrackInfo } from './track-info'
 import { createSliderWithTooltip, Range } from 'rc-slider';
 import { getNewRange, mapValue, getNote } from 'utils'
-import { AppContextProvider, AppContextConsumer, AppContextInterface} from 'AppContext';
+import { AppContextConsumer} from 'AppContext';
 import { ContributionCalendar } from 'models/ContributionCalendar'
 import { Midi } from 'models/Midi'
-import * as Tone from "tone";
 
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
@@ -189,6 +188,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
               setChannel={this.setChannel}
               octave={octave}
               channel={channel}
+              contributions={contributions}
             />
             <div className="track-steps">
               <RangeWithTooltips 

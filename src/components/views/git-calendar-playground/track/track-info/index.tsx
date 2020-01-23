@@ -7,6 +7,7 @@ import { SynthEngine } from 'models/Synth'
 import '../../index.css'
 
 export interface CalendarTrackInfoProps{
+  contributions: Contribution[][],
   totalCounts: number,
   UserDetails: UserDetails,
   trackIndex: number,
@@ -65,9 +66,19 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
     return n[0].charAt(0).toUpperCase()+ "." + n[1].charAt(0).toUpperCase() + "."
   }
 
+  formattedDate(d: Date): string {
+    let date: string
+    return date = [
+      d.getFullYear(),
+      ('0' + (d.getMonth() + 1)).slice(-2),
+      ('0' + d.getDate()).slice(-2)
+    ].join('-');
+  }
+
   render(){
 
     const { 
+      contributions,
       totalCounts, 
       UserDetails, 
       trackIndex,
@@ -92,7 +103,6 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
             </div>
           </div>
           <OctaveButton setOctave={setOctave} octave={octave}/>
-          <ChannelButton setChannel={setChannel} channel={channel}/>
           <div className="abbrev-name">{this.abbrevName(UserDetails.user_name)}</div> 
           <div className={ `track-bloc ${isMidiMode? 'level-off':''}` } data-title='volume'>
             <LevelMeter  
@@ -102,6 +112,7 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
               disabled={isMidiMode}
             /> 
           </div>
+          <ChannelButton setChannel={setChannel} channel={channel}/>
         </div>
 
         <div className="track-info">
@@ -114,9 +125,10 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
             contributions
           </div>
           <div className="contrib-date">
-            <p> from 01-07-2020 </p>
-            <p> to 12-31-2020 </p>
-            <p> midichan: {trackIndex} </p>
+            <p> from: {this.formattedDate(contributions[0][0].date)} </p>
+            <p> to: {this.formattedDate(new Date())} </p>
+            <b> location: {UserDetails.user_location}</b>
+            <p> name: {UserDetails.user_name}</p>
           </div>
         </div> 
         </>
@@ -135,11 +147,11 @@ class OctaveButton extends React.Component<OctaveButtonProps>{
     const { setOctave, octave } = this.props
     return (
       <div className="octave">
-        <div className="octave-btn-wrapper">
-          <div className="octave-btn" onClick={() => setOctave('down')}> - </div>
-          <div className="octave-btn" onClick={() => setOctave('up')}> + </div>
-        </div>
-        <div className="octave-display"><p>{octave}</p></div>
+        {/* <div className="octave-btn-wrapper"> */}
+          <div className="octave-btn btn-up" onClick={() => setOctave('down')}> - </div>
+          <div className="octave-display"><p>octave: {octave}</p></div>
+          <div className="octave-btn btn-down" onClick={() => setOctave('up')}> + </div>
+        {/* </div> */}
       </div>
     )
   }
@@ -155,11 +167,9 @@ class ChannelButton extends React.Component<ChannelButtonProps>{
     const { setChannel, channel } = this.props
     return (
       <div className="octave">
-        <div className="octave-btn-wrapper">
-          <div className="octave-btn" onClick={() => setChannel('down')}> - </div>
-          <div className="octave-btn" onClick={() => setChannel('up')}> + </div>
-        </div>
-        <div className="octave-display"><p>{channel}</p></div>
+          <div className="octave-btn btn-up" onClick={() => setChannel('down')}> - </div>
+          <div className="octave-display"><p>channel: {channel}</p></div>
+          <div className="octave-btn btn-down" onClick={() => setChannel('up')}> + </div>
       </div>
     )
   }
