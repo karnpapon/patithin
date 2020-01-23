@@ -51,8 +51,8 @@ module.exports = {
       filename: 'style.css',
       path: __dirname + '/dist'
     }),
-    new HtmlWebpackPlugin({
-      template: 'index.html',
-    }),
+    // new HtmlWebpackPlugin({
+    //   template: 'index.html',
+    // }),
   ]
 };

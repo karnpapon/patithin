@@ -151,6 +151,14 @@ input{
 
 /* loading.. */
 
+.dimmed-bg{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: var(--shade-base-dark);
+  opacity: .5;
+}
+
 .loading-track{
   width: 100%;
   height: auto;
@@ -162,6 +170,17 @@ input{
 }
 .loading{ position: relative; background-blend-mode: overlay;  animation: slide-up 0.4s ease;}
 
+.loading-texts{
+  font-size: 11rem;
+  font-family: Helvetica, sans-serif;
+  text-transform: none;
+  line-height: 1;
+  margin: 0;
+  padding: 0 20px;
+  animation: loading 0.4s ease;
+  animation-iteration-count: infinite;
+}
+
 @keyframes slide-up {
   0% {
       opacity: 0;
@@ -171,4 +190,10 @@ input{
       opacity: 1;
       transform: translateY(0);
   }
+}
+
+@keyframes loading {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
 }

@@ -2,6 +2,7 @@
   /* --shade-base: rgb(150, 150, 150); */
   /* --shade-base: rgb(0, 0, 0); */
   --shade-base: darkblue;
+  --shade-base-dark: rgb(0, 0, 85);
   --shade-base-overlay: #000d;
 
   --shade-dark: #111;

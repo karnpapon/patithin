@@ -75,7 +75,8 @@ class LoadingDisplay extends React.Component {
   render() {
     return (
       <div className="loading-track">
-        <img className="loading" src="src/assets/loading2.gif"></img>
+        {/* <img className="loading" src="src/assets/loading2.gif"></img> */}
+        <p className="loading-texts">Getting Account Contributions...</p>
       </div>
     );
   }
