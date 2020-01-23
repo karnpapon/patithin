@@ -76,7 +76,6 @@ export class ContributionCalendar {
 
   setIsAccountMuted = () => {
     this.isAccountMuted = !this.isAccountMuted
-    console.log("thjiss.isaccountmuted", this.isAccountMuted)
     return this
   }
 

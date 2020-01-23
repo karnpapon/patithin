@@ -64,12 +64,11 @@ export class SynthEngine extends SynthEngineState {
     this.channels[1] = new Tone.AMSynth({ 'harmonicity': 1.5, 'oscillator': { 'type': 'triangle' }, 'modulation': { 'type': 'sawtooth' } })
     this.channels[2] = new Tone.AMSynth({ 'harmonicity': 1.75, 'oscillator': { 'type': 'sawtooth' }, 'modulation': { 'type': 'triangle' } })
     this.channels[3] = new Tone.AMSynth({ 'harmonicity': 2, 'oscillator': { 'type': 'square' }, 'modulation': { 'type': 'square' } })
-    // AM
     this.channels[4] = new Tone.AMSynth({ 'harmonicity': 1.25, 'oscillator': { 'type': 'sine' }, 'modulation': { 'type': 'square' } })
     this.channels[5] = new Tone.AMSynth({ 'harmonicity': 1.5, 'oscillator': { 'type': 'triangle' }, 'modulation': { 'type': 'sawtooth' } })
+    // FM
     this.channels[6] = new Tone.FMSynth({ 'harmonicity': 1.75, 'modulationIndex': 10, 'oscillator': { 'type': 'sawtooth' }, 'modulation': { 'type': 'triangle' } })
     this.channels[7] = new Tone.FMSynth({ 'harmonicity': 2, 'modulationIndex': 20, 'oscillator': { 'type': 'square' }, 'modulation': { 'type': 'sine' } })
-    // FM
     this.channels[8] = new Tone.FMSynth({ 'harmonicity': 0.5, 'modulationIndex': 30, 'oscillator': { 'type': 'sine' }, 'modulation': { 'type': 'sawtooth' } })
     this.channels[9] = new Tone.FMSynth({ 'harmonicity': 2.5, 'modulationIndex': 40, 'oscillator': { 'type': 'sine' }, 'modulation': { 'type': 'triangle' } })
     // Membrane

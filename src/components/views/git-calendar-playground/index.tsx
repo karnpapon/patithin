@@ -42,7 +42,6 @@ export class GitCalendarPlayground extends React.Component<PlaygroundProps, Play
 
   render(){
     const { contributions, isLoading } = this.state
-    console.log("contri", contributions)
     return ( 
     <div className="contents"> 
       { isLoading? <LoadingDisplay/>:'' }
