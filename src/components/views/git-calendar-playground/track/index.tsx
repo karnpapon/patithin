@@ -4,8 +4,9 @@ import { WeekRender } from './track-week-render';
 import { CalendarTrackInfo } from './track-info'
 import { createSliderWithTooltip, Range } from 'rc-slider';
 import { getNewRange, mapValue, getNote } from 'utils'
-import { AppContextConsumer} from 'AppContext';
+import { AppContextConsumer, ctx} from 'AppContext';
 import { ContributionCalendar } from 'models/ContributionCalendar'
+import { Nullable } from 'components/common/types'
 import { Midi } from 'models/Midi'
 
 import 'rc-slider/assets/index.css';
@@ -27,10 +28,12 @@ export interface GitCalendarTrackProps{
   updateAccountMute: () => void,
 }
 export interface GitCalendarTrackState{
+  // limitedSteps: Nullable<number>
   steps: number[]
   synthEngine: SynthEngine;
   octave: number;
-  channel: number
+  channel: number;
+  clock: number
 }
 
 export interface MidiNoteAndVelocity{
@@ -39,20 +42,30 @@ export interface MidiNoteAndVelocity{
 }
 
 export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, GitCalendarTrackState>{
-
+  static contextType = ctx;
   constructor(props: GitCalendarTrackProps){
     super(props)
     this.state = {
+      // limitedSteps: 1,
       steps: [0,16],
       synthEngine: new SynthEngine(this),
       octave: 3,
-      channel: 0
+      channel: 0,
+      clock: 0
     }
   }
 
   onRangeSliderChange = (value: number[]) => {
     this.setState({ steps: value })
   }
+
+  // limitedSteps = (value: number[], tick: number) => {
+  //   let distant = value[1] - value[0]
+  //   let limited = distant > 16? 16:1
+  //   console.log("distant", distant)
+  //   console.log("tick", tick)
+  //   this.setState({ limitedSteps: limited})
+  // }
 
   setOctave = (type: string) => {
     if( type == 'up'){
@@ -138,14 +151,24 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     return store.getState().session.isPlaying && !this.props.isAccountMuted
   }
 
-  run = (app: any) => {
+  /**
+   * clock per track, based on 16th notes global clock.
+   */
+  runClock = (tick: number): number => {
+    const { steps } = this.state
+    let distant = steps[1] - steps[0]
+    // TODO: compensate overflow steps to wrap around new range properly.
+    return tick % distant
+  }
+
+  run = (app: any, clock: number) => {
     const { steps } = this.state
     if(this.checkIsPlayingUnmuted() && store.getState().app.midiselect){
-      this.runMidi( app.midi , getNewRange(app.currentBeat,steps) ) 
+      this.runMidi( app.midi , getNewRange(clock,steps) ) 
     } 
     
     if (this.checkIsPlayingUnmuted() && !store.getState().app.midiselect){
-      this.runSynthEngine(getNewRange(app.currentBeat,steps)) 
+      this.runSynthEngine(getNewRange(clock,steps)) 
     }
   }
 
@@ -168,12 +191,14 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
       calendar,
       updateAccountMute,
     } = this.props
-    const { steps, synthEngine, octave, channel } = this.state
+    const { steps, synthEngine, octave, channel, clock } = this.state
 
+    let clockTrack = this.runClock(this.context.currentBeat)
+    
     return ( 
       <AppContextConsumer>
         {appContext => appContext && (
-          this.run(appContext),
+          this.run(appContext, clockTrack),
           <div className="track-container">
           <div className="track">
             { isAccountMuted ? ( <div className='muted'><p className="mute-display"> Shhhh.. </p></div> ):'' }
@@ -194,8 +219,8 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
               <RangeWithTooltips 
                 max={53} min={0}
                 defaultValue={[0, 16]} 
-                step={16}
-                allowCross={false}
+                step={8}
+                allowCross={true}
                 tipFormatter={( value: number ) => `week ${value == 0? 1:value}`}
                 tipProps={{ overlayClassName: 'tooltip-custom' }}
                 pushable={true}
@@ -220,7 +245,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
                         weeks={weeks} 
                         week_idx={index} 
                         steps={steps}
-                        // monitorTrackMute={this.monitorTrackMute}
+                        clock={clockTrack}
                       />
                   })
                   :

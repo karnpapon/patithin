@@ -183,11 +183,13 @@
     font-weight: bold;
 }
 
-.delete-track:hover{ background-color: var(--hover-base); color: var(--hover-inverted);}
+.delete-track:hover{ 
+    background-color: var(--hover-dark); 
+    color: var(--shade-base);
+}
 
 
-
-.contrib-count{ }
+.contrib-count{ padding-bottom: 15px; }
 
 .counts{ display: flex; align-items: center; }
 .counts i{ font-size: 1.5rem; margin-left: 10px;}

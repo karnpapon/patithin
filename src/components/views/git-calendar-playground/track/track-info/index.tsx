@@ -127,6 +127,7 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
           <div className="contrib-date">
             <p> from: {this.formattedDate(contributions[0][0].date)} </p>
             <p> to: {this.formattedDate(new Date())} </p>
+            <br/>
             <b> location: {UserDetails.user_location}</b>
             <p> name: {UserDetails.user_name}</p>
           </div>
