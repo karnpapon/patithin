@@ -3,7 +3,7 @@
   "name": "GCB",
   "icons": [
     {
-      "src": "./public/img/app-icon.png",
+      "src": "./img/app-icon.png",
       "sizes": "512x512",
       "type": "image/x-icon"
     }
