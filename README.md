@@ -2,10 +2,13 @@
 
 written in TypeScript + React + Redux
 
+[TRY IT HERE 🕺🔥🔥](https://tender-banach-703feb.netlify.com/)
+
 - internal synth (using [Tone.js](https://tonejs.github.io/))
     - channel 0 - 5 = AM Synthesis
     - channel 6 - 9 = FM Synthesis
     - channel 10 - 13 = Percussive
+NOTE: Internal synth are all monophony.
 
 - MIDI protocol
 - adjustable    
