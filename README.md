@@ -8,7 +8,8 @@ written in TypeScript + React + Redux
     - channel 0 - 5 = AM Synthesis
     - channel 6 - 9 = FM Synthesis
     - channel 10 - 13 = Percussive
-NOTE: Internal synth are all monophony.
+
+#### NOTE: Internal synth are all monophony.
 
 - MIDI protocol
 - adjustable    
