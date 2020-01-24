@@ -6,7 +6,6 @@ import { createSliderWithTooltip, Range } from 'rc-slider';
 import { getNewRange, mapValue, getNote,getNotesFromRoot,getDegreeInScale,getNotesFromScale,scaleLists } from 'utils'
 import { AppContextConsumer, ctx} from 'AppContext';
 import { ContributionCalendar } from 'models/ContributionCalendar'
-import { Nullable } from 'components/common/types'
 import { Midi } from 'models/Midi'
 
 import 'rc-slider/assets/index.css';
@@ -162,12 +161,11 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
   }
 
   /**
-   * clock per track, based on 16th notes global clock.
+   * clock per track
    */
   runClock = (tick: number): number => {
     const { steps } = this.state
     let distant = steps[1] - steps[0]
-    // TODO: compensate overflow steps to wrap around new range properly.
     return tick % distant
   }
 
@@ -183,7 +181,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
   }
 
   getScale(index: number){
-    let notes: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
+    let notes: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
     let currentRootNoteIndex = notes.indexOf(this.state.rootNote)
     let scale = scaleLists
     let key = Object.keys(scale)
@@ -196,7 +194,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
   }
 
   transpose(index: number){
-    let notes: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
+    let notes: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
     let nextNote = notes[Math.abs( index )]
     let notesInScale = getNotesFromScale(getNotesFromRoot(index), getDegreeInScale(this.state.scale))
     this.setState({ 
@@ -262,7 +260,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
               <RangeWithTooltips 
                 max={53} min={0}
                 defaultValue={[0, 16]} 
-                step={1}
+                step={4}
                 allowCross={true}
                 tipFormatter={( value: number ) => `week ${value == 0? 1:value}`}
                 tipProps={{ overlayClassName: 'tooltip-custom' }}

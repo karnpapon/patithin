@@ -61,7 +61,7 @@ export const scaleLists: any = {
     locrianMajor ,
 }
 
-const notes: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
+let notes: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 
 export const getNotesFromRoot = function(index: number): string[] {
     let notesFromRoot: string[] = [], i: number
