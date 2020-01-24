@@ -1,6 +1,6 @@
 import { getLevel } from './getLevel'
-import { range, getNewRange, mapValue, getNote } from './range'
-import { getNotesFromRoot, getDegreeInScale, getNotesFromScale, scaleLists } from './scale'
+import { range, getNewRange, mapValue } from './range'
+import { getNotesFromRoot, getDegreeInScale, getNotesFromScale, scaleLists, getNote } from './scale'
 
 export {
     getLevel,

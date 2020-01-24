@@ -63,7 +63,7 @@ export const scaleLists: any = {
 
 const notes: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
 
-export const getNotesFromRoot = function(index: number) {
+export const getNotesFromRoot = function(index: number): string[] {
     let notesFromRoot: string[] = [], i: number
    for(i = index; i<notes.length + index; i++){
         notesFromRoot.push(notes[i % notes.length])
@@ -83,3 +83,8 @@ export const getNotesFromScale = function(notesFromRoot: string[], degree: numbe
     return notes
 }
 
+export function getNote( value: number, scale?: string[] ): string{
+    let note: string
+    note = scale[value]
+    return note
+}

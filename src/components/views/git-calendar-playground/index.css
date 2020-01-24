@@ -66,12 +66,16 @@
 
 .transpose-up:hover{ color: var(--shade-active-on); }
 .transpose-down:hover{ color: var(--shade-active-on);}
+.transpose-down{ border-top: 1px solid; }
+.transpose-up{ 
+    border-bottom: 1px solid;
+}
 .root-note{ 
     font-size: 1rem; 
     padding-bottom: 5px;
     text-transform: none; 
     text-align: center;
-    border-bottom: 1px solid;
+    border-bottom: 1px dashed;
     font-weight: bolder;
 }
 .scale-title{ 
@@ -106,7 +110,7 @@
 .track-steps{
     /* display: flex; */
     /* border-top: 1px solid var(--shade-gray); */
-    padding: 20px 10px; 
+    padding: 20px 20px; 
     padding-top: 0;
     flex: 3;
 }
@@ -115,7 +119,7 @@
 
 .track-info{
     border-top: 1px solid var(--shade-gray);
-    padding: 20px;
+    padding: 10px;
     /* width: 100%; */
     flex: 1;
     margin-right: 10px;

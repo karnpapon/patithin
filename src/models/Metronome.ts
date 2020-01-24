@@ -53,9 +53,9 @@ export class Metronome extends MetronomeState {
                                         // tempo value to calculate beat length.
     this.nextNoteTime += 0.25 * secondsPerBeat;    // Add beat length to last beat time
     this.current16thNote++;    // Advance the beat number, wrap to zero
-    if (this.current16thNote == 16) {
-      this.current16thNote = 0;
-    }
+    // if (this.current16thNote == 16) {
+    //   this.current16thNote = 0;
+    // }
   }
 
   scheduleNote = function( beatNumber: any, time: any ) {
