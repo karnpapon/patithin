@@ -335,7 +335,7 @@ class NoteTransposer extends React.Component<NoteTransposerProps,NoteTransposerS
 
   handleGetNewScale = () => {
     let current = this.state.currentScaleIndex
-    current = ( current + 1 ) % 11
+    current = ( current + 1 ) % Object.keys(scaleLists).length
     this.props.getScale(current)
     this.setState({ currentScaleIndex: current })
   }
