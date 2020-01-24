@@ -3,7 +3,7 @@ import { Contribution, UserDetails } from 'services/fetchContributions'
 import { WeekRender } from './track-week-render';
 import { CalendarTrackInfo } from './track-info'
 import { createSliderWithTooltip, Range } from 'rc-slider';
-import { getNewRange, mapValue, getNote } from 'utils'
+import { getNewRange, mapValue, getNote,getNotesFromRoot,getDegreeInScale,getNotesFromScale,scaleLists } from 'utils'
 import { AppContextConsumer, ctx} from 'AppContext';
 import { ContributionCalendar } from 'models/ContributionCalendar'
 import { Nullable } from 'components/common/types'
@@ -28,13 +28,14 @@ export interface GitCalendarTrackProps{
   updateAccountMute: () => void,
 }
 export interface GitCalendarTrackState{
-  // limitedSteps: Nullable<number>
   steps: number[]
   synthEngine: SynthEngine;
   octave: number;
   channel: number;
   clock: number;
   rootNote: string;
+  scale: string;
+  notesInScale: string[]
 }
 
 export interface MidiNoteAndVelocity{
@@ -47,13 +48,14 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
   constructor(props: GitCalendarTrackProps){
     super(props)
     this.state = {
-      // limitedSteps: 1,
       steps: [0,16],
       synthEngine: new SynthEngine(this),
       octave: 3,
       channel: 0,
       clock: 0,
-      rootNote: 'C'
+      rootNote: 'C',
+      scale: 'major',
+      notesInScale: []
     }
   }
 
@@ -111,12 +113,13 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
    */
   runSynthEngine = (current: number) => {
     const { extractedWeek } = this.props
-    const { synthEngine, channel, octave } = this.state
+    const { synthEngine, channel, octave, notesInScale } = this.state
     let polyNotes: string[] = []
     let singleNote: string = 'C'
+
     if(extractedWeek[current] !== null){
       this.getMidiNoteAndVelocity(extractedWeek[current]).forEach(m => {
-        singleNote = getNote(m.note, 'harmonic-minor')
+        singleNote = getNote(m.note, notesInScale)
         singleNote = singleNote + JSON.stringify(octave)
         polyNotes.push(singleNote)
       })
@@ -179,15 +182,38 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     }
   }
 
+  getScale(index: number){
+    let notes: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
+    let currentRootNoteIndex = notes.indexOf(this.state.rootNote)
+    let scale = scaleLists
+    let key = Object.keys(scale)
+    let nextScale = key[Math.abs( index )]
+    let notesInScale = getNotesFromScale(getNotesFromRoot(currentRootNoteIndex), getDegreeInScale(nextScale))
+    this.setState({
+      notesInScale: notesInScale,
+      scale: nextScale
+    })
+  }
+
   transpose(index: number){
     let notes: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
     let nextNote = notes[Math.abs( index )]
-    this.setState({ rootNote: nextNote})
+    let notesInScale = getNotesFromScale(getNotesFromRoot(index), getDegreeInScale(this.state.scale))
+    this.setState({ 
+      rootNote: nextNote,
+      notesInScale: notesInScale
+    })
+  }
+
+  initScale(){
+    let notesInScale = getNotesFromScale(getNotesFromRoot(0), getDegreeInScale(this.state.scale))
+    this.setState({ notesInScale: notesInScale})
   }
 
   componentDidMount(){
     this.state.synthEngine.init()
     this.initChannel()
+    this.initScale()
   }
 
 
@@ -201,7 +227,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
       calendar,
       updateAccountMute,
     } = this.props
-    const { steps, synthEngine, octave, channel, rootNote } = this.state
+    const { steps, synthEngine, octave, channel, rootNote, scale } = this.state
 
     let clockTrack = this.runClock(this.context.currentBeat)
     
@@ -226,7 +252,12 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
               contributions={contributions}
             />
 
-            <NoteTransposer transpose={this.transpose.bind(this)} rootNote={rootNote}/>
+            <NoteTransposer 
+              transpose={this.transpose.bind(this)} 
+              getScale={this.getScale.bind(this)} 
+              rootNote={rootNote}
+              scale={scale}
+            />
             <div className="track-steps">
               <RangeWithTooltips 
                 max={53} min={0}
@@ -269,18 +300,22 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
 
 export interface NoteTransposerProps{
   transpose: (index: number) => void;
+  getScale: (index: number) => void;
   rootNote: string
+  scale: string
 }
 
 export interface NoteTransposerState{
-  currentNoteIndex: number
+  currentNoteIndex: number;
+  currentScaleIndex: number;
 }
 
 class NoteTransposer extends React.Component<NoteTransposerProps,NoteTransposerState>{
   constructor(props: NoteTransposerProps){
     super(props)
     this.state = {
-      currentNoteIndex: 0
+      currentNoteIndex: 0,
+      currentScaleIndex: 0
     }
   }
 
@@ -290,20 +325,30 @@ class NoteTransposer extends React.Component<NoteTransposerProps,NoteTransposerS
     if(direction == 'up'){
       current = ( current + 1 ) % 11
     } else {
-      current = ( current - 1 ) % 11
+      if(current !== 0 ){
+        current = ( current - 1 ) % 11
+      }
     } 
     this.props.transpose( current )
     this.setState({ currentNoteIndex: current})
   }
 
+  handleGetNewScale = () => {
+    let current = this.state.currentScaleIndex
+    current = ( current + 1 ) % 11
+    this.props.getScale(current)
+    this.setState({ currentScaleIndex: current })
+  }
+
 
   render(){
-    const { rootNote } = this.props
+    const { rootNote, scale } = this.props
     return(
       <div className="day-selector">
         <div className="day-selector-wrapper">
           <span onClick={() => this.handleTranspose('up')} className="transpose-up">￪</span>
           <div className="root-note">{rootNote}</div>
+          <span onClick={() => this.handleGetNewScale()} className="scale-title">{scale.substring(0,5)}</span>
           <span onClick={() => this.handleTranspose('down')} className="transpose-down">￬</span>
         </div>
     </div>

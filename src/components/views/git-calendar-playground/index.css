@@ -47,23 +47,42 @@
 
 .day-selector{
     display: flex;
+    border: 1px solid;
 }
 
 .day-selector-wrapper{
-    padding-top: 54px;
-    height: 60%;
+    /* padding-top: 54px; */
+    /* height: 60%; */
     width: 25px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    font-family: Helvetica, sans-serif;
     font-size: 2rem;
+    text-align: center;
 }
 
 .day-selector-wrapper span{  cursor: pointer;}
 
-.transpose-up:hover{ color: var(--shade-active-on);}
+.transpose-up:hover{ color: var(--shade-active-on); }
 .transpose-down:hover{ color: var(--shade-active-on);}
-.root-note{ font-size: 1rem; text-transform: none;}
+.root-note{ 
+    font-size: 1rem; 
+    padding-bottom: 5px;
+    text-transform: none; 
+    text-align: center;
+    border-bottom: 1px solid;
+    font-weight: bolder;
+}
+.scale-title{ 
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    font-size: .6rem;
+    padding-top: 5px;
+    font-weight: bolder;
+    align-items: center;
+    display: flex;
+}
 
 
 /* .day-selector:hover ~ .weeks-table .week .week-col div:nth-child(1){
@@ -87,7 +106,7 @@
 .track-steps{
     /* display: flex; */
     /* border-top: 1px solid var(--shade-gray); */
-    padding: 20px;
+    padding: 20px 10px; 
     padding-top: 0;
     flex: 3;
 }

@@ -124,7 +124,7 @@ export class SynthEngine extends SynthEngineState {
 
   runPolySynth = (index: number, notes: string[]) => {
     if(this.channels[index]){
-      this.channels[index].triggerAttackRelease(notes, "8n");
+      this.channels[index].triggerAttackRelease(notes, "6n");
     }
   }
 

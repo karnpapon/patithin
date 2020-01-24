@@ -169,7 +169,7 @@ class ChannelButton extends React.Component<ChannelButtonProps>{
     return (
       <div className="octave">
           <div className="octave-btn btn-up" onClick={() => setChannel('down')}> - </div>
-          <div className="octave-display"><p>chan: {channel}</p></div>
+          <div className="octave-display"><p>ch: {channel}</p></div>
           <div className="octave-btn btn-down" onClick={() => setChannel('up')}> + </div>
       </div>
     )

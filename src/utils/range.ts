@@ -10,63 +10,8 @@ export function mapValue(value: number, in_min: number, in_max: number, out_min:
     return (value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-export function getNote( value: number, scale?: string ): string{
+export function getNote( value: number, scale?: string[] ): string{
   let note: string
-  if ( scale == 'harmonic-minor' ){
-    switch (value) {
-      case 0:
-        note = 'C'
-        break;
-      case 1:
-        note = 'D'
-        break;
-      case 2:
-        note = 'D#'
-        break;
-      case 3:
-        note = 'F'
-        break;
-      case 4:
-        note = 'G'
-        break;
-      case 5:
-        note = 'G#'
-        break;
-      case 6:
-        note = 'B'
-        break;
-      default:
-        note = 'C'
-        break;
-    }
-  } else {
-    switch (value) {
-      case 0:
-        note = 'C'
-        break;
-      case 1:
-        note = 'B'
-        break;
-      case 2:
-        note = 'D'
-        break;
-      case 3:
-        note = 'E'
-        break;
-      case 4:
-        note = 'F'
-        break;
-      case 5:
-        note = 'G'
-        break;
-      case 6:
-        note = 'A'
-        break;
-      default:
-        note = 'C'
-        break;
-    }
-  }
-
+  note = scale[value]
   return note
 }
