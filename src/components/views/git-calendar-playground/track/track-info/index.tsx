@@ -150,7 +150,7 @@ class OctaveButton extends React.Component<OctaveButtonProps>{
       <div className="octave">
         {/* <div className="octave-btn-wrapper"> */}
           <div className="octave-btn btn-up" onClick={() => setOctave('down')}> - </div>
-          <div className="octave-display"><p>octave: {octave}</p></div>
+          <div className="octave-display"><p>oct: {octave}</p></div>
           <div className="octave-btn btn-down" onClick={() => setOctave('up')}> + </div>
         {/* </div> */}
       </div>
@@ -169,7 +169,7 @@ class ChannelButton extends React.Component<ChannelButtonProps>{
     return (
       <div className="octave">
           <div className="octave-btn btn-up" onClick={() => setChannel('down')}> - </div>
-          <div className="octave-display"><p>channel: {channel}</p></div>
+          <div className="octave-display"><p>chan: {channel}</p></div>
           <div className="octave-btn btn-down" onClick={() => setChannel('up')}> + </div>
       </div>
     )

@@ -33,7 +33,8 @@ export interface GitCalendarTrackState{
   synthEngine: SynthEngine;
   octave: number;
   channel: number;
-  clock: number
+  clock: number;
+  rootNote: string;
 }
 
 export interface MidiNoteAndVelocity{
@@ -51,7 +52,8 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
       synthEngine: new SynthEngine(this),
       octave: 3,
       channel: 0,
-      clock: 0
+      clock: 0,
+      rootNote: 'C'
     }
   }
 
@@ -118,7 +120,12 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
         singleNote = singleNote + JSON.stringify(octave)
         polyNotes.push(singleNote)
       })
-      this.runMonoSynth(synthEngine, channel, singleNote) 
+
+      if(channel == 0){
+        this.runPolySynth(synthEngine, channel, polyNotes)
+      } else{
+        this.runMonoSynth(synthEngine, channel, singleNote) 
+      }
     }
   }
 
@@ -172,14 +179,17 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
     }
   }
 
+  transpose(index: number){
+    let notes: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
+    let nextNote = notes[Math.abs( index )]
+    this.setState({ rootNote: nextNote})
+  }
+
   componentDidMount(){
     this.state.synthEngine.init()
     this.initChannel()
   }
 
-  // monitorTrackMute = ( isMuted: boolean ) => {
-    // console.log("isTrackMuted", isMuted)
-  // }
 
   render(){
     const { 
@@ -191,7 +201,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
       calendar,
       updateAccountMute,
     } = this.props
-    const { steps, synthEngine, octave, channel, clock } = this.state
+    const { steps, synthEngine, octave, channel, rootNote } = this.state
 
     let clockTrack = this.runClock(this.context.currentBeat)
     
@@ -215,6 +225,8 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
               channel={channel}
               contributions={contributions}
             />
+
+            <NoteTransposer transpose={this.transpose.bind(this)} rootNote={rootNote}/>
             <div className="track-steps">
               <RangeWithTooltips 
                 max={53} min={0}
@@ -226,16 +238,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
                 pushable={true}
                 onAfterChange={value => this.onRangeSliderChange( value )}
               />
-              {/* <div className="day-selector">
-                <span>*</span>
-                <span>+</span>
-                <span>+</span>
-                <span>+</span>
-                <span>+</span>
-                <span>+</span>
-                <span>+</span>
-                <span>+</span>
-              </div> */}
+             
               <div className="weeks-table">
                 {
                   contributions?
@@ -260,4 +263,50 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
      )
   }
 
+}
+
+
+
+export interface NoteTransposerProps{
+  transpose: (index: number) => void;
+  rootNote: string
+}
+
+export interface NoteTransposerState{
+  currentNoteIndex: number
+}
+
+class NoteTransposer extends React.Component<NoteTransposerProps,NoteTransposerState>{
+  constructor(props: NoteTransposerProps){
+    super(props)
+    this.state = {
+      currentNoteIndex: 0
+    }
+  }
+
+
+  handleTranspose = (direction: string): void => {
+    let current = this.state.currentNoteIndex
+    if(direction == 'up'){
+      current = ( current + 1 ) % 11
+    } else {
+      current = ( current - 1 ) % 11
+    } 
+    this.props.transpose( current )
+    this.setState({ currentNoteIndex: current})
+  }
+
+
+  render(){
+    const { rootNote } = this.props
+    return(
+      <div className="day-selector">
+        <div className="day-selector-wrapper">
+          <span onClick={() => this.handleTranspose('up')} className="transpose-up">￪</span>
+          <div className="root-note">{rootNote}</div>
+          <span onClick={() => this.handleTranspose('down')} className="transpose-down">￬</span>
+        </div>
+    </div>
+    )
+  }
 }

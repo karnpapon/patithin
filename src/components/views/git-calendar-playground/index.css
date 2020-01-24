@@ -46,11 +46,25 @@
 }
 
 .day-selector{
-    display: grid;
-    cursor: pointer;
+    display: flex;
 }
 
-.day-selector span:nth-child(1){ visibility: hidden;}
+.day-selector-wrapper{
+    padding-top: 54px;
+    height: 60%;
+    width: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 2rem;
+}
+
+.day-selector-wrapper span{  cursor: pointer;}
+
+.transpose-up:hover{ color: var(--shade-active-on);}
+.transpose-down:hover{ color: var(--shade-active-on);}
+.root-note{ font-size: 1rem; text-transform: none;}
+
 
 /* .day-selector:hover ~ .weeks-table .week .week-col div:nth-child(1){
     background-color: var(--hover-base);  

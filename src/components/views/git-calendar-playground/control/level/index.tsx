@@ -30,8 +30,6 @@ export class LevelMeter extends React.Component< LevelMeterProps, LevelMeterStat
     };
   }
 
-  clamp = (v: number, min: number, max: number) => { return v < min ? min : v > max ? max : v }
-
   render() {
     const { unitType, disabled } = this.props
     let height = Math.round((this.props.progress || 0) * 100) + '%';
