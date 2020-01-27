@@ -90,17 +90,17 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
    * sending midi
    */
   runMidi = (midi: Midi, current: number): void => {
-    const { extractedWeek, trackIndex } = this.props
-    const { octave, channel } = this.state
+    const { extractedWeek } = this.props
+    const { octave, channel, notesInScale } = this.state
     midi.clear()
     if(extractedWeek[current] !== null){
       this.getMidiNoteAndVelocity(extractedWeek[current]).forEach(m => {
         midi.send({
           channel ,
           octave, 
-          note: getNote(m.note),
+          note: getNote(m.note, notesInScale),
           velocity: Math.ceil( mapValue(m.velocity,1,10, 60,127 ) ), 
-          length: 12 
+          length: 16 
         })
       })
       midi.run()

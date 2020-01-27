@@ -1,6 +1,7 @@
 @import '/src/styles/variables.css';
 
 
+
 .track-container{
     display: flex;
     font-size: 12px;
@@ -33,7 +34,14 @@
     background-color: rgb(47, 47, 47);
 }
 
-.week-col{}
+.week-col >span{
+    margin: 4px;
+    margin-right: 0;
+    width: 12px;
+    height: 12px;
+    display: flex;
+    background-color: rgb(175, 175, 175);
+}
 
 .week-selector{
     cursor: pointer;
@@ -115,7 +123,9 @@
     flex: 3;
 }
 
-.track-steps span{ width: auto;}
+.track-steps span{ 
+    /* width: auto; */
+}
 
 .track-info{
     border-top: 1px solid var(--shade-gray);
@@ -238,13 +248,7 @@
 
 .contrib-date p{ margin: 0 }
 
-/* contribution level */
-.rarely{ background-color: rgb(130, 255, 130);}
-.normal{ background-color: rgb(10, 187, 10);}
-.often{ background-color: rgb(3, 148, 3);}
-.every{ background-color: rgb(0, 138, 0);}
-.nerd{ background-color: rgb(15, 109, 15);}
-.commits-by-cat{ background-color: rgb(0, 71, 0);}
+
 
 
 .no-t-margin{ margin: 0}
@@ -263,11 +267,11 @@
     clip-path: var(--cut-shape);
 }
 
-.active .week-col div{
+.active .week-col span{
     background-color: var(--shade-active);
 }
 
-.excluded div{
+.excluded span{
     opacity: 0.5;
 }
 
@@ -378,6 +382,14 @@
 }
 
 .octave-display p{margin: 0;}
+
+/* contribution level */
+span.rarely{ background-color: rgb(130, 255, 130);}
+span.normal{ background-color: rgb(10, 187, 10);}
+span.often{ background-color: rgb(3, 148, 3);}
+span.every{ background-color: rgb(0, 138, 0);}
+span.nerd{ background-color: rgb(15, 109, 15);}
+span.commits-by-cat{ background-color: rgb(0, 71, 0);}
   
 @keyframes slide-up {
     0% {

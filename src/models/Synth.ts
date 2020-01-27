@@ -61,7 +61,7 @@ export class SynthEngine extends SynthEngineState {
     // AM
     this.channels[0] = new Tone.PolySynth(4, Tone.Synth);
     // this.channels[0] = new Tone.AMSynth({ 'harmonicity': 1.25, 'oscillator': { 'type': 'sine' }, 'modulation': { 'type': 'sine' } })
-    this.channels[1] = new Tone.AMSynth({ 'harmonicity': 1.5, 'oscillator': { 'type': 'triangle' }, 'modulation': { 'type': 'sawtooth' } })
+    this.channels[1] = new Tone.Synth({  'oscillator': { 'type': 'sine' } })
     this.channels[2] = new Tone.AMSynth({ 'harmonicity': 1.75, 'oscillator': { 'type': 'sawtooth' }, 'modulation': { 'type': 'triangle' } })
     this.channels[3] = new Tone.AMSynth({ 'harmonicity': 2, 'oscillator': { 'type': 'square' }, 'modulation': { 'type': 'square' } })
     this.channels[4] = new Tone.AMSynth({ 'harmonicity': 1.25, 'oscillator': { 'type': 'sine' }, 'modulation': { 'type': 'square' } })
@@ -130,7 +130,7 @@ export class SynthEngine extends SynthEngineState {
 
   runMonoSynth = (index: number, note: string) => {
     if(this.channels[index]){
-      this.channels[index].triggerAttackRelease(note, "16n");
+      this.channels[index].triggerAttackRelease(note, "8n");
     }
   }
 
