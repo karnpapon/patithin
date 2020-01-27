@@ -27,4 +27,7 @@
   --hover-light: rgb(230, 198, 111);
   --hover-dark: #444;
   --hover-inverted: white;
+
+
+  --desktop: 1000px;
 }
