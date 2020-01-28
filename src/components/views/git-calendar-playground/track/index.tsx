@@ -35,7 +35,8 @@ export interface GitCalendarTrackState{
   clock: number;
   rootNote: string;
   scale: string;
-  notesInScale: string[]
+  notesInScale: string[],
+  toggleMutedWeek: number[]
 }
 
 export interface MidiNoteAndVelocity{
@@ -55,7 +56,8 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
       clock: 0,
       rootNote: 'C',
       scale: 'major',
-      notesInScale: []
+      notesInScale: [],
+      toggleMutedWeek: []
     }
   }
 
@@ -92,7 +94,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
    */
   runMidi = (midi: Midi, current: number): void => {
     const { extractedWeek } = this.props
-    const { octave, channel, notesInScale } = this.state
+    const { octave, channel, notesInScale, toggleMutedWeek } = this.state
     midi.clear()
     if(extractedWeek[current] !== null){
       this.getMidiNoteAndVelocity(extractedWeek[current]).forEach(m => {
@@ -113,7 +115,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
    */
   runSynthEngine = (current: number) => {
     const { extractedWeek } = this.props
-    const { synthEngine, channel, octave, notesInScale } = this.state
+    const { synthEngine, channel, octave, notesInScale, toggleMutedWeek } = this.state
     let polyNotes: string[] = []
     let singleNote: string = 'C'
 
@@ -171,13 +173,16 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
   }
 
   run = (app: any, clock: number) => {
-    const { steps } = this.state
-    if(this.checkIsPlayingUnmuted() && store.getState().app.midiselect){
-      this.runMidi( app.midi , getNewRange(clock,steps) ) 
-    } 
-    
-    if (this.checkIsPlayingUnmuted() && !store.getState().app.midiselect){
-      this.runSynthEngine(getNewRange(clock,steps)) 
+    const { steps, toggleMutedWeek } = this.state
+    let refreshStep = getNewRange(clock,steps)
+    if( toggleMutedWeek.indexOf(refreshStep) === -1){
+      if(this.checkIsPlayingUnmuted() && store.getState().app.midiselect){
+        this.runMidi( app.midi , refreshStep ) 
+      } 
+      
+      if (this.checkIsPlayingUnmuted() && !store.getState().app.midiselect){
+        this.runSynthEngine(refreshStep) 
+      }
     }
   }
 
@@ -200,6 +205,18 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
       rootNote: nextNote,
       notesInScale: notesInScale
     })
+  }
+
+  handleStoreToggleMutedWeek = (week_index: number) => {
+    let week = this.state.toggleMutedWeek
+    // remove week index if contains one.
+    if( week.indexOf(week_index) !== -1 ){
+      week.splice(week.indexOf(week_index),1)
+    } else {
+      // otherwise add it to the list.
+      week.push(week_index)
+    }
+    this.setState({ toggleMutedWeek: week })
   }
 
   initScale(){
@@ -277,6 +294,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
                         week_idx={index} 
                         steps={steps}
                         clock={clockTrack}
+                        handleStoreToggleMutedWeek={this.handleStoreToggleMutedWeek}
                       />
                   })
                   :
