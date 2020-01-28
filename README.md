@@ -6,7 +6,8 @@ written in TypeScript + React + Redux
 
 - internal synth (using [Tone.js](https://tonejs.github.io/))
     - channel 0 = PolySynth
-    - channel 1 - 5 = AM Synthesis
+    - channel 1 = sine-wave
+    - channel 2 - 5 = AM Synthesis
     - channel 6 - 9 = FM Synthesis
     - channel 10 - 13 = Percussive
 

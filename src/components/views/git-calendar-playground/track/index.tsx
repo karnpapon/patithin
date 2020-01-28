@@ -15,6 +15,7 @@ import { store } from 'store';
 import { SynthEngine } from 'models/Synth';
 
 const RangeWithTooltips = createSliderWithTooltip(Range);
+const notes: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 
 export interface GitCalendarTrackProps{
   contributions: Contribution[][],
@@ -181,7 +182,6 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
   }
 
   getScale(index: number){
-    let notes: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
     let currentRootNoteIndex = notes.indexOf(this.state.rootNote)
     let scale = scaleLists
     let key = Object.keys(scale)
@@ -194,7 +194,6 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
   }
 
   transpose(index: number){
-    let notes: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
     let nextNote = notes[Math.abs( index )]
     let notesInScale = getNotesFromScale(getNotesFromRoot(index), getDegreeInScale(this.state.scale))
     this.setState({ 
