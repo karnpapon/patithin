@@ -1,20 +1,15 @@
 // -- 7 note scales
 const major: number[] = [0,2,4,5,7,9,11]
-const ionian : number[]= [0,2,4,5,7,9,11]
 const dorian: number[] = [0,2,3,5,7,9,10]
 const phrygian: number[] = [0,1,3,5,7,8,10]
 const lydian: number[] = [0,2,4,6,7,9,11]
 const mixolydian: number[] = [0,2,4,5,7,9,10]
-const aeolian: number[] = [0,2,3,5,7,8,10]
 const minor: number[] = [0,2,3,5,7,8,10]
 const locrian: number[] = [0,1,3,5,6,8,10]
 const harmonicMinor: number[] = [0,2,3,5,7,8,11]
 const harmonicMajor: number[] = [0,2,4,5,7,8,11]
 const melodicMinor: number[] = [0,2,3,5,7,9,11]
-const melodicMinorDesc: number[] = [0,2,3,5,7,8,10]
 const melodicMajor: number[] = [0,2,4,5,7,8,10]
-const bartok: number[] = [0,2,4,5,7,8,10]
-const hindu: number[] = [0,2,4,5,7,8,10]
 
 // --
 const superLocrian: number[] = [0,1,3,4,6,8,10]
@@ -32,21 +27,16 @@ const locrianMajor: number[] = [0,2,4,5,6,8,10]
 
 export const scaleLists: any = {
     major ,
-    ionian ,
     dorian ,
     phrygian ,
     lydian ,
     mixolydian ,
-    aeolian ,
     minor ,
     locrian ,
     harmonicMinor ,
     harmonicMajor ,
     melodicMinor ,
-    melodicMinorDesc ,
     melodicMajor ,
-    bartok ,
-    hindu ,
 
     superLocrian ,
     romanianMinor ,
