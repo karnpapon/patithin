@@ -46,14 +46,14 @@ export class Midi extends MidiState {
   send = ({ channel , octave, note, velocity, length }: any) => {
     let noteNumber = []
     let convertedNote 
-    convertedNote = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'].indexOf( note )
+    convertedNote = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'].indexOf( note )
     
     let msg = Object.assign({}, { channel, octave, note: convertedNote, velocity, length })
     this.stack.push(msg)
   }
 
   set = (data: any = this.stack, device: any) => {
-    const channel = this.convertChannel(data['channel'])
+    const channel = this.convertChannel(data['channel']) // 0 ~ 16
     const note = this.convertNote(data['octave'], data['note'])
     const velocity = data['velocity'] > 127 || data['velocity'] < 0 ? 60: data['velocity'] // between 0 ~ 127
     const length = window.performance.now() + this.convertLength(data['length']) // 0 ~ 16
