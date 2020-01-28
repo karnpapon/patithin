@@ -389,7 +389,7 @@ span.normal{ background-color: rgb(10, 187, 10);}
 span.often{ background-color: rgb(3, 148, 3);}
 span.every{ background-color: rgb(0, 138, 0);}
 span.nerd{ background-color: rgb(15, 109, 15);}
-span.commits-by-cat{ background-color: rgb(0, 71, 0);}
+span.committed-by-cat{ background-color: rgb(0, 71, 0);}
   
 @keyframes slide-up {
     0% {
