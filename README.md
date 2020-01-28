@@ -18,7 +18,7 @@ written in TypeScript + React + Redux
     - MIDI CHAN
     - OCTAVE
 
-<img src="public/img/ss.png?sanitize=true">
+<img src="public/img/ss3.png?sanitize=true">
 
 
 ### Development
