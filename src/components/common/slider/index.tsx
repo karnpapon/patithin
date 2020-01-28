@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import './index.css';
 
-const WHEEL_STEP = 4;
-
 export interface SliderProps {
   unitSize?: number;
   reverseScroll?: boolean;
@@ -16,7 +14,6 @@ export class Slider extends React.Component<SliderProps> {
   yStart: number;
   currentValue = 0;
   nextValue = 0;
-  wheelAcc = 0;
   updatePlanned: number;
 
   elRef: React.RefObject<HTMLDivElement> = React.createRef();
@@ -67,7 +64,6 @@ export class Slider extends React.Component<SliderProps> {
     );
   }
 
-  /* Touch listeners *************************************/
 
   touchStart(t: TouchEvent) {
     this.reset(t.targetTouches[0].pageX, t.targetTouches[0].pageY);
@@ -80,7 +76,6 @@ export class Slider extends React.Component<SliderProps> {
 
   touchEnd() {}
 
-  /* Mouse listeners *************************************/
 
   mouseStart(t: MouseEvent) {
     this.reset(t.pageX, t.pageY);
@@ -102,38 +97,6 @@ export class Slider extends React.Component<SliderProps> {
     window.removeEventListener('mouseup', this.mouseEndListener);
   }
 
-  /* Wheel ***********************************************/
-
-  onWheel(e: React.WheelEvent) {
-    // End event
-    e.stopPropagation();
-    e.preventDefault();
-
-    const Y = -e.deltaY;
-    let newIndex = 0;
-    if (!Y) {
-      return;
-    }
-    if (this.props.reverseScroll) {
-      this.wheelAcc += Y > 0 ? -1 : +1;
-    } else {
-      this.wheelAcc += Y > 0 ? +1 : -1;
-    }
-
-    if (this.wheelAcc >= WHEEL_STEP) {
-      newIndex += Math.floor(this.wheelAcc / WHEEL_STEP);
-      this.wheelAcc %= WHEEL_STEP;
-    } else if (this.wheelAcc <= -WHEEL_STEP) {
-      newIndex -= Math.floor(-this.wheelAcc / WHEEL_STEP);
-      this.wheelAcc = -(-this.wheelAcc % WHEEL_STEP);
-    } else {
-      return;
-    }
-    this.setNextValue(this.nextValue + newIndex);
-    return false;
-  }
-
-  /* Logic ***********************************************/
 
   reset(xStart: number, yStart: number) {
     this.xStart = xStart;
