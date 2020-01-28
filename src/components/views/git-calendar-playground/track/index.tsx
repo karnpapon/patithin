@@ -368,8 +368,10 @@ class NoteTransposer extends React.Component<NoteTransposerProps,NoteTransposerS
       <div className="day-selector">
         <div className="day-selector-wrapper">
           <span onClick={() => this.handleTranspose('up')} className="transpose-up">￪</span>
-          <div className="root-note">{rootNote}</div>
-          <span onClick={() => this.handleGetNewScale()} className="scale-title">{scale.substring(0,5)}</span>
+          <div className="note-wrapper">
+            <div className="root-note">{rootNote}</div>
+            <span onClick={() => this.handleGetNewScale()} className="scale-title">{scale.substring(0,5)}</span>
+          </div>
           <span onClick={() => this.handleTranspose('down')} className="transpose-down">￬</span>
         </div>
     </div>

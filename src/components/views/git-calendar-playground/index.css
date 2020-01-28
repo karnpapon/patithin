@@ -76,20 +76,38 @@
 
 .day-selector-wrapper span{  cursor: pointer;}
 
-.transpose-up:hover{ color: var(--shade-active-on); }
-.transpose-down:hover{ color: var(--shade-active-on);}
+.transpose-up:hover{     
+  color: var(--shade-base);
+ background: var(--shade-light); 
+}
+.transpose-down:hover{     
+ color: var(--shade-base);
+ background: var(--shade-light);
+}
+
 .transpose-down{ border-top: 1px solid; }
 .transpose-up{ 
     border-bottom: 1px solid;
 }
+
+.note-wrapper{
+    display: flex;
+    height: 100%;
+    flex-direction: column;;
+}
+
 .root-note{ 
-    font-size: 1rem; 
-    padding-bottom: 5px;
-    text-transform: none; 
+    font-size: 1rem;
+    text-transform: none;
     text-align: center;
     border-bottom: 1px dashed;
     font-weight: bolder;
+    justify-content: center;
+    height: 30%;
+    align-items: center;
+    display: flex;;
 }
+
 .scale-title{ 
     writing-mode: vertical-lr;
     text-orientation: upright;
@@ -98,6 +116,14 @@
     font-weight: bolder;
     align-items: center;
     display: flex;
+    height: 500%;
+    flex-grow: initial;
+    justify-content: center;
+}
+
+.scale-title:hover{ 
+    color: var(--shade-base);
+    background-color: var(--shade-light);
 }
 
 
