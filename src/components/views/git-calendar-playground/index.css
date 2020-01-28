@@ -22,6 +22,10 @@
     margin-left: 0;
 }
 
+.week-wrapper{
+    display: flex;
+}
+
 .week{
     display: flex;
     flex-direction: column;
@@ -390,6 +394,23 @@ span.often{ background-color: rgb(3, 148, 3);}
 span.every{ background-color: rgb(0, 138, 0);}
 span.nerd{ background-color: rgb(15, 109, 15);}
 span.committed-by-cat{ background-color: rgb(0, 71, 0);}
+
+.note-display{
+    display: flex;
+    flex-direction: column;
+    width: 20px;
+    justify-content: flex-end;
+    font-family: Helvetica, sans-serif;
+    font-weight: bolder;
+}
+
+.note-display span{
+    margin-top: 4px;
+    width: .7rem;
+    height: .7rem;
+}
+
+.note-display span:last-child{ margin-bottom: 4px;}
   
 @keyframes slide-up {
     0% {

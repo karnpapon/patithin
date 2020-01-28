@@ -241,7 +241,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
       calendar,
       updateAccountMute,
     } = this.props
-    const { steps, synthEngine, octave, channel, rootNote, scale } = this.state
+    const { steps, synthEngine, octave, channel, rootNote, scale, notesInScale } = this.state
 
     let clockTrack = this.runClock(this.context.currentBeat)
     
@@ -283,23 +283,29 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
                 pushable={true}
                 onAfterChange={value => this.onRangeSliderChange( value )}
               />
-             
-              <div className="weeks-table">
-                {
-                  contributions?
-                  contributions.map(( weeks, index ) => {
-                      return <WeekRender 
-                        key={index} 
-                        weeks={weeks} 
-                        week_idx={index} 
-                        steps={steps}
-                        clock={clockTrack}
-                        handleStoreToggleMutedWeek={this.handleStoreToggleMutedWeek}
-                      />
-                  })
-                  :
-                  "loading.."
-                }
+
+              <div className="week-wrapper">
+                <div className="note-display">
+                  { notesInScale.map(( item, n_index ) => <span key={ n_index }>{item}</span>) }
+                </div>
+              
+                <div className="weeks-table">
+                  {
+                    contributions?
+                    contributions.map(( weeks, index ) => {
+                        return <WeekRender 
+                          key={index} 
+                          weeks={weeks} 
+                          week_idx={index} 
+                          steps={steps}
+                          clock={clockTrack}
+                          handleStoreToggleMutedWeek={this.handleStoreToggleMutedWeek}
+                        />
+                    })
+                    :
+                    "loading.."
+                  }
+                </div>
               </div>
             </div>
           </div>
