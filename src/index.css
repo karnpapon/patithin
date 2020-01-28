@@ -106,6 +106,7 @@ input{
   position: relative;
   top: -5px;
   margin-left: 20px;
+  width: initial;
 }
 
 .rc-slider .rc-slider-rail{ border-radius: 0; height: 2px; left: 0; right: 0; background-color: var(--shade-light);}
