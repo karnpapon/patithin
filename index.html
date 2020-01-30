@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <link rel="manifest" href="/public/manifest.json" />
-    <link rel="stylesheet" href="dist/style.css" />
+    <link rel="stylesheet" href="/dist/style.css" />
     <link rel="stylesheet" type="text/css"  href='/src/assets/icon/icomoon/style.css'/>
     <link href="https://fonts.googleapis.com/css?family=Glegoo:400,700|Six+Caps&display=swap" rel="stylesheet">
+  </head>
   <body>
     <noscript>
       You need to enable JavaScript to run this app.
@@ -28,12 +29,16 @@
   </body>
 
   <!-- Main -->
-  <!-- <script async src="./dist/bundle.js"></script> -->
-  <script>
+  <div id="root"></div>
+  <script src="/dist/index.js"></script>
+  <!-- <script>
     setTimeout(() => {
       var bundleTag = document.createElement('script');
+      // var wasmTag = document.createElement('script');
       bundleTag.src = './dist/bundle.js';
+      // wasmTag.src = './dist/pkg';
       document.body.appendChild(bundleTag);
+      // document.body.appendChild(wasmTag);
     }, 1);
-  </script>
+  </script> -->
 </html>

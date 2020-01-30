@@ -4,6 +4,8 @@
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "commonjs",
+    // "module": "esnext", // needed to have dynamic imports
+    // "moduleResolution": "node",
     "target": "es6",
     "jsx": "react",
     "baseUrl": "src",

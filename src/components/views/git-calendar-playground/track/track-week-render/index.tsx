@@ -12,8 +12,6 @@ export interface WeekRenderProps{
   steps: number[],
   clock: number,
   handleStoreToggleMutedWeek: (week_index: number) => void
-  // weekRef: React.RefObject<HTMLDivElement>
-  // monitorTrackMute: (isMuted: boolean) => void
 }
 export interface WeekRenderState{
   isMuted: boolean,

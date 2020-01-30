@@ -25,6 +25,7 @@ export class App extends React.Component<any, AppState> {
     };
   }
   componentWillMount(){
+
   }
 
   componentDidMount() {

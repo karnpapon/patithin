@@ -1,11 +1,13 @@
+const path = require("path");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
 
 module.exports = {
   entry: './src/index.tsx',
   output: {
-    filename: 'bundle.js',
+    filename: 'index.js',
     path: __dirname + '/dist'
   },
 
@@ -20,8 +22,8 @@ module.exports = {
 
   module: {
     rules: [
-      // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
       { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
+      { test: /\.wasm$/, loader: ['wasm-loader'],type: 'javascript/auto'},
 
       // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
       { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
@@ -51,8 +53,14 @@ module.exports = {
       filename: 'style.css',
       path: __dirname + '/dist'
     }),
-    // new HtmlWebpackPlugin({
-    //   template: 'index.html',
+    // new WasmPackPlugin({
+    //   crateDirectory: path.resolve(__dirname, "."),
+    //   withTypeScript: true // this is new
     // }),
+    new HtmlWebpackPlugin({
+      inject: false,
+      template: 'index.html',
+      filename: 'index.html'
+    }),
   ]
 };

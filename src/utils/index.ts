@@ -11,5 +11,5 @@ export {
     getNotesFromRoot,
     getDegreeInScale,
     getNotesFromScale,
-    scaleLists
+    scaleLists,
 }
