@@ -60,12 +60,11 @@
 .day-selector{
     display: flex;
     border: 1px solid;
+    flex: 0.25;
 }
 
 .day-selector-wrapper{
-    /* padding-top: 54px; */
-    /* height: 60%; */
-    width: 25px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -116,14 +115,14 @@
     font-weight: bolder;
     align-items: center;
     display: flex;
-    height: 500%;
+    height: auto;
     flex-grow: initial;
     justify-content: center;
 }
 
 .scale-title:hover{ 
-    color: var(--shade-base);
-    background-color: var(--shade-light);
+    color: var(--hover-light);
+    /* background-color: var(--shade-light); */
 }
 
 
