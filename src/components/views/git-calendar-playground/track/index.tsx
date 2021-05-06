@@ -15,6 +15,7 @@ import { store } from 'store';
 import { SynthEngine } from 'models/Synth';
 
 const RangeWithTooltips = createSliderWithTooltip(Range);
+const tipFormatter = ( value: number ) => (`week ${value == 0? 1:value}`)
 const notes: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 
 export interface GitCalendarTrackProps{
@@ -274,14 +275,14 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
             />
             <div className="track-steps">
               <RangeWithTooltips 
-                max={53} min={0}
+                min={0} max={53} 
                 defaultValue={[0, 16]} 
                 step={4}
                 allowCross={true}
-                tipFormatter={( value: number ) => `week ${value == 0? 1:value}`}
+                tipFormatter={tipFormatter}
                 tipProps={{ overlayClassName: 'tooltip-custom' }}
                 pushable={true}
-                onAfterChange={value => this.onRangeSliderChange( value )}
+                onAfterChange={(value: number[]) => this.onRangeSliderChange( value )}
               />
 
               <div className="week-wrapper">

@@ -2,11 +2,10 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { store, actions } from 'store';
 import { GitCalendarPlayground } from 'components/views/git-calendar-playground';
-import { Header } from './components/common/header'
+import { Header } from 'components/common/header'
 import { Metronome } from 'models/Metronome';
 import { Midi } from 'models/Midi';
 import { AppContextInterface, AppContextProvider } from './AppContext';
-import { SynthEngine } from 'models/Synth'
 
 interface AppState {
   metronome: Metronome,

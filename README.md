@@ -1,5 +1,7 @@
 ## Patithin (git-calendar-beat generator).
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a04f2009-6f36-41e4-b907-b84dd383198b/deploy-status)](https://app.netlify.com/sites/tender-banach-703feb/deploys)
+
 written in TypeScript + React + Redux
 
 [TRY IT HERE 🕺🔥🔥](https://tender-banach-703feb.netlify.com/)

@@ -1,8 +1,8 @@
 const path = require("path");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
+// const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
 
 module.exports = {
   entry: './src/index.tsx',
@@ -17,13 +17,13 @@ module.exports = {
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: ['.ts', '.tsx', '.js', '.json'],
-    plugins: [new TsConfigPathsPlugin(/* { configFileName, compiler } */)]
+    plugins: [new TsconfigPathsPlugin(/* { configFileName, compiler } */)]
   },
 
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
-      { test: /\.wasm$/, loader: ['wasm-loader'],type: 'javascript/auto'},
+      { test: /\.tsx?$/, loader: 'ts-loader' },
+      // { test: /\.wasm$/, loader: ['wasm-loader'],type: 'javascript/auto'},
 
       // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
       { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
@@ -51,7 +51,6 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'style.css',
-      path: __dirname + '/dist'
     }),
     // new WasmPackPlugin({
     //   crateDirectory: path.resolve(__dirname, "."),

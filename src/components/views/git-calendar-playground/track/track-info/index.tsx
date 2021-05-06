@@ -90,7 +90,7 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
       octave
     } = this.props
     const { isMidiMode } = this.state
-    
+
     return (
         <>
         <div className="track-title"> 

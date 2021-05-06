@@ -59,7 +59,7 @@ export class SynthEngine extends SynthEngineState {
   defineSynth = () => {
 
     // AM
-    this.channels[0] = new Tone.PolySynth(4, Tone.Synth);
+    this.channels[0] = new Tone.PolySynth();
     // this.channels[0] = new Tone.AMSynth({ 'harmonicity': 1.25, 'oscillator': { 'type': 'sine' }, 'modulation': { 'type': 'sine' } })
     this.channels[1] = new Tone.Synth({  'oscillator': { 'type': 'sine' } })
     this.channels[2] = new Tone.AMSynth({ 'harmonicity': 1.75, 'oscillator': { 'type': 'sawtooth' }, 'modulation': { 'type': 'triangle' } })

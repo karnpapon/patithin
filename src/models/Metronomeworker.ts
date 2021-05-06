@@ -11,7 +11,7 @@ export class MetronomeWorker extends WorkerState{
     window.addEventListener('message', e => {
       if (e.data=="start") {
         // console.log("starting");
-        this.timerID=setInterval(function(){window.parent.postMessage("tick", '*');},this.interval)
+        this.timerID=window.setInterval(function(){window.parent.postMessage("tick", '*');},this.interval);
       }
       else if (e.data.interval) {
         console.log("setting interval");
@@ -19,7 +19,7 @@ export class MetronomeWorker extends WorkerState{
         console.log("interval="+this.interval);
         if (this.timerID) {
           clearInterval(this.timerID);
-          this.timerID=setInterval(function(){window.parent.postMessage("tick", '*');},this.interval)
+          this.timerID=window.setInterval(function(){window.parent.postMessage("tick", '*');},this.interval)
         }
       }
       else if (e.data=="stop") {
