@@ -26,11 +26,11 @@ const getUserIdDetails = (data: AxiosResponse<any>): UserDetails => ({
   user_login: data.data.login
 })
 
-const withCORS = (url: string) =>
-  'https://urlreq.appspot.com/req?method=GET&url=' + url
+// const withCORS = (url: string) =>
+//   'https://urlreq.appspot.com/req?method=GET&url=' + url
 
 export async function fetchContributions( user: String): Promise<Contribution[][]> {
-  const endpoint = withCORS(`https://github.com/users/${user}/contributions`)
+  const endpoint = `http://localhost:8080/api/contrib?user=${user}`
   const {data: html} = await axios.get(endpoint)
 
   const parser = new DOMParser()
