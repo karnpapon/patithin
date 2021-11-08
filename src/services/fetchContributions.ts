@@ -30,7 +30,7 @@ const getUserIdDetails = (data: AxiosResponse<any>): UserDetails => ({
 //   'https://urlreq.appspot.com/req?method=GET&url=' + url
 
 export async function fetchContributions( user: String): Promise<Contribution[][]> {
-  const endpoint = `http://localhost:8080/api/contrib?user=${user}`
+  const endpoint = `https://patithin-server.vercel.app/api/contrib?user=${user}`
   const {data: html} = await axios.get(endpoint)
 
   const parser = new DOMParser()
