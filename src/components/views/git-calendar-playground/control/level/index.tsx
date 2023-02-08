@@ -60,9 +60,9 @@ export class LevelMeter extends React.Component< LevelMeterProps, LevelMeterStat
             </span>
             :
             <span className='level-label'>
-              {prefix}
-              <span>{displayValue}</span>
-              <p>{unitType}</p>
+              {/* {prefix} */}
+              {/* <span>{displayValue}</span> */}
+              {/* <p>{unitType}</p> */}
           </span>
         }
       </Slider>

@@ -1,8 +1,8 @@
-import { store, actions } from 'store';
+import { store, actions } from "store";
 import * as Tone from "tone";
-import { mapValue } from 'utils';
+import { mapValue } from "utils";
 
-export interface EffectType{
+export interface EffectType {
   // bitcrusher: Tone.BitCrusher;
   // distortion: Tone.Distortion;
   // autowah: Tone.AutoWah;
@@ -21,17 +21,16 @@ export interface EffectType{
 export class SynthEngineState {
   index: number;
   channels: any[];
-  effects: EffectType; 
+  effects: EffectType;
   volume: number;
 }
 
 export class SynthEngine extends SynthEngineState {
-  
-  constructor(props: any){
-    super()
-    this.index = 0
-    this.channels = []
-    this.volume = .75
+  constructor(props: any) {
+    super();
+    this.index = 0;
+    this.channels = [];
+    this.volume = 0.5;
     this.effects = {
       // bitcrusher: null,
       // distortion: null,
@@ -46,39 +45,86 @@ export class SynthEngine extends SynthEngineState {
       // compressor: null,
       volume: null,
       limiter: null,
-    }
+    };
   }
 
   init = () => {
-    this.defineSynth()
-    this.defineEffect()
-    this.connectNode()
-    this.initVolume()
-  }
+    this.defineSynth();
+    this.defineEffect();
+    this.connectNode();
+    this.initVolume();
+  };
 
   defineSynth = () => {
-
     // AM
     this.channels[0] = new Tone.PolySynth();
     // this.channels[0] = new Tone.AMSynth({ 'harmonicity': 1.25, 'oscillator': { 'type': 'sine' }, 'modulation': { 'type': 'sine' } })
-    this.channels[1] = new Tone.Synth({  'oscillator': { 'type': 'sine' } })
-    this.channels[2] = new Tone.AMSynth({ 'harmonicity': 1.75, 'oscillator': { 'type': 'sawtooth' }, 'modulation': { 'type': 'triangle' } })
-    this.channels[3] = new Tone.AMSynth({ 'harmonicity': 2, 'oscillator': { 'type': 'square' }, 'modulation': { 'type': 'square' } })
-    this.channels[4] = new Tone.AMSynth({ 'harmonicity': 1.25, 'oscillator': { 'type': 'sine' }, 'modulation': { 'type': 'square' } })
-    this.channels[5] = new Tone.AMSynth({ 'harmonicity': 1.5, 'oscillator': { 'type': 'triangle' }, 'modulation': { 'type': 'sawtooth' } })
+    this.channels[1] = new Tone.Synth({ oscillator: { type: "sine" } });
+    this.channels[2] = new Tone.AMSynth({
+      harmonicity: 1.75,
+      oscillator: { type: "sawtooth" },
+      modulation: { type: "triangle" },
+    });
+    this.channels[3] = new Tone.AMSynth({
+      harmonicity: 2,
+      oscillator: { type: "square" },
+      modulation: { type: "square" },
+    });
+    this.channels[4] = new Tone.AMSynth({
+      harmonicity: 1.25,
+      oscillator: { type: "sine" },
+      modulation: { type: "square" },
+    });
+    this.channels[5] = new Tone.AMSynth({
+      harmonicity: 1.5,
+      oscillator: { type: "triangle" },
+      modulation: { type: "sawtooth" },
+    });
     // FM
-    this.channels[6] = new Tone.FMSynth({ 'harmonicity': 1.75, 'modulationIndex': 10, 'oscillator': { 'type': 'sawtooth' }, 'modulation': { 'type': 'triangle' } })
-    this.channels[7] = new Tone.FMSynth({ 'harmonicity': 2, 'modulationIndex': 20, 'oscillator': { 'type': 'square' }, 'modulation': { 'type': 'sine' } })
-    this.channels[8] = new Tone.FMSynth({ 'harmonicity': 0.5, 'modulationIndex': 30, 'oscillator': { 'type': 'sine' }, 'modulation': { 'type': 'sawtooth' } })
-    this.channels[9] = new Tone.FMSynth({ 'harmonicity': 2.5, 'modulationIndex': 40, 'oscillator': { 'type': 'sine' }, 'modulation': { 'type': 'triangle' } })
+    this.channels[6] = new Tone.FMSynth({
+      harmonicity: 1.75,
+      modulationIndex: 10,
+      oscillator: { type: "sawtooth" },
+      modulation: { type: "triangle" },
+    });
+    this.channels[7] = new Tone.FMSynth({
+      harmonicity: 2,
+      modulationIndex: 20,
+      oscillator: { type: "square" },
+      modulation: { type: "sine" },
+    });
+    this.channels[8] = new Tone.FMSynth({
+      harmonicity: 0.5,
+      modulationIndex: 30,
+      oscillator: { type: "sine" },
+      modulation: { type: "sawtooth" },
+    });
+    this.channels[9] = new Tone.FMSynth({
+      harmonicity: 2.5,
+      modulationIndex: 40,
+      oscillator: { type: "sine" },
+      modulation: { type: "triangle" },
+    });
     // Membrane
-    this.channels[10] =  new Tone.MembraneSynth({ 'octaves': 5, 'oscillator': { 'type': 'sine' } })
-    this.channels[11] =  new Tone.MembraneSynth({ 'octaves': 10, 'oscillator': { 'type': 'sawtooth' } })
-    this.channels[12] =  new Tone.MembraneSynth({ 'octaves': 15, 'oscillator': { 'type': 'triangle' } })
-    this.channels[13] =  new Tone.MembraneSynth({ 'octaves': 20, 'oscillator': { 'type': 'square' } })
-  }
+    this.channels[10] = new Tone.MembraneSynth({
+      octaves: 5,
+      oscillator: { type: "sine" },
+    });
+    this.channels[11] = new Tone.MembraneSynth({
+      octaves: 10,
+      oscillator: { type: "sawtooth" },
+    });
+    this.channels[12] = new Tone.MembraneSynth({
+      octaves: 15,
+      oscillator: { type: "triangle" },
+    });
+    this.channels[13] = new Tone.MembraneSynth({
+      octaves: 20,
+      oscillator: { type: "square" },
+    });
+  };
 
-    defineEffect(){
+  defineEffect() {
     // // I
     // this.effects.bitcrusher =  new Tone.BitCrusher(4)
     // this.effects.distortion =  new Tone.Distortion(0.05)
@@ -94,14 +140,13 @@ export class SynthEngine extends SynthEngineState {
     // // Mastering
     // this.effects.equalizer =  new Tone.EQ3(5, 0, 5)
     // this.effects.compressor =  new Tone.Compressor(-6, 4)
-    this.effects.volume =  new Tone.Volume(0)
-    this.effects.limiter =  new Tone.Limiter(-2)    
+    this.effects.volume = new Tone.Volume(0);
+    this.effects.limiter = new Tone.Limiter(-2);
   }
 
   connectNode = () => {
-
     for (const id in this.channels) {
-      this.channels[id].connect(this.effects.volume)
+      this.channels[id].connect(this.effects.volume);
     }
 
     // this.effects.bitcrusher.connect(this.effects.distortion)
@@ -118,30 +163,30 @@ export class SynthEngine extends SynthEngineState {
 
     // this.effects.equalizer.connect(this.effects.compressor)
     // this.effects.compressor.connect(this.effects.volume)
-    this.effects.volume.connect(this.effects.limiter)
-    this.effects.limiter.toMaster()
-  }
+    this.effects.volume.connect(this.effects.limiter);
+    this.effects.limiter.toMaster();
+  };
 
   runPolySynth = (index: number, notes: string[]) => {
-    if(this.channels[index]){
+    if (this.channels[index]) {
       this.channels[index].triggerAttackRelease(notes, "6n");
     }
-  }
+  };
 
   runMonoSynth = (index: number, note: string) => {
-    if(this.channels[index]){
+    if (this.channels[index]) {
       this.channels[index].triggerAttackRelease(note, "8n");
     }
-  }
+  };
 
   setVolume = (newVolume: number, synthIndex: number) => {
     this.volume = Math.max(0, Math.min(1, newVolume));
-    let map_value = mapValue(this.volume, 0,1,-40,0)
-    this.effects.volume.volume.value = map_value
-  }
+    let map_value = mapValue(this.volume, 0, 1, -40, 0);
+    this.effects.volume.volume.value = map_value;
+  };
 
   initVolume = () => {
-    let map_value = mapValue(this.volume, 0,1,-40,0)
-    this.effects.volume.volume.value = map_value 
-  }
+    let map_value = mapValue(this.volume, 0, 1, -40, 0);
+    this.effects.volume.volume.value = map_value;
+  };
 }

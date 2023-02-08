@@ -7,6 +7,10 @@
   font-family: Helvetica, sans-serif;
   font-size: 1.25rem;
   cursor: grab;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
 /* Background / Meter */

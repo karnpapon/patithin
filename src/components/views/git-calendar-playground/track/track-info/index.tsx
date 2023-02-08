@@ -103,8 +103,10 @@ export class CalendarTrackInfo extends React.Component<CalendarTrackInfoProps, C
             </div>
           </div>
           <OctaveButton setOctave={setOctave} octave={octave}/>
+          <div className='name-meter-wrapper'>
           <div className="abbrev-name">{this.abbrevName(UserDetails.user_name)}</div> 
           <div className={ `track-bloc ${isMidiMode? 'level-off':''}` } data-title='volume'>
+          </div>
             <LevelMeter  
               progress={synthEngine.volume}
               onUpdate={this.volumeUpdateListener}

@@ -7,6 +7,7 @@ import { getNewRange, mapValue, getNote,getNotesFromRoot,getDegreeInScale,getNot
 import { AppContextConsumer, ctx} from 'AppContext';
 import { ContributionCalendar } from 'models/ContributionCalendar'
 import { Midi } from 'models/Midi'
+import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
@@ -253,6 +254,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
           <div className="track-container">
           <div className="track">
             { isAccountMuted ? ( <div className='muted'><p className="mute-display"> Shhhh.. </p></div> ):'' }
+            <div className='track-controller-wrapper'>
             <CalendarTrackInfo 
               totalCounts={totalCounts} 
               UserDetails={UserDetails} 
@@ -273,6 +275,7 @@ export class GitCalendarTrack extends React.Component<GitCalendarTrackProps, Git
               rootNote={rootNote}
               scale={scale}
             />
+            </div>
             <div className="track-steps">
               <RangeWithTooltips 
                 min={0} max={53} 
@@ -368,12 +371,12 @@ class NoteTransposer extends React.Component<NoteTransposerProps,NoteTransposerS
     return(
       <div className="day-selector">
         <div className="day-selector-wrapper">
-          <span onClick={() => this.handleTranspose('up')} className="transpose-up">￪</span>
+          <span onClick={() => this.handleTranspose('up')} className="transpose-up"><AiOutlineArrowUp size={20}/></span>
           <div className="note-wrapper">
             <div className="root-note">{rootNote}</div>
             <span onClick={() => this.handleGetNewScale()} className="scale-title">{scale.substring(0,5)}</span>
           </div>
-          <span onClick={() => this.handleTranspose('down')} className="transpose-down">￬</span>
+          <span onClick={() => this.handleTranspose('down')} className="transpose-down"><AiOutlineArrowDown size={20}/></span>
         </div>
     </div>
     )

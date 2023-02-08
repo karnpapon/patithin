@@ -1,48 +1,56 @@
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosResponse } from "axios";
 
 // import {Contribution} from '.'
 
 export interface Contribution {
-  date: Date
-  count: number
+  date: Date;
+  count: number;
 }
 
 export interface UserDetails {
-  user_name: string,
-  user_id: number,
-  user_location: string,
-  user_login: string
+  user_name: string;
+  user_id: number;
+  user_location: string;
+  user_login: string;
 }
 
-const getContribution = (tile: Element): Contribution => ({
-  date: new Date(String(tile.getAttribute('data-date'))),
-  count: Number(tile.getAttribute('data-count'))
-})
+const getContribution = (tile: Element): Contribution => {
+  const _count = Number(tile.textContent.split(" ")[0]);
+  return {
+    date: new Date(String(tile.getAttribute("data-date"))),
+    count: isNaN(_count) ? 0 : _count,
+  };
+};
 
 const getUserIdDetails = (data: AxiosResponse<any>): UserDetails => ({
   user_name: data.data.name,
   user_id: data.data.id,
   user_location: data.data.location,
-  user_login: data.data.login
-})
+  user_login: data.data.login,
+});
 
 // const withCORS = (url: string) =>
 //   'https://urlreq.appspot.com/req?method=GET&url=' + url
 
-export async function fetchContributions( user: String): Promise<Contribution[][]> {
-  const endpoint = `https://patithin-server.vercel.app/api/contrib?user=${user}`
-  const {data: html} = await axios.get(endpoint)
+export async function fetchContributions(
+  user: String
+): Promise<Contribution[][]> {
+  const endpoint = `https://patithin-server.vercel.app/api/contrib?user=${user}`;
+  const { data: html } = await axios.get(endpoint);
 
-  const parser = new DOMParser()
-  const dom = parser.parseFromString(html, 'text/html')
-  const rows = Array.from(dom.querySelectorAll('.js-calendar-graph-svg g g'))
+  const parser = new DOMParser();
+  const dom = parser.parseFromString(html, "text/html");
+  const rows = Array.from(dom.querySelectorAll(".js-calendar-graph-svg g g"));
 
-  return [...rows].map(week => Array.from(week.querySelectorAll('.ContributionCalendar-day')).map(getContribution))
+  return [...rows].map((week) =>
+    Array.from(week.querySelectorAll(".ContributionCalendar-day")).map(
+      getContribution
+    )
+  );
 }
 
-
 export async function fetchUserDetails(user: String): Promise<UserDetails> {
-  const endpoint = `https://api.github.com/users/${user}`
-  const data = await axios.get(endpoint)
-  return getUserIdDetails(data)
+  const endpoint = `https://api.github.com/users/${user}`;
+  const data = await axios.get(endpoint);
+  return getUserIdDetails(data);
 }
