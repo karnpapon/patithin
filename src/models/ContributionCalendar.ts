@@ -20,7 +20,6 @@ export class ContributionCalendar {
 
   async fetchContributions(user: string): Promise<Contribution[][]> {
     this.contributions = await fetchContributions(user);
-
     return this.contributions;
   }
 

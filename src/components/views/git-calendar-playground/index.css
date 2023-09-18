@@ -464,8 +464,8 @@ span.committed-by-cat{ background-color: rgb(0, 71, 0);}
 
 .note-display span{
     margin-top: 4px;
-    width: .7rem;
-    height: .7rem;
+    width: 1rem;
+    height: 1rem;
 }
 
 .note-display span:last-child{ margin-bottom: 4px;}

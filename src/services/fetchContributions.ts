@@ -29,6 +29,24 @@ const getUserIdDetails = (data: AxiosResponse<any>): UserDetails => ({
   user_login: data.data.login,
 });
 
+// flip array.
+// quick workaround, since GitHub change rendering from week(vertical) to day(horizontal)
+const flipArr = (contribs: Contribution[][]): Contribution[][] => {
+  let contributionsByWeek: any = [];
+
+  for (let i = 0; i <= contribs[0].length - 1; i++) {
+    contributionsByWeek.push([]);
+  }
+
+  for (let i = 0; i <= contribs[0].length - 1; i++) {
+    for (let j = 0; j <= contribs.length - 1; j++) {
+      contribs[j][i] && contributionsByWeek[i].push(contribs[j][i]);
+    }
+  }
+
+  return contributionsByWeek;
+};
+
 // const withCORS = (url: string) =>
 //   'https://urlreq.appspot.com/req?method=GET&url=' + url
 
@@ -40,13 +58,17 @@ export async function fetchContributions(
 
   const parser = new DOMParser();
   const dom = parser.parseFromString(html, "text/html");
-  const rows = Array.from(dom.querySelectorAll(".js-calendar-graph-svg g g"));
+  const rows = Array.from(
+    dom.querySelectorAll(".js-calendar-graph-table tbody tr")
+  );
 
-  return [...rows].map((week) =>
+  const contribs = [...rows].map((week) =>
     Array.from(week.querySelectorAll(".ContributionCalendar-day")).map(
       getContribution
     )
   );
+
+  return flipArr(contribs);
 }
 
 export async function fetchUserDetails(user: String): Promise<UserDetails> {
